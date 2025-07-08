@@ -1,7 +1,8 @@
+# Metropolis cloudový klient
 Klient pro Microsoft OneDrive. Založeno na oficiálních Microsoft Rest API.
 
 
-## Privacy Policy – Metropolis cloudový klient (Metropolis Cloud Client)
+### Privacy Policy & Disclaimer
 
 Metropolis cloudový klient is provided "as is" without warranty of any kind. By using this application, you acknowledge and agree to the following:
 
