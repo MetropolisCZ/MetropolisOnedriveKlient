@@ -32,7 +32,7 @@ namespace MetropolisOnedriveKlient
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += NaplnitPrihlasovaciMoznosti;
-            MainPage.PageHeader.Text = "Účet";
+            MainPage.PageHeader.Text = "Nastavení";
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -67,10 +67,33 @@ namespace MetropolisOnedriveKlient
                 ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"] = result.ResponseData[0].Token;
                 var headers = httpClient.DefaultRequestHeaders;
                 headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", result.ResponseData[0].Token);
+                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + result.ResponseData[0].Token);
 
                 //JObject repository_url = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me"));
             }
         }
 
+        /*private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var item = new DownloadItem
+            {
+                FileName = "TestFile.txt",
+                Progress = 0,
+                Status = "Starting..."
+            };
+            DownloadManager.Instance.Downloads.Add(item);
+
+            // Simulate progress
+            _ = Task.Run(async () =>
+            {
+                for (int i = 0; i <= 100; i += 10)
+                {
+                    await Task.Delay(300);
+                    item.Progress = i;
+                    item.Status = $"Downloading... {i}%";
+                }
+                item.Status = "Completed!";
+            });
+        }*/
     }
 }

@@ -51,6 +51,7 @@ namespace MetropolisOnedriveKlient
             {
                 var headers = httpClient.DefaultRequestHeaders;
                 headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"].ToString());
+                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"].ToString());
                 ContentFrame.Navigate(typeof(StrankaSoubory));
             }
             else
@@ -79,11 +80,17 @@ namespace MetropolisOnedriveKlient
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
 
+        private void TlacitkoPrubeh_Click(object sender, RoutedEventArgs e)
+        {
+            NavigovatNaStranku(typeof(StrankaPrubehStahovani));
+        }
+
         public static void NavigovatNaStranku(Type strankaKamNavigovatType)
         {
             ContentFrame.Navigate(strankaKamNavigovatType);
             ContentFrame.BackStack.Clear();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
+
     }
 }

@@ -39,7 +39,7 @@ namespace MetropolisOnedriveKlient
         {
             base.OnNavigatedTo(e);
 
-            MainPage.PageHeader.Text = "Adresář";
+            MainPage.PageHeader.Text = "Soubory";
 
         }
 
@@ -49,7 +49,7 @@ namespace MetropolisOnedriveKlient
 
             try
             {
-                obsahSlozkyOneDrive_korenove = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root/children?$select=name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails")).SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+                obsahSlozkyOneDrive_korenove = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails")).SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
             }
             catch
             {
@@ -84,10 +84,12 @@ namespace MetropolisOnedriveKlient
                 ItemTemplate = Application.Current.Resources["SablonaSouboryRepozitarGithub"] as DataTemplate,
                 Name = "ListViewSouboryaSlozky",
                 ItemsSource = obsahSlozkyOneDrive_korenove,
+                IsRightTapEnabled = true
                 //Header = navigacniPanelCesty
             };
 
             ListViewSouboryaSlozky.ItemClick += ListViewSouboryaSlozky_ItemClick;
+            ListViewSouboryaSlozky.RightTapped += ListViewSouboryaSlozky_RightTapped;
 
 
             
@@ -114,6 +116,60 @@ namespace MetropolisOnedriveKlient
             };
 
             Content = ScrollViewerHlavniObsah;
+        }
+
+        private void ListViewSouboryaSlozky_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            MenuFlyout myFlyout = new MenuFlyout();
+
+            var originalSource = e.OriginalSource as FrameworkElement;
+            OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
+            if (kliknutySoubor?.Folder != null)
+            { // Složka
+
+            }
+            else
+            { // Soubor
+                MenuFlyoutItem flyoutTlacitkoSdilet = new MenuFlyoutItem { Text = "Sdílet", Icon = new SymbolIcon { Symbol = Symbol.Share }, DataContext = kliknutySoubor };
+                myFlyout.Items.Add(flyoutTlacitkoSdilet);
+
+                MenuFlyoutItem flyoutTlacitkoOdstranit = new MenuFlyoutItem { Text = "Odstranit", Icon = new SymbolIcon { Symbol = Symbol.Delete }, DataContext = kliknutySoubor };
+                myFlyout.Items.Add(flyoutTlacitkoOdstranit);
+
+                MenuFlyoutItem flyoutTlacitkoPodrobnosti = new MenuFlyoutItem { Text = "Podrobnosti", Icon = new SymbolIcon { Symbol = Symbol.List }, DataContext = kliknutySoubor };
+                myFlyout.Items.Add(flyoutTlacitkoPodrobnosti);
+
+                MenuFlyoutItem flyoutTlacitkoStahnout = new MenuFlyoutItem { Text = "Stáhnout", Icon = new SymbolIcon { Symbol = Symbol.Download }, DataContext = kliknutySoubor };
+                flyoutTlacitkoStahnout.Click += FlyoutTlacitkoStahnout_Click;
+                myFlyout.Items.Add(flyoutTlacitkoStahnout);
+
+                MenuFlyoutItem flyoutTlacitkoPresunout = new MenuFlyoutItem { Text = "Přesunout", Icon = new SymbolIcon { Symbol = Symbol.MoveToFolder }, DataContext = kliknutySoubor };
+                myFlyout.Items.Add(flyoutTlacitkoPresunout);
+
+                MenuFlyoutItem flyoutTlacitkoPrejmenovat = new MenuFlyoutItem { Text = "Přejmenovat", Icon = new SymbolIcon { Symbol = Symbol.Rename }, DataContext = kliknutySoubor };
+                myFlyout.Items.Add(flyoutTlacitkoPrejmenovat);
+            }
+
+            
+
+
+         
+
+            //the code can show the flyout in your mouse click 
+            myFlyout.ShowAt(sender as UIElement, e.GetPosition(sender as UIElement));
+
+        }
+
+        private async void FlyoutTlacitkoStahnout_Click(object sender, RoutedEventArgs e)
+        {
+            var originalSource = e.OriginalSource as FrameworkElement;
+            OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
+
+            List<OneDriveAdresarSoubory> souboryKeStazeni = new List<OneDriveAdresarSoubory>()
+            {
+                kliknutySoubor
+            };
+            await StahnoutSoubory(souboryKeStazeni);
         }
 
         private async void NavigacniPanelCesty_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -151,7 +207,7 @@ namespace MetropolisOnedriveKlient
 
                 try
                 {
-                    obsahSlozkyOneDrive_aktualni = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails")).SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+                    obsahSlozkyOneDrive_aktualni = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails")).SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
                 }
                 catch
                 {
@@ -219,7 +275,7 @@ namespace MetropolisOnedriveKlient
 
                 try
                 {
-                    obsahSlozkyOneDrive_aktualni = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails")).SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+                    obsahSlozkyOneDrive_aktualni = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails")).SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
                 }
                 catch
                 {

@@ -13,6 +13,8 @@
     <Page.TopAppBar>
         <CommandBar>
 
+            <AppBarButton x:Name="tlacitkoPrubeh" HorizontalAlignment="Left" Icon="Switch" Label="Průběh" VerticalAlignment="Top" Click="TlacitkoPrubeh_Click" />
+
             <AppBarButton x:Name="tlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" Label="Soubory" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>
             <AppBarButton x:Name="tlacitkoUcet" HorizontalAlignment="Left" Icon="Setting" Label="Nastavení" VerticalAlignment="Top" Click="TlacitkoUcet_Click"/>
 

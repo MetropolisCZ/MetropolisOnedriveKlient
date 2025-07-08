@@ -12,6 +12,9 @@ namespace MetropolisOnedriveKlient
         [JsonProperty("@odata.etag")]
         public string Odataetag { get; set; }
 
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("createdDateTime")]
         public DateTime CreatedDateTime { get; set; }
 

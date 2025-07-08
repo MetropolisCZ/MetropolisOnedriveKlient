@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="MetropolisOnedriveKlient.StrankaPrubehStahovani"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MetropolisOnedriveKlient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <StackPanel Padding="20">
+
+            <!--<Button Click="Button_Click">Test</Button>-->
+
+            <Pivot>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock>Stahování</TextBlock>
+                    </PivotItem.Header>
+                    
+                    <ListView ItemsSource="{x:Bind ViewModel.Downloads}" HorizontalAlignment="Stretch">
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:DownloadItem">
+                                <StackPanel Margin="0,10">
+                                    <TextBlock Text="{x:Bind FileName, Mode=OneWay}" FontWeight="Bold" TextWrapping="Wrap"/>
+                                    <ProgressBar Value="{x:Bind Progress, Mode=OneWay}" Maximum="100" Height="10" Margin="0,5"/>
+                                    <TextBlock Text="{x:Bind Status, Mode=OneWay}" FontStyle="Italic" FontSize="12"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </PivotItem>
+                
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock>Nahrávání</TextBlock>
+                    </PivotItem.Header>
+
+                </PivotItem>
+
+                
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock>Fotoaparát</TextBlock>
+                    </PivotItem.Header>
+
+                </PivotItem>
+            </Pivot>
+
+
+            
+        </StackPanel>
+    </ScrollViewer>
+</Page>
