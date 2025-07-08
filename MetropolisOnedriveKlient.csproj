@@ -117,18 +117,21 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ApiWebKlient.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Konvertory.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OneDriveAdresarSoubory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StrankaSoubory.xaml.cs">
       <DependentUpon>StrankaSoubory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StrankaPrihlaseni.xaml.cs">
-      <DependentUpon>StrankaPrihlaseni.xaml</DependentUpon>
+    <Compile Include="StrankaNastaveni.xaml.cs">
+      <DependentUpon>StrankaNastaveni.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +163,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StrankaPrihlaseni.xaml">
+    <Page Include="StrankaNastaveni.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

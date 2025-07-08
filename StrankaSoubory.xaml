@@ -8,7 +8,24 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <TextBlock Text="Obsah"></TextBlock>
-    </StackPanel>
+    <!--<StackPanel>
+        <Button Content="Načíst obsah" Click="TlacitkoNacistObsah_Clicked"></Button>
+    </StackPanel>-->
+
+    <Page.BottomAppBar>
+        <CommandBar>
+
+            <!--<AppBarButton x:Name="tlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" Label="Soubory" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>-->
+            <AppBarButton x:Name="tlacitkoAktualizovat" HorizontalAlignment="Left" Icon="Sync" Label="Nahrát" VerticalAlignment="Top" />
+            <AppBarButton x:Name="tlacitkoVytvoritSlozku" HorizontalAlignment="Left" Icon="NewFolder" Label="Nová složka" VerticalAlignment="Top" />
+            <AppBarButton x:Name="tlacitkoNahratSoubor" HorizontalAlignment="Left" Icon="Upload" Label="Nahrát" VerticalAlignment="Top" />
+
+
+            <!--<CommandBar.Content>
+                <TextBlock x:Name="NadpisStrankyTextBlock" Margin="12,8" x:FieldModifier="public" Text="aaaaaaa" />
+            </CommandBar.Content>-->
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    
 </Page>

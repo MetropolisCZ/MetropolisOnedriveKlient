@@ -10,15 +10,15 @@
 
     <Frame x:Name="NavigacniRamec" Navigated="NavigacniRamec_Navigated"></Frame>
 
-    <Page.BottomAppBar>
+    <Page.TopAppBar>
         <CommandBar>
 
-            <AppBarButton x:Name="tlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" Label="Soubory" VerticalAlignment="Top" Click="tlacitkoSoubory_Click"/>
-            <AppBarButton x:Name="tlacitkoUcet" HorizontalAlignment="Left" Icon="Contact" Label="Účet" VerticalAlignment="Top" Click="tlacitkoUcet_Click"/>
+            <AppBarButton x:Name="tlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" Label="Soubory" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>
+            <AppBarButton x:Name="tlacitkoUcet" HorizontalAlignment="Left" Icon="Setting" Label="Nastavení" VerticalAlignment="Top" Click="TlacitkoUcet_Click"/>
 
             <CommandBar.Content>
                 <TextBlock x:Name="NadpisStrankyTextBlock" Margin="12,8" x:FieldModifier="public" />
             </CommandBar.Content>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Page.TopAppBar>
 </Page>

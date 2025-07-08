@@ -4,4 +4,66 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetropolisOnedriveKlient">
 
+    <Application.Resources>
+        
+        <local:KonvertorRepozitarIkonaSlozkyNeboSouboru x:Key="KonvertorRepozitarIkonaSlozkyNeboSouboru"/>
+        <!--<local:KonvertorViditelnostThumbnailu x:Key="KonvertorViditelnostThumbnailu"/>-->
+        <!--<local:KonvertorViditelnostThumbnailuInvert x:Key="KonvertorViditelnostThumbnailuInvert"/>-->
+        <local:KonvertorBnaMB x:Key="KonvertorBnaMB"/>
+
+        <local:VybratIkonuDleObsahu x:Key="VybratIkonuDleObsahu"
+                            SablonaSouboryRepozitarGithub_IkonaSlozky="{StaticResource SablonaSouboryRepozitarGithub_IkonaSlozky}"
+                            SablonaSouboryRepozitarGithub_IkonaGenericka="{StaticResource SablonaSouboryRepozitarGithub_IkonaGenericka}"
+                            SablonaSouboryRepozitarGithub_IkonaObrazkovyNahled="{StaticResource SablonaSouboryRepozitarGithub_IkonaObrazkovyNahled}" />
+
+
+
+        <DataTemplate x:Key="SablonaSouboryRepozitarGithub_IkonaSlozky">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B7;" FontSize="25" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="SablonaSouboryRepozitarGithub_IkonaGenericka">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;" FontSize="25" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="SablonaSouboryRepozitarGithub_IkonaObrazkovyNahled">
+            <Image>
+                <Image.Source>
+                    <BitmapImage UriSource="{Binding Thumbnails[0].Small.Url}" />
+                </Image.Source>
+            </Image>
+        </DataTemplate>
+        
+        
+
+        <DataTemplate x:Key="SablonaSouboryRepozitarGithub">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="66"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="26"></RowDefinition>
+                    <RowDefinition Height="18"></RowDefinition>
+                    <RowDefinition Height="22"></RowDefinition>
+                </Grid.RowDefinitions>
+                <!--<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{Binding Folder, Converter={StaticResource KonvertorRepozitarIkonaSlozkyNeboSouboru}}" Margin="0,0,10,0" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding Thumbnails, Converter={StaticResource KonvertorViditelnostThumbnailu}}" />
+                <Image Width="66" Height="66" Grid.RowSpan="3" Margin="0,0,15,0" Visibility="{Binding Thumbnails, Converter={StaticResource KonvertorViditelnostThumbnailuInvert}}">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Thumbnails[0].Small.Url}" />
+                    </Image.Source>
+                </Image>-->
+                <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource VybratIkonuDleObsahu}" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,15,0" />
+                
+                <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="0,5,0,0"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" Foreground="DarkGray">
+                    <Run Text="{Binding Size, Converter={StaticResource KonvertorBnaMB}}"></Run>
+                    <Run>–</Run>
+                    <Run Text="{Binding LastModifiedDateTime}"></Run>
+                </TextBlock>
+            </Grid>
+        </DataTemplate>
+        
+    </Application.Resources>
+
 </Application>

@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="MetropolisOnedriveKlient.StrankaNastaveni"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MetropolisOnedriveKlient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+
+        <StackPanel Padding="20">
+
+            <!--<TextBlock Text="O aplikaci" FontSize="23" Margin="0,15,0,15" />-->
+            
+            <Button x:Name="LoginButton" Content="Zobrazit dialog přihlášení" Click="LoginButton_Click" />
+            
+
+            <!--<ToggleSwitch Header="Zobrazit nezpracované výsledky vyhledávání" x:Name="ZobrazitNezpracovaneVysledkyVyhledavani" Toggled="ZobrazitNezpracovaneVysledkyVyhledavani_Toggled"/>-->
+
+
+            <!--<StackPanel Margin="0,25,0,0">
+                <TextBlock Text="Výchozí pozice přepínače času" />
+                <RadioButton Content="Čas odjezdu" Tag="false" x:Name="PoziceCasOdjezdu" GroupName="VychoziPozicePrepinaceCasu" Checked="VychoziPozicePrepinaceCasu_Checked" />
+                <RadioButton Content="Čas příjezdu" Tag="true" x:Name="PoziceCasPrijezdu" GroupName="VychoziPozicePrepinaceCasu" Checked="VychoziPozicePrepinaceCasu_Checked" />
+            </StackPanel>-->
+
+            <!--<ToggleSwitch Header="Zobrazit čas odjezdu v nadpisu včetně zpoždění" x:Name="ZobrazitCasVcetneZpozdeni" Margin="0,25,0,0" IsOn="True" IsEnabled="False"/>-->
+
+
+            <TextBlock TextWrapping="Wrap" Text="O aplikaci" FontSize="23" Margin="0,50,0,0" />
+            <TextBlock TextWrapping="Wrap" Text="Tato aplikace byla založena na Microsoft Graph API" />
+            <TextBlock TextWrapping="Wrap" Text="Firma Metropolis 2025, všechna práva na kód vyhrazena"></TextBlock>
+            <HyperlinkButton Content="Web firmy Metropolis" NavigateUri="http://www.metropolis.xf.cz/webdesign/index.php?zdrojZobrazeni=MetropolisCloudovyKlient" />
+            <HyperlinkButton Content="Ochrana osobních údajů a odpovědnost" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
+
+            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0" Text="Verze aplikace: 1.0.0" />
+
+        </StackPanel>
+
+    </ScrollViewer>
+</Page>
