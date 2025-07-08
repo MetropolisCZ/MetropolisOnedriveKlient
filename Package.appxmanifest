@@ -9,7 +9,7 @@
   <Identity
     Name="FirmaMetropolis.Metropoliscloudovklient"
     Publisher="CN=D21B3810-6776-4010-B3FB-7D9EB339B1A5"
-    Version="0.2.0.0" />
+    Version="0.3.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="f13dfceb-a8cc-4666-868e-4a653994ed9c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -35,10 +35,15 @@
         DisplayName="Metropolis cloudový klient"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="MetropolisOnedriveKlient"
+        Description="Neoficiální klient pro Micorosoft OneDrive"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
       </uap:VisualElements>
     </Application>
   </Applications>

@@ -37,15 +37,7 @@ namespace MetropolisOnedriveKlient
             ContentFrame = NavigacniRamec;
             PageHeader = NadpisStrankyTextBlock;
 
-
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, a) =>
-            {
-                if (ContentFrame.CanGoBack)
-                {
-                    ContentFrame.GoBack();
-                    a.Handled = true;
-                }
-            };
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
             if (ApplicationData.Current.LocalSettings.Values.ContainsKey("OsobniPristupovyToken"))
             {
@@ -59,6 +51,16 @@ namespace MetropolisOnedriveKlient
                 ContentFrame.Navigate(typeof(StrankaNastaveni));
             }
         }
+
+        public static void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (ContentFrame.CanGoBack)
+            {
+                ContentFrame.GoBack();
+                e.Handled = true;
+            }
+        }
+
 
         private void TlacitkoUcet_Click(object sender, RoutedEventArgs e)
         {
@@ -82,7 +84,7 @@ namespace MetropolisOnedriveKlient
 
         private void TlacitkoPrubeh_Click(object sender, RoutedEventArgs e)
         {
-            NavigovatNaStranku(typeof(StrankaPrubehStahovani));
+            ContentFrame.Navigate(typeof(StrankaPrubehStahovani));
         }
 
         public static void NavigovatNaStranku(Type strankaKamNavigovatType)
