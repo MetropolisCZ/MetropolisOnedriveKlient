@@ -21,8 +21,8 @@ namespace MetropolisOnedriveKlient
     {
         private ComboBox NavigacniPanelCesty;
         private ListView ListViewSouboryaSlozky;
-        private List<OneDriveAdresarSoubory> obsahSlozkyOneDrive_korenove;
-        private List<OneDriveAdresarSoubory> obsahSlozkyOneDrive_aktualni;
+        private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_korenove;
+        private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_aktualni;
         private string obsahSlozkyOneDrive_aktualni_adresaNext = null;
         private ObservableCollection<string> onedriveNavigacniCesta = new ObservableCollection<string> {
             "Moje soubory"
@@ -34,9 +34,9 @@ namespace MetropolisOnedriveKlient
         Button TlacitkoNacistDalsiSoubory = new Button
         {
             Content = "Načíst další",
-            Visibility = Visibility.Collapsed
+            Visibility = Visibility.Collapsed,
+            Margin = new Thickness(15, 10, 15, 15)
         };
-        
 
 
 
@@ -44,23 +44,59 @@ namespace MetropolisOnedriveKlient
         {
             InitializeComponent();
 
+            /*foreach (AppBarButton jednoTlacitko in commandBarStrankaSoubory_tlacitkaVychozi)
+            {
+                commandBarStrankaSoubory.PrimaryCommands.Add(jednoTlacitko);
+            }*/
+
+            //NacistTlacitkaCommandBar();
+
             NacistObsahKorenovehoAdresare();
+
         }
+
+        private void PrepinacTlacitkaCommandBar(bool zapnoutMultiVyber = false)
+        {
+            if (zapnoutMultiVyber)
+            {
+                ListViewSouboryaSlozky.IsItemClickEnabled = false;
+                ListViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled = true;
+                ListViewSouboryaSlozky.SelectionMode = ListViewSelectionMode.Multiple;
+                BottomAppBar = (CommandBar)((DataTemplate)Resources["CommandBarTemplate_multiVyber"]).LoadContent();
+            }
+            else // Vypnout multivýběr
+            {
+                ListViewSouboryaSlozky.IsItemClickEnabled = true;
+                ListViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled = false;
+                ListViewSouboryaSlozky.SelectionMode = ListViewSelectionMode.None;
+                BottomAppBar = (CommandBar)((DataTemplate)Resources["CommandBarTemplate_vychozi"]).LoadContent();
+            }
+
+        }
+
 
         private async void OnBackRequestedZpetAdresar(object sender, BackRequestedEventArgs e)
         {
             //Debug.WriteLine("Zpět v navigaci");
             
-
-            if (onedriveNavigacniCesta.Count >= 2)
-            { // Kromě kořenové složky tam jsou i další
+            if (ListViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled)
+            { // Režim multivýběru –> nejdřív vypnout multivýběr, nepřecházet v adresáři zpět
                 e.Handled = true;
-                await NavigovatDleIndexuVhistoriiNavigace(onedriveNavigacniCesta.Count - 2);
+                PrepinacTlacitkaCommandBar();
             }
             else
-            { // Jenom kořenová složka. Nechat systém pořešit si navigaci
+            { // Přejít v adresáří zpět
+                if (onedriveNavigacniCesta.Count >= 2)
+                { // Kromě kořenové složky tam jsou i další
+                    e.Handled = true;
+                    await NavigovatDleIndexuVhistoriiNavigace(onedriveNavigacniCesta.Count - 2);
+                }
+                else
+                { // Jenom kořenová složka. Nechat systém pořešit si navigaci
 
+                }
             }
+
 
 
         }
@@ -91,7 +127,7 @@ namespace MetropolisOnedriveKlient
             try
             {
                 JObject obsahSlozkyOneDrive_korenove_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails"));
-                obsahSlozkyOneDrive_korenove = obsahSlozkyOneDrive_korenove_JObject.SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+                obsahSlozkyOneDrive_korenove = obsahSlozkyOneDrive_korenove_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
                 obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_korenove_JObject.SelectToken("@odata.nextLink")?.ToString();
 
                 if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
@@ -138,6 +174,7 @@ namespace MetropolisOnedriveKlient
 
             ListViewSouboryaSlozky.ItemClick += ListViewSouboryaSlozky_ItemClick;
             ListViewSouboryaSlozky.RightTapped += ListViewSouboryaSlozky_RightTapped;
+            ListViewSouboryaSlozky.SelectionChanged += ListViewSouboryaSlozky_SelectionChanged;
 
 
             
@@ -163,6 +200,17 @@ namespace MetropolisOnedriveKlient
             };
 
             Content = ScrollViewerHlavniObsah;
+
+            PrepinacTlacitkaCommandBar();
+        }
+
+        private void ListViewSouboryaSlozky_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var ZdrojovyListView = (ListView)sender;
+            if (ZdrojovyListView.SelectedRanges.Count == 0)
+            {
+                PrepinacTlacitkaCommandBar();
+            }
         }
 
         private void ListViewSouboryaSlozky_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
@@ -210,12 +258,23 @@ namespace MetropolisOnedriveKlient
         private async void FlyoutTlacitkoStahnout_Click(object sender, RoutedEventArgs e)
         {
             var originalSource = e.OriginalSource as FrameworkElement;
-            OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
+            List<OneDriveAdresarSoubory> souboryKeStazeni = new List<OneDriveAdresarSoubory>();
 
-            List<OneDriveAdresarSoubory> souboryKeStazeni = new List<OneDriveAdresarSoubory>()
-            {
-                kliknutySoubor
-            };
+            if (!ListViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled)
+            { // Normální výběr –> stáhnout vybraný soubor
+
+                OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
+                souboryKeStazeni.Add(kliknutySoubor);
+            }
+            else
+            { // Multivýběr –> stáhnout soubory zaškrtlé v ListView
+
+                foreach (var kliknuteSoubory in ListViewSouboryaSlozky.SelectedItems)
+                {
+                    souboryKeStazeni.Add((OneDriveAdresarSoubory)kliknuteSoubory);
+                }
+            }
+            
             await StahnoutSoubory(souboryKeStazeni);
         }
 
@@ -233,14 +292,14 @@ namespace MetropolisOnedriveKlient
 
             if (kliknutySoubor.Folder == null)
             {
-                ContentDialogResult contentDialogResult = await new ContentDialog()
+                /*ContentDialogResult contentDialogResult = await new ContentDialog()
                 {
                     Content = kliknutySoubor.Name + "\nVelikost souboru: " + (kliknutySoubor.Size / 1024 / 1024) + " MB",
                     PrimaryButtonText = "Otevřít",
                     SecondaryButtonText = "Stáhnout",
                     CloseButtonText = "Zrušit"
 
-                }.ShowAsync();
+                }.ShowAsync();*/
 
                 /*if (contentDialogResult == ContentDialogResult.Primary)
                 {
@@ -269,12 +328,13 @@ namespace MetropolisOnedriveKlient
                 try
                 {
                     JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails"));
-                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
                     obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.Value<string>("@odata.nextLink");
 
                     if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
                     {
                         TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
+                        TlacitkoNacistDalsiSoubory.IsEnabled = true;
                     }
 
                 }
@@ -301,9 +361,42 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        private void TlacitkoNacistDalsiSoubory_Click(object sender, RoutedEventArgs e)
+        private async void TlacitkoNacistDalsiSoubory_Click(object sender, RoutedEventArgs e)
         {
-            TlacitkoNacistDalsiSoubory.Visibility = Visibility.Collapsed;
+            TlacitkoNacistDalsiSoubory.IsEnabled = false;
+
+            //ListViewSouboryaSlozky.ItemsSource = null;
+
+
+            try
+            {
+                JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi(obsahSlozkyOneDrive_aktualni_adresaNext));
+
+                TlacitkoNacistDalsiSoubory.Visibility = Visibility.Collapsed;
+
+                List<OneDriveAdresarSoubory> obsahSlozkyOneDrive_aktualni_next_docasna = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+
+                foreach(OneDriveAdresarSoubory soubor_next_docasna in obsahSlozkyOneDrive_aktualni_next_docasna)
+                {
+                    obsahSlozkyOneDrive_aktualni.Add(soubor_next_docasna);
+                }
+
+
+                obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.Value<string>("@odata.nextLink");
+
+                if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
+                {
+                    TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
+                    TlacitkoNacistDalsiSoubory.IsEnabled = true;
+                }
+
+            }
+            catch
+            {
+                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
+                return;
+            }
+
         }
 
         private async Task NavigovatDleIndexuVhistoriiNavigace(int indexHistorieNavigace)
@@ -349,7 +442,7 @@ namespace MetropolisOnedriveKlient
                 {
 
                     JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails"));
-                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<List<OneDriveAdresarSoubory>>();
+                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
                     obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("@odata.nextLink")?.ToString();
 
                     if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
@@ -370,6 +463,44 @@ namespace MetropolisOnedriveKlient
 
             NavigacniPanelCesty.IsEnabled = true;
             NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
+
+        }
+
+        // TLAČÍTKA COMMANDBAR VÝCHOZÍ
+
+        private void TlacitkoNovaSlozka_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TlacitkoNahrat_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TlacitkoVyber_Click(object sender, RoutedEventArgs e)
+        {
+            PrepinacTlacitkaCommandBar(true);
+        }
+
+        private void TlacitkoAktualizovat_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        // TLAČÍTKA COMMANDBAR MULTIVÝBĚR
+        private void TlacitkoSdilet_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TlacitkoOdstranit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TlacitkoStahnout_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

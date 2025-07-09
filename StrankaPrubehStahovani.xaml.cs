@@ -36,6 +36,12 @@ namespace MetropolisOnedriveKlient
             MainPage.PageHeader.Text = "Průběh";
         }
 
+        private async void StazeneSoubory_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DownloadItem kliknutySoubor = (DownloadItem)e.ClickedItem;
+            await Windows.System.Launcher.LaunchFileAsync(kliknutySoubor.StorageFile);
+        }
+
         /*private void Button_Click(object sender, RoutedEventArgs e)
         {
             var item = new DownloadItem

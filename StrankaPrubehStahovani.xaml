@@ -14,12 +14,15 @@
             <!--<Button Click="Button_Click">Test</Button>-->
 
             <Pivot>
-                <PivotItem>
+                <PivotItem Margin="0">
                     <PivotItem.Header>
-                        <TextBlock>Stahování</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Download" Margin="0,0,8,0"></SymbolIcon>
+                            <TextBlock VerticalAlignment="Center" FontSize="15">Stahování</TextBlock>
+                        </StackPanel>
                     </PivotItem.Header>
                     
-                    <ListView ItemsSource="{x:Bind ViewModel.Downloads}" HorizontalAlignment="Stretch">
+                    <ListView ItemsSource="{x:Bind ViewModel.Downloads}" HorizontalAlignment="Stretch" SelectionMode="None" ItemClick="StazeneSoubory_ItemClick" IsItemClickEnabled="True">
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -42,7 +45,10 @@
                 
                 <PivotItem>
                     <PivotItem.Header>
-                        <TextBlock>Nahrávání</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Upload" Margin="0,0,8,0"></SymbolIcon>
+                            <TextBlock VerticalAlignment="Center" FontSize="15">Nahrávání</TextBlock>
+                        </StackPanel>
                     </PivotItem.Header>
 
                 </PivotItem>
@@ -50,7 +56,10 @@
                 
                 <PivotItem>
                     <PivotItem.Header>
-                        <TextBlock>Fotoaparát</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Camera" Margin="0,0,8,0"></SymbolIcon>
+                            <TextBlock VerticalAlignment="Center" FontSize="15">Fotoaparát</TextBlock>
+                        </StackPanel>
                     </PivotItem.Header>
 
                 </PivotItem>

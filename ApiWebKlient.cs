@@ -58,24 +58,6 @@ namespace MetropolisOnedriveKlient
 
                 foreach (OneDriveAdresarSoubory jedenSouborKeStazeni in souboryKeStazeni)
                 {
-                    //StorageFile destinationFile = await DownloadsFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
-
-                    //DownloadOperation download = backgroundDownloader.CreateDownload(new Uri("https://graph.microsoft.com/v1.0/me/drive/items/" + jedenSouborKeStazeni.Id + "/content"), destinationFile);
-                    //await download.StartAsync();
-                    //if (download.Progress.Status == BackgroundTransferStatus.Completed)
-                    //{
-                    //    //new ToastContentBuilder().AddText("Stahování položky z GitHubu dokončeno").AddText(jedenSouborKeStazeni.Name).Show();
-                    //}
-                    //else if (download.Progress.Status != BackgroundTransferStatus.Idle && download.Progress.Status != BackgroundTransferStatus.Running)
-                    //{
-                    //    new ToastContentBuilder().AddText("Chyba (" + download.Progress.Status.ToString() + ") při stahování z OneDrive").AddText(jedenSouborKeStazeni.Name).Show();
-                    //}
-
-
-
-
-
-
 
                     var polozkaSeznamStahovani = new DownloadItem
                     {
@@ -89,6 +71,8 @@ namespace MetropolisOnedriveKlient
                     try
                     {
                         StorageFile destinationFile = await DownloadsFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
+
+                        polozkaSeznamStahovani.StorageFile = destinationFile;
 
                         await backgroundDownloader.CreateDownload(new Uri("https://graph.microsoft.com/v1.0/me/drive/items/" + jedenSouborKeStazeni.Id + "/content"), destinationFile).StartAsync().AsTask(new Progress<DownloadOperation>(async progress =>
                         {
@@ -177,6 +161,8 @@ namespace MetropolisOnedriveKlient
                 OnPropertyChanged();
             }
         }
+
+        public StorageFile StorageFile { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>

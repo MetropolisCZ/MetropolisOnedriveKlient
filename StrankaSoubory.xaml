@@ -6,20 +6,44 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Required">
 
     <!--<StackPanel>
         <Button Content="Načíst obsah" Click="TlacitkoNacistObsah_Clicked"></Button>
     </StackPanel>-->
 
+    <Page.Resources>
+        <!-- Default mode buttons -->
+        <DataTemplate x:Key="CommandBarTemplate_vychozi">
+            <CommandBar>
+                <AppBarButton Icon="NewFolder" Label="Nová složka" Click="TlacitkoNovaSlozka_Click"/>
+                <AppBarButton Icon="Upload" Label="Nahrát" Click="TlacitkoNahrat_Click"/>
+                <AppBarButton Icon="Bullets" Label="Výběr" Click="TlacitkoVyber_Click"/>
+                <AppBarButton Icon="Sync" Label="Aktualizovat" Click="TlacitkoAktualizovat_Click"/>
+            </CommandBar>
+        </DataTemplate>
+
+        <!-- Multi-select mode buttons -->
+        <DataTemplate x:Key="CommandBarTemplate_multiVyber">
+            <CommandBar>
+                <AppBarButton Icon="Share" Label="Sdílet" Click="TlacitkoSdilet_Click"/>
+                <AppBarButton Icon="Delete" Label="Odstranit" Click="TlacitkoOdstranit_Click"/>
+                <AppBarButton Icon="Download" Label="Stáhnout" Click="FlyoutTlacitkoStahnout_Click"/>
+            </CommandBar>
+        </DataTemplate>
+    </Page.Resources>
+
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar x:Name="commandBarStrankaSoubory">
 
             <!--<AppBarButton x:Name="tlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" Label="Soubory" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>-->
-            <AppBarButton x:Name="tlacitkoAktualizovat" HorizontalAlignment="Left" Icon="Sync" Label="Nahrát" VerticalAlignment="Top" />
-            <AppBarButton x:Name="tlacitkoVytvoritSlozku" HorizontalAlignment="Left" Icon="NewFolder" Label="Nová složka" VerticalAlignment="Top" />
+            
+            
+            <!--<AppBarButton x:Name="tlacitkoVytvoritSlozku" HorizontalAlignment="Left" Icon="NewFolder" Label="Nová složka" VerticalAlignment="Top" />
             <AppBarButton x:Name="tlacitkoNahratSoubor" HorizontalAlignment="Left" Icon="Upload" Label="Nahrát" VerticalAlignment="Top" />
-
+            <AppBarButton x:Name="tlacitkoAktivovatMultiVyber" HorizontalAlignment="Left" Icon="Bullets" Label="Vybrat" VerticalAlignment="Top" Click="TlacitkoAktivovatMultiVyber_Click" />
+            <AppBarButton x:Name="tlacitkoAktualizovat" HorizontalAlignment="Left" Icon="Sync" Label="Nahrát" VerticalAlignment="Top" />-->
 
             <!--<CommandBar.Content>
                 <TextBlock x:Name="NadpisStrankyTextBlock" Margin="12,8" x:FieldModifier="public" Text="aaaaaaa" />
