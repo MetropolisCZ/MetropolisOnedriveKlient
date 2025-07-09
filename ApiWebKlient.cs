@@ -50,27 +50,44 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        public static async Task StahnoutSoubory(List<OneDriveAdresarSoubory> souboryKeStazeni)
+        public static async Task StahnoutSoubory(List<OneDriveAdresarSoubory> souboryKeStazeni, bool jenomOtevritTemp = false)
         {
             if (souboryKeStazeni.Count > 0)
             {
                 //new ToastContentBuilder().AddText("Stahování " + souboryKeStazeni.Count + " položek").Show();
+                MainPage.ContentFrame.Navigate(typeof(StrankaPrubehStahovani)); // Navigovat na stahování
+
+                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"].ToString()); // Pro jistotu ještě jednou – ono to nějak vždycky vypadávalo
 
                 foreach (OneDriveAdresarSoubory jedenSouborKeStazeni in souboryKeStazeni)
                 {
 
-                    var polozkaSeznamStahovani = new DownloadItem
+                    DownloadItem polozkaSeznamStahovani = new DownloadItem
                     {
                         FileName = jedenSouborKeStazeni.Name,
                         Progress = 0,
-                        Status = "Připraveno"
+                        Status = "Připraveno",
+                        JenomTemp = jenomOtevritTemp
                     };
 
                     DownloadManager.Instance.Downloads.Add(polozkaSeznamStahovani);
 
                     try
                     {
-                        StorageFile destinationFile = await DownloadsFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
+                        StorageFile destinationFile;
+
+                        if (!jenomOtevritTemp)
+                        { // Normálně stáhnout –> do stažených souborů
+
+                            destinationFile = await DownloadsFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
+                        }
+                        else
+                        { // Stáhnout do tempu (příklad stáhnu instalátor, otevřu ho a je mi jedno, jestli se smaže)
+
+                            destinationFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
+                            polozkaSeznamStahovani.Status += " – dočasný soubor";
+                        }
+
 
                         polozkaSeznamStahovani.StorageFile = destinationFile;
 
@@ -81,13 +98,22 @@ namespace MetropolisOnedriveKlient
                             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
                                 polozkaSeznamStahovani.Progress = percent;
-                                polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();                                
+                                polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();     
+                                if (jenomOtevritTemp)
+                                {
+                                    polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                }
                             });
                         }));
 
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
                             polozkaSeznamStahovani.Status = "Dokončeno";
+                            if (jenomOtevritTemp)
+                            {
+                                polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                await Windows.System.Launcher.LaunchFileAsync(destinationFile);
+                            }
                         });
                     }
                     catch (Exception ex)
@@ -163,6 +189,7 @@ namespace MetropolisOnedriveKlient
         }
 
         public StorageFile StorageFile { get; set; }
+        public bool JenomTemp { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
