@@ -44,8 +44,22 @@ namespace MetropolisOnedriveKlient
 
                 httpResponse = await httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Patch, new Uri(UrlkZiskani)) { Content = new HttpStringContent(teloHTTPrequestu, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json") });
             }
+            else if (typHTTPrequestu == TypyHTTPrequestu.Post)
+            { // Posílá data na server, narozdíl od PUT je možné POST volat vícekrát což může mít za následek například vícenásobné vytvoření téže položky
 
-            if (httpResponse.IsSuccessStatusCode)
+                httpResponse = await httpClient.PostAsync(new Uri(UrlkZiskani), new HttpStringContent(teloHTTPrequestu, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json"));
+                //httpResponse = await httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Patch, new Uri(UrlkZiskani)) { Content = new HttpStringContent(teloHTTPrequestu, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json") });
+            }
+            else if (typHTTPrequestu == TypyHTTPrequestu.Put)
+            {
+
+            }
+            else if (typHTTPrequestu == TypyHTTPrequestu.Delete)
+            {
+                httpResponse = await httpClient.DeleteAsync(new Uri(UrlkZiskani));
+            }
+
+            if (httpResponse.IsSuccessStatusCode || (typHTTPrequestu == TypyHTTPrequestu.Delete && httpResponse.StatusCode == HttpStatusCode.NoContent))
             {
 
                 return await httpResponse.Content.ReadAsStringAsync();

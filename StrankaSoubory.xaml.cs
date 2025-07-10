@@ -224,8 +224,49 @@ namespace MetropolisOnedriveKlient
 
             var originalSource = e.OriginalSource as FrameworkElement;
             OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
+
+
+            // Definice položek flyoutu
+            MenuFlyoutItem flyoutTlacitkoOdstranit = new MenuFlyoutItem { Text = "Odstranit", Icon = new SymbolIcon { Symbol = Symbol.Delete }, DataContext = kliknutySoubor };
+            flyoutTlacitkoOdstranit.Click += TlacitkoOdstranit_Click;
+
+            MenuFlyoutItem flyoutTlacitkoPresunout = new MenuFlyoutItem { Text = "Přesunout", Icon = new SymbolIcon { Symbol = Symbol.MoveToFolder }, DataContext = kliknutySoubor };
+            flyoutTlacitkoPresunout.Click += FlyoutTlacitkoPresunout_Click;
+
+            MenuFlyoutItem flyoutTlacitkoSdilet = new MenuFlyoutItem { Text = "Sdílet", Icon = new SymbolIcon { Symbol = Symbol.Share }, DataContext = kliknutySoubor };
+
+            MenuFlyoutItem flyoutTlacitkoStahnout = new MenuFlyoutItem { Text = "Stáhnout", Icon = new SymbolIcon { Symbol = Symbol.Download }, DataContext = kliknutySoubor };
+            flyoutTlacitkoStahnout.Click += FlyoutTlacitkoStahnout_Click;
+
+            MenuFlyoutItem flyoutTlacitkoPrejmenovat = new MenuFlyoutItem { Text = "Přejmenovat", Icon = new SymbolIcon { Symbol = Symbol.Rename }, DataContext = kliknutySoubor };
+            flyoutTlacitkoPrejmenovat.Click += FlyoutTlacitkoPrejmenovat_Click;
+
+            //MenuFlyoutItem flyoutTlacitkoPodrobnosti = new MenuFlyoutItem { Text = "Podrobnosti", Icon = new SymbolIcon { Symbol = Symbol.List }, DataContext = kliknutySoubor };
+
+
+
+
+            // Přiřazení dle druhu výběru
             if (kliknutySoubor?.Folder != null)
             { // Složka
+
+
+
+                if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.Vychozi)
+                {
+                    myFlyout.Items.Add(flyoutTlacitkoOdstranit);
+                    myFlyout.Items.Add(flyoutTlacitkoPresunout);
+                    myFlyout.Items.Add(flyoutTlacitkoPrejmenovat);
+                }
+                else if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.MultiVyber)
+                {
+                    myFlyout.Items.Add(flyoutTlacitkoOdstranit);
+                    myFlyout.Items.Add(flyoutTlacitkoPresunout);
+                }
+                else if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.PresouvaniSouboru)
+                {
+                    myFlyout.Items.Add(flyoutTlacitkoOdstranit);
+                }
 
             }
             else
@@ -234,43 +275,26 @@ namespace MetropolisOnedriveKlient
                 if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.Vychozi)
                 { // Normální výběr –> normální kontextová nabídka
 
-                    MenuFlyoutItem flyoutTlacitkoSdilet = new MenuFlyoutItem { Text = "Sdílet", Icon = new SymbolIcon { Symbol = Symbol.Share }, DataContext = kliknutySoubor };
-                    myFlyout.Items.Add(flyoutTlacitkoSdilet);
-
-                    MenuFlyoutItem flyoutTlacitkoOdstranit = new MenuFlyoutItem { Text = "Odstranit", Icon = new SymbolIcon { Symbol = Symbol.Delete }, DataContext = kliknutySoubor };
+                    
+                    //myFlyout.Items.Add(flyoutTlacitkoSdilet);
                     myFlyout.Items.Add(flyoutTlacitkoOdstranit);
-
-                    MenuFlyoutItem flyoutTlacitkoPodrobnosti = new MenuFlyoutItem { Text = "Podrobnosti", Icon = new SymbolIcon { Symbol = Symbol.List }, DataContext = kliknutySoubor };
-                    myFlyout.Items.Add(flyoutTlacitkoPodrobnosti);
-
-                    MenuFlyoutItem flyoutTlacitkoStahnout = new MenuFlyoutItem { Text = "Stáhnout", Icon = new SymbolIcon { Symbol = Symbol.Download }, DataContext = kliknutySoubor };
-                    flyoutTlacitkoStahnout.Click += FlyoutTlacitkoStahnout_Click;
                     myFlyout.Items.Add(flyoutTlacitkoStahnout);
-
-                    MenuFlyoutItem flyoutTlacitkoPresunout = new MenuFlyoutItem { Text = "Přesunout", Icon = new SymbolIcon { Symbol = Symbol.MoveToFolder }, DataContext = kliknutySoubor };
-                    flyoutTlacitkoPresunout.Click += FlyoutTlacitkoPresunout_Click;
                     myFlyout.Items.Add(flyoutTlacitkoPresunout);
-
-                    MenuFlyoutItem flyoutTlacitkoPrejmenovat = new MenuFlyoutItem { Text = "Přejmenovat", Icon = new SymbolIcon { Symbol = Symbol.Rename }, DataContext = kliknutySoubor };
-                    flyoutTlacitkoPrejmenovat.Click += FlyoutTlacitkoPrejmenovat_Click;
                     myFlyout.Items.Add(flyoutTlacitkoPrejmenovat);
                 }
-                else
+                else if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.MultiVyber)
                 { // Multivýběr –> speciální kontextová nabídka
 
-                    MenuFlyoutItem flyoutTlacitkoSdilet = new MenuFlyoutItem { Text = "Sdílet", Icon = new SymbolIcon { Symbol = Symbol.Share }, DataContext = kliknutySoubor };
-                    myFlyout.Items.Add(flyoutTlacitkoSdilet);
-
-                    MenuFlyoutItem flyoutTlacitkoOdstranit = new MenuFlyoutItem { Text = "Odstranit", Icon = new SymbolIcon { Symbol = Symbol.Delete }, DataContext = kliknutySoubor };
+                    //myFlyout.Items.Add(flyoutTlacitkoSdilet);
                     myFlyout.Items.Add(flyoutTlacitkoOdstranit);
-
-                    MenuFlyoutItem flyoutTlacitkoStahnout = new MenuFlyoutItem { Text = "Stáhnout", Icon = new SymbolIcon { Symbol = Symbol.Download }, DataContext = kliknutySoubor };
-                    flyoutTlacitkoStahnout.Click += FlyoutTlacitkoStahnout_Click;
                     myFlyout.Items.Add(flyoutTlacitkoStahnout);
-
-                    MenuFlyoutItem flyoutTlacitkoPresunout = new MenuFlyoutItem { Text = "Přesunout", Icon = new SymbolIcon { Symbol = Symbol.MoveToFolder }, DataContext = kliknutySoubor };
-                    flyoutTlacitkoPresunout.Click += FlyoutTlacitkoPresunout_Click;
                     myFlyout.Items.Add(flyoutTlacitkoPresunout);
+                }
+                else if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.PresouvaniSouboru)
+                { // Přesouvání souboru –> speciální kontextová nabídka
+
+                    myFlyout.Items.Add(flyoutTlacitkoOdstranit);
+                    myFlyout.Items.Add(flyoutTlacitkoPrejmenovat);
                 }
 
                 
@@ -284,6 +308,11 @@ namespace MetropolisOnedriveKlient
             //the code can show the flyout in your mouse click 
             myFlyout.ShowAt(sender as UIElement, e.GetPosition(sender as UIElement));
 
+        }
+
+        private void FlyoutTlacitkoOdstranit_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void FlyoutTlacitkoPresunout_Click(object sender, RoutedEventArgs e)
@@ -373,10 +402,9 @@ namespace MetropolisOnedriveKlient
                     }.ShowAsync();
                 }
 
-                ListViewSouboryaSlozky.IsEnabled = true;
-
             }
 
+            ListViewSouboryaSlozky.IsEnabled = true;
 
         }
 
@@ -475,6 +503,24 @@ namespace MetropolisOnedriveKlient
 
 
 
+        private string AktualniCestaDoStringu()
+        {
+            string cestaAktualni = "";
+            if (onedriveNavigacniCesta.Count != 1)
+            { // Normální nekořenový adresář –> vytvořit cestu
+                cestaAktualni += ":";
+                for (int i = 1; i < onedriveNavigacniCesta.Count; i++)
+                {
+                    cestaAktualni += "/" + onedriveNavigacniCesta[i];
+                }
+                return cestaAktualni += ":";
+            }
+            else
+            { // Kořenový adresář
+                return "";
+            }
+        }
+
 
         private async Task NavigovatAdresarAsync(bool navigovatNaKorenovyAdresar = false, bool navigovatNaIndexHistorie = false, int indexHistorieNavigace = 0)
         {
@@ -510,13 +556,7 @@ namespace MetropolisOnedriveKlient
             else
             { // Adresář dle pole onedriveNavigacniCesta
 
-                string cestaAktualni = "";
-                for (int i = 1; i < onedriveNavigacniCesta.Count; i++)
-                {
-                    cestaAktualni += "/" + onedriveNavigacniCesta[i];
-                }
-
-                adresaKamNavigovat = ":" + cestaAktualni + ":";
+                adresaKamNavigovat += AktualniCestaDoStringu();
 
 
             }
@@ -553,9 +593,69 @@ namespace MetropolisOnedriveKlient
 
         // TLAČÍTKA COMMANDBAR VÝCHOZÍ
 
-        private void TlacitkoNovaSlozka_Click(object sender, RoutedEventArgs e)
+        private async void TlacitkoNovaSlozka_Click(object sender, RoutedEventArgs e)
         {
+            StackPanel contentDialogNovaSlozka_stackPanel = new StackPanel();
+            TextBox contentDialogNovaSlozka_textBox = new TextBox()
+            {
+                PlaceholderText = "Nový název složky"
+            };
 
+            contentDialogNovaSlozka_stackPanel.Children.Add(contentDialogNovaSlozka_textBox);
+
+            ContentDialog contentDialogNovaSlozka = new ContentDialog()
+            {
+                Title = "Vytvoření nové složky",
+                PrimaryButtonText = "Vytvořit",
+                CloseButtonText = "Zrušit",
+                Content = contentDialogNovaSlozka_stackPanel
+            };
+
+            contentDialogNovaSlozka_textBox.SelectAll();
+            ListViewSouboryaSlozky.IsEnabled = false;
+
+            ContentDialogResult contentDialogResult = await contentDialogNovaSlozka.ShowAsync();
+
+
+            if (contentDialogResult == ContentDialogResult.Primary)
+            {
+                if (contentDialogNovaSlozka_textBox.Text.Length > 0)
+                {
+
+                    string cestaAktualni = AktualniCestaDoStringu();
+
+                    try
+                    {
+
+                        _ = await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + cestaAktualni + "/children", TypyHTTPrequestu.Post, "{ 'name': '" + contentDialogNovaSlozka_textBox.Text + "', 'folder': { }, '@microsoft.graph.conflictBehavior': 'rename' }");
+
+                        //_ = await new ContentDialog()
+                        //{
+                        //    Title = "Přejmenováno",
+                        //    CloseButtonText = "Zavřít"
+                        //}.ShowAsync();
+
+                        TlacitkoAktualizovat_Click(sender, e);
+
+                    }
+                    catch
+                    {
+                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
+                        return;
+                    }
+
+                }
+                else
+                {
+                    _ = await new ContentDialog()
+                    {
+                        Title = "Zadejte platný název",
+                        CloseButtonText = "Zavřít"
+                    }.ShowAsync();
+                }
+
+                ListViewSouboryaSlozky.IsEnabled = true;
+            }
         }
 
         private void TlacitkoNahrat_Click(object sender, RoutedEventArgs e)
@@ -602,9 +702,72 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        private void TlacitkoOdstranit_Click(object sender, RoutedEventArgs e)
+        private async void TlacitkoOdstranit_Click(object sender, RoutedEventArgs e)
         {
+            ListViewSouboryaSlozky.IsEnabled = false;
+            BottomAppBar.IsEnabled = false;
 
+            List<OneDriveAdresarSoubory> souboryKodstraneni = new List<OneDriveAdresarSoubory>();
+
+            ContentDialog contentDialogOdstranit = new ContentDialog()
+            {
+                PrimaryButtonText = "Odstranit",
+                CloseButtonText = "Zrušit"
+            };
+
+            if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.Vychozi)
+            { // Normální výběr –> přesunout vybraný soubor
+
+                var originalSource = e.OriginalSource as FrameworkElement;
+                OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
+                souboryKodstraneni.Add(kliknutySoubor);
+            }
+            else if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.MultiVyber)
+            { // Multivýběr –> přesunout soubory zaškrtlé v ListView
+
+                foreach (var kliknuteSoubory in ListViewSouboryaSlozky.SelectedItems)
+                {
+                    souboryKodstraneni.Add((OneDriveAdresarSoubory)kliknuteSoubory);
+                }
+                
+            }
+
+            if (souboryKodstraneni.Count > 1)
+            { // Více položek (více než 1)
+
+                contentDialogOdstranit.Title = "Odstranit tyto položky?";
+                contentDialogOdstranit.Content = souboryKodstraneni[0].Name + " a " + (souboryKodstraneni.Count - 1) + " dalších";
+            }
+            else
+            {
+                contentDialogOdstranit.Title = "Odstranit tuto položku?";
+                contentDialogOdstranit.Content = souboryKodstraneni[0].Name;
+            }
+
+            ContentDialogResult contentDialogResult = await contentDialogOdstranit.ShowAsync();
+
+
+            if (contentDialogResult == ContentDialogResult.Primary)
+            {
+                try
+                {
+                    foreach (OneDriveAdresarSoubory jedenSouborKodstraneni in souboryKodstraneni)
+                    {
+                        await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/items/" + jedenSouborKodstraneni.Id, TypyHTTPrequestu.Delete);
+                    }
+                    TlacitkoAktualizovat_Click(sender, e);
+
+                }
+                catch
+                {
+                    MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
+                    return;
+                }
+
+            }
+
+            ListViewSouboryaSlozky.IsEnabled = true;
+            BottomAppBar.IsEnabled = true;
         }
 
 
@@ -616,20 +779,7 @@ namespace MetropolisOnedriveKlient
             ListViewSouboryaSlozky.IsEnabled = false;
             BottomAppBar.IsEnabled = false;
 
-            string cestaAktualni = "";
-            if (onedriveNavigacniCesta.Count != 1)
-            { // Normální nekořenový adresář –> vytvořit cestu
-                cestaAktualni += ":";
-                for (int i = 1; i < onedriveNavigacniCesta.Count; i++)
-                {
-                    cestaAktualni += "/" + onedriveNavigacniCesta[i];
-                }
-                cestaAktualni += ":";
-            }
-            else
-            { // Kořenový adresář
-
-            }
+            string cestaAktualni = AktualniCestaDoStringu();
 
 
             try

@@ -19,7 +19,18 @@
 
 
         <DataTemplate x:Key="SablonaSouboryRepozitarGithub_IkonaSlozky">
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B7;" FontSize="25" />
+            <Grid HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B7;" FontSize="25" />
+                <Frame Grid.Row="1" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                    
+                </Frame>
+                <TextBlock Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="{Binding Folder.ChildCount}" HorizontalAlignment="Right" Padding="0,0,5,5"></TextBlock>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="SablonaSouboryRepozitarGithub_IkonaGenericka">
@@ -37,9 +48,9 @@
         
 
         <DataTemplate x:Key="SablonaSouboryRepozitarGithub">
-            <Grid Padding="5">
+            <Grid Padding="0,5,5,5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="66"></ColumnDefinition>
+                    <ColumnDefinition Width="85"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -53,7 +64,7 @@
                         <BitmapImage UriSource="{Binding Thumbnails[0].Small.Url}" />
                     </Image.Source>
                 </Image>-->
-                <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource VybratIkonuDleObsahu}" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,15,0" />
+                <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource VybratIkonuDleObsahu}" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,15,0" />
                 
                 <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="0,5,0,0"></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" Foreground="DarkGray">
