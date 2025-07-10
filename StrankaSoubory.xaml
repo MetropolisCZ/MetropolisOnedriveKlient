@@ -32,8 +32,17 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Icon="Delete" Label="Odstranit" Click="TlacitkoOdstranit_Click"/>
                 <AppBarButton Icon="Download" Label="Stáhnout" Click="FlyoutTlacitkoStahnout_Click"/>
+                <AppBarButton Icon="MoveToFolder" Label="Přesunout" Click="FlyoutTlacitkoPresunout_Click"/>
+                <AppBarButton Icon="Delete" Label="Odstranit" Click="TlacitkoOdstranit_Click"/>
+            </CommandBar>
+        </DataTemplate>
+
+        <!-- Tlačítka pro přesouvání souborů -->
+        <DataTemplate x:Key="CommandBarTemplate_presouvaniSouboru">
+            <CommandBar>
+                <AppBarButton Icon="Accept" Label="Přesunout sem" Click="TlacitkoPresunoutSem_Click"/>
+                <AppBarButton Icon="Clear" Label="Zrušit" Click="FlyoutTlacitkoZrusitPresun_Click"/>
             </CommandBar>
         </DataTemplate>
     </Page.Resources>
