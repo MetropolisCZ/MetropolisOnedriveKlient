@@ -21,7 +21,7 @@ namespace MetropolisOnedriveKlient
     {
         private ComboBox NavigacniPanelCesty;
         private ListView ListViewSouboryaSlozky;
-        private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_korenove;
+        //private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_korenove;
         private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_aktualni;
         private string obsahSlozkyOneDrive_aktualni_adresaNext = null;
         private ObservableCollection<string> onedriveNavigacniCesta = new ObservableCollection<string> {
@@ -59,7 +59,7 @@ namespace MetropolisOnedriveKlient
 
             //NacistTlacitkaCommandBar();
 
-            NacistObsahKorenovehoAdresare();
+            NacistOvladaciPrvkyStranky();
 
         }
 
@@ -110,7 +110,8 @@ namespace MetropolisOnedriveKlient
                 if (onedriveNavigacniCesta.Count >= 2)
                 { // Kromě kořenové složky tam jsou i další
                     e.Handled = true;
-                    await NavigovatDleIndexuVhistoriiNavigace(onedriveNavigacniCesta.Count - 2);
+                    //await NavigovatDleIndexuVhistoriiNavigace(onedriveNavigacniCesta.Count - 2);
+                    await NavigovatAdresarAsync(false, true, onedriveNavigacniCesta.Count - 2);
                 }
                 else
                 { // Jenom kořenová složka. Nechat systém pořešit si navigaci
@@ -141,28 +142,8 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        private async void NacistObsahKorenovehoAdresare()
+        private async void NacistOvladaciPrvkyStranky()
         {
-           
-
-            try
-            {
-                JObject obsahSlozkyOneDrive_korenove_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails"));
-                obsahSlozkyOneDrive_korenove = obsahSlozkyOneDrive_korenove_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
-                obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_korenove_JObject.SelectToken("@odata.nextLink")?.ToString();
-
-                if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
-                {
-                    TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
-                }
-            }
-            catch
-            {
-                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
-                return;
-            }
-
-            
 
             NavigacniPanelCesty = new ComboBox
             {
@@ -188,7 +169,7 @@ namespace MetropolisOnedriveKlient
                 IsItemClickEnabled = true,
                 ItemTemplate = Application.Current.Resources["SablonaSouboryRepozitarGithub"] as DataTemplate,
                 Name = "ListViewSouboryaSlozky",
-                ItemsSource = obsahSlozkyOneDrive_korenove,
+                ItemsSource = obsahSlozkyOneDrive_aktualni,
                 IsRightTapEnabled = true
                 //Header = navigacniPanelCesty
             };
@@ -223,12 +204,15 @@ namespace MetropolisOnedriveKlient
             Content = ScrollViewerHlavniObsah;
 
             PrepinacTlacitkaCommandBar();
+
+            await NavigovatAdresarAsync(true);
+
         }
 
         private void ListViewSouboryaSlozky_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var ZdrojovyListView = (ListView)sender;
-            if (ZdrojovyListView.SelectedRanges.Count == 0)
+            if (moznostiTlacitekCommandBar_aktualni != MoznostiTlacitekCommandBar.PresouvaniSouboru && ZdrojovyListView.SelectedRanges.Count == 0)
             {
                 PrepinacTlacitkaCommandBar();
             }
@@ -313,7 +297,6 @@ namespace MetropolisOnedriveKlient
 
                 OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)originalSource.DataContext;
                 souboryKpresunuti.Add(kliknutySoubor);
-                //await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/items/" + kliknutySoubor.Id, TypyHTTPrequestu.Patch, "'parentReference': { 'id': '" +  + "' }");
             }
             else if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.MultiVyber)
             { // Multivýběr –> přesunout soubory zaškrtlé v ListView
@@ -326,17 +309,6 @@ namespace MetropolisOnedriveKlient
 
             PrepinacTlacitkaCommandBar(MoznostiTlacitekCommandBar.PresouvaniSouboru);
 
-
-
-            //            PATCH / me / drive / items /{ item - id}
-            //            Content - type: application / json
-
-            //{
-            //                "parentReference": {
-            //                    "id": "{new-parent-folder-id}"
-            //                },
-            //  "name": "new-item-name.txt"
-            //}
         }
 
         private async void FlyoutTlacitkoPrejmenovat_Click(object sender, RoutedEventArgs e)
@@ -405,13 +377,6 @@ namespace MetropolisOnedriveKlient
 
             }
 
-            //            PATCH https://graph.microsoft.com/v1.0/me/drive/items/12345
-            //Authorization: Bearer { access - token}
-            //            Content - Type: application / json
-
-            //{
-            //                "name": "newname.txt"
-            //}
 
         }
 
@@ -441,12 +406,12 @@ namespace MetropolisOnedriveKlient
         private async void NavigacniPanelCesty_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Debug.WriteLine(e.AddedItems[0].ToString());
-            await NavigovatDleIndexuVhistoriiNavigace(onedriveNavigacniCesta.IndexOf(e.AddedItems[0].ToString()));
+            //await NavigovatDleIndexuVhistoriiNavigace(onedriveNavigacniCesta.IndexOf(e.AddedItems[0].ToString()));
+            await NavigovatAdresarAsync(false, true, onedriveNavigacniCesta.IndexOf(e.AddedItems[0].ToString()));
         }
 
         private async void ListViewSouboryaSlozky_ItemClick(object sender, ItemClickEventArgs e)
         {
-            NavigacniPanelCesty.IsEnabled = false;
 
             OneDriveAdresarSoubory kliknutySoubor = (OneDriveAdresarSoubory)e.ClickedItem;
 
@@ -459,51 +424,15 @@ namespace MetropolisOnedriveKlient
             }
             else
             { // Složka
+
                 onedriveNavigacniCesta.Add(kliknutySoubor.Name);
-
-                ListViewSouboryaSlozky.ItemsSource = null;
-
-                string cestaAktualni = "";
-                for (int i = 1; i < onedriveNavigacniCesta.Count; i++)
-                {
-                    cestaAktualni += "/" + onedriveNavigacniCesta[i];
-                }
-
-                try
-                {
-                    JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails"));
-                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
-                    obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.Value<string>("@odata.nextLink");
-
-                    if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
-                    {
-                        TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
-                        TlacitkoNacistDalsiSoubory.IsEnabled = true;
-                    }
-
-                }
-                catch
-                {
-                    MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
-                    return;
-                }
-
-                //obsahSlozkyOneDrive_aktualni.Sort((x, y) => x.Type.CompareTo(y.Type));
-                /*obsahSlozkyOneDrive_aktualni.Insert(0, new GithubAdresarSoubory
-                {
-                    Name = "Kořenový adresář",
-                    Type = "root"
-                });*/
-
-                ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
-                NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
-                NavigacniPanelCesty.SelectedItem = NavigacniPanelCesty.Items[NavigacniPanelCesty.Items.Count - 1];
-                NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
+                await NavigovatAdresarAsync();
             }
 
-            NavigacniPanelCesty.IsEnabled = true;
-
         }
+
+
+
 
         private async void TlacitkoNacistDalsiSoubory_Click(object sender, RoutedEventArgs e)
         {
@@ -543,37 +472,43 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        private async Task NavigovatDleIndexuVhistoriiNavigace(int indexHistorieNavigace)
+
+
+
+
+        private async Task NavigovatAdresarAsync(bool navigovatNaKorenovyAdresar = false, bool navigovatNaIndexHistorie = false, int indexHistorieNavigace = 0)
         {
-            NavigacniPanelCesty.IsEnabled = false;
             ListViewSouboryaSlozky.ItemsSource = null;
-
+            NavigacniPanelCesty.IsEnabled = false;
             NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
+            string adresaKamNavigovat = "";
 
-            if (indexHistorieNavigace == 0)
-            { // Kořenový adresář
-                onedriveNavigacniCesta.Clear();
-                onedriveNavigacniCesta.Add("Moje soubory");
-                NavigacniPanelCesty.SelectedIndex = 0;
+            if (navigovatNaIndexHistorie)
+            { // Navigovat dle indexu v historii
 
-                ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_korenove;
-            }
-            else
-            {
-
-                //NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
-                //NavigacniPanelCesty.ItemsSource = null;
-
-
-                int pocetItineraci = onedriveNavigacniCesta.Count - indexHistorieNavigace - 1;
-                for (int i = 0; i < pocetItineraci; i++) // Oříznout vyšší indexy (cesta, kterou potřebujeme smazat)
+                int pocetIteraci = onedriveNavigacniCesta.Count - indexHistorieNavigace - 1;
+                for (int i = 0; i < pocetIteraci; i++) // Oříznout vyšší indexy (cesta, kterou potřebujeme smazat)
                 {
                     //NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
                     onedriveNavigacniCesta.RemoveAt(indexHistorieNavigace + 1);
                     //NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
                 }
-                NavigacniPanelCesty.SelectedIndex = onedriveNavigacniCesta.Count - 1;
+                //NavigacniPanelCesty.SelectedIndex = onedriveNavigacniCesta.Count - 1;
+            }
 
+
+            // Výpočet nové adresy
+            if (navigovatNaKorenovyAdresar || onedriveNavigacniCesta.Count == 1)
+            { // Kořenový adresář
+
+                onedriveNavigacniCesta.Clear();
+                onedriveNavigacniCesta.Add("Moje soubory");
+                NavigacniPanelCesty.SelectedIndex = 0;
+
+                //adresaKamNavigovat = "";
+            }
+            else
+            { // Adresář dle pole onedriveNavigacniCesta
 
                 string cestaAktualni = "";
                 for (int i = 1; i < onedriveNavigacniCesta.Count; i++)
@@ -581,32 +516,38 @@ namespace MetropolisOnedriveKlient
                     cestaAktualni += "/" + onedriveNavigacniCesta[i];
                 }
 
+                adresaKamNavigovat = ":" + cestaAktualni + ":";
 
-                try
-                {
-
-                    JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails"));
-                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
-                    obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("@odata.nextLink")?.ToString();
-
-                    if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
-                    {
-                        TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
-                    }
-                }
-                catch
-                {
-                    MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
-                    return;
-                }
-
-                ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
-                
 
             }
 
-            NavigacniPanelCesty.IsEnabled = true;
+            adresaKamNavigovat += "/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails";
+
+            // Provést navigaci
+            try
+            {
+                JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + adresaKamNavigovat));
+                obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
+                obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.Value<string>("@odata.nextLink");
+
+                if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
+                {
+                    TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
+                    TlacitkoNacistDalsiSoubory.IsEnabled = true;
+                }
+
+            }
+            catch
+            {
+                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
+                return;
+            }
+
+            
+            ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
+            NavigacniPanelCesty.SelectedItem = NavigacniPanelCesty.Items[NavigacniPanelCesty.Items.Count - 1];
             NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
+            NavigacniPanelCesty.IsEnabled = true;
 
         }
 
@@ -629,9 +570,6 @@ namespace MetropolisOnedriveKlient
 
         private async void TlacitkoAktualizovat_Click(object sender, RoutedEventArgs e)
         {
-            NavigacniPanelCesty.IsEnabled = false;
-            ListViewSouboryaSlozky.ItemsSource = null;
-
 
             try
             {
@@ -639,35 +577,12 @@ namespace MetropolisOnedriveKlient
                 if (onedriveNavigacniCesta.Count == 1)
                 { // Kořenový adresář
 
-                    JObject obsahSlozkyOneDrive_korenove_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,file&$expand=thumbnails"));
-                    obsahSlozkyOneDrive_korenove = obsahSlozkyOneDrive_korenove_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
-                    obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_korenove_JObject.SelectToken("@odata.nextLink")?.ToString();
-
-                    ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_korenove;
+                    await NavigovatAdresarAsync(true);
                 }
                 else
                 { // Jiná složka
 
-                    string cestaAktualni = "";
-                    for (int i = 1; i < onedriveNavigacniCesta.Count; i++)
-                    {
-                        cestaAktualni += "/" + onedriveNavigacniCesta[i];
-                    }
-                    
-                    JObject obsahSlozkyOneDrive_aktualni_JObject = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root:" + cestaAktualni + ":/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails"));
-                    obsahSlozkyOneDrive_aktualni = obsahSlozkyOneDrive_aktualni_JObject.SelectToken("value").ToObject<ObservableCollection<OneDriveAdresarSoubory>>();
-                    obsahSlozkyOneDrive_aktualni_adresaNext = obsahSlozkyOneDrive_aktualni_JObject.Value<string>("@odata.nextLink");
-
-                    ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
-                    
-                }
-
-                NavigacniPanelCesty.IsEnabled = true;
-
-                if (obsahSlozkyOneDrive_aktualni_adresaNext != null)
-                {
-                    TlacitkoNacistDalsiSoubory.Visibility = Visibility.Visible;
-                    TlacitkoNacistDalsiSoubory.IsEnabled = true;
+                    await NavigovatAdresarAsync();
                 }
 
             }
