@@ -302,7 +302,42 @@ namespace MetropolisOnedriveKlient
                 Content = contentDialogPrejmenovat_stackPanel
             };
 
+            contentDialogPrejmenovat_textBox.SelectAll();
+
             ContentDialogResult contentDialogResult = await contentDialogPrejmenovat.ShowAsync();
+            
+
+            if (contentDialogResult == ContentDialogResult.Primary)
+            {
+                if (contentDialogPrejmenovat_textBox.Text.Length > 0)
+                {
+                    try
+                    {
+                        _ = await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/items/" + kliknutySoubor.Id, TypyHTTPrequestu.Patch, "{ \"name\": \"" + contentDialogPrejmenovat_textBox.Text + "\" }");
+                        kliknutySoubor.Name = contentDialogPrejmenovat_textBox.Text;
+                        _ = await new ContentDialog()
+                        {
+                            Title = "Přejmenováno",
+                            CloseButtonText = "Zavřít"
+                        }.ShowAsync();
+                    }
+                    catch
+                    {
+                        // Chyba se už vypíše v ApiWebKlient.cs, netřeba dělat nic tady
+                        return;
+                    }
+
+                }
+                else
+                {
+                    _ = await new ContentDialog()
+                    {
+                        Title = "Zadejte platný název",
+                        CloseButtonText = "Zavřít"
+                    }.ShowAsync();
+                }
+
+            }
 
             //            PATCH https://graph.microsoft.com/v1.0/me/drive/items/12345
             //Authorization: Bearer { access - token}

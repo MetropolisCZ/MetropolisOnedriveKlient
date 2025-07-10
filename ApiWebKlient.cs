@@ -22,12 +22,29 @@ namespace MetropolisOnedriveKlient
         public static HttpClient httpClient = new HttpClient();
         public static BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
 
-
-        public static async Task<string> NacistStrankuRestApi(string UrlkZiskani)
+        public enum TypyHTTPrequestu
         {
-            HttpResponseMessage httpResponse = await httpClient.GetAsync(new Uri(UrlkZiskani));
-            //httpResponse.EnsureSuccessStatusCode();
-            
+            Get,
+            Post,
+            Put,
+            Patch,
+            Delete
+        }
+
+        public static async Task<string> NacistStrankuRestApi(string UrlkZiskani, TypyHTTPrequestu typHTTPrequestu = TypyHTTPrequestu.Get, string teloHTTPrequestu = null)
+        {
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+
+            if (typHTTPrequestu == TypyHTTPrequestu.Get)
+            {
+                httpResponse = await httpClient.GetAsync(new Uri(UrlkZiskani));
+            }
+            else if (typHTTPrequestu == TypyHTTPrequestu.Patch)
+            { // Upraví vlastnosti, zachová soubor
+
+                httpResponse = await httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Patch, new Uri(UrlkZiskani)) { Content = new HttpStringContent(teloHTTPrequestu, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json") });
+            }
+
             if (httpResponse.IsSuccessStatusCode)
             {
 
@@ -44,11 +61,11 @@ namespace MetropolisOnedriveKlient
                 };
 
                 _ = await dialogHTTPchyba.ShowAsync();
-
-                return null;
+                throw new System.Net.Http.HttpRequestException();
             }
 
         }
+
 
         public static async Task StahnoutSoubory(List<OneDriveAdresarSoubory> souboryKeStazeni, bool jenomOtevritTemp = false)
         {

@@ -57,7 +57,7 @@ namespace MetropolisOnedriveKlient
         private async void GetAadTokenAsync(WebAccountProviderCommand command)
         {
             string clientId = "d0342bc7-f4d3-422e-97d7-354ecdc21ae7"; // Obtain your clientId from the Azure Portal
-            WebTokenRequest request = new WebTokenRequest(command.WebAccountProvider, "Files.Read.All", clientId);
+            WebTokenRequest request = new WebTokenRequest(command.WebAccountProvider, "Files.ReadWrite.All", clientId);
             request.Properties.Add("resource", "https://graph.microsoft.com");
             WebTokenRequestResult result = await WebAuthenticationCoreManager.RequestTokenAsync(request);
 
