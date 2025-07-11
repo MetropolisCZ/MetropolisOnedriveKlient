@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -39,16 +40,14 @@ namespace MetropolisOnedriveKlient
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("OsobniPristupovyToken"))
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("CurrentUserProviderId"))
             {
-                var headers = httpClient.DefaultRequestHeaders;
-                headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"].ToString());
-                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"].ToString());
-                ContentFrame.Navigate(typeof(StrankaSoubory));
+                NavigovatNaStranku(typeof(StrankaSoubory));
             }
             else
             {
-                ContentFrame.Navigate(typeof(StrankaNastaveni));
+                bool zobrazitPrihlaseniAutomaticky = true;
+                NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
             }
         }
 
@@ -60,7 +59,6 @@ namespace MetropolisOnedriveKlient
                 e.Handled = true;
             }
         }
-
 
         private void TlacitkoUcet_Click(object sender, RoutedEventArgs e)
         {
@@ -90,9 +88,16 @@ namespace MetropolisOnedriveKlient
             ContentFrame.Navigate(typeof(StrankaPrubehStahovani));
         }
 
-        public static void NavigovatNaStranku(Type strankaKamNavigovatType)
+        public static void NavigovatNaStranku(Type strankaKamNavigovatType, object navigacniParametry = null)
         {
-            ContentFrame.Navigate(strankaKamNavigovatType);
+            if (navigacniParametry == null)
+            {
+                ContentFrame.Navigate(strankaKamNavigovatType);
+            }
+            else
+            {
+                ContentFrame.Navigate(strankaKamNavigovatType, navigacniParametry);
+            }
             ContentFrame.BackStack.Clear();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }

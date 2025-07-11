@@ -388,7 +388,6 @@ namespace MetropolisOnedriveKlient
                     }
                     catch
                     {
-                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
                         return;
                     }
 
@@ -494,7 +493,6 @@ namespace MetropolisOnedriveKlient
             }
             catch
             {
-                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
                 return;
             }
 
@@ -579,7 +577,6 @@ namespace MetropolisOnedriveKlient
             }
             catch
             {
-                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
                 return;
             }
 
@@ -640,7 +637,6 @@ namespace MetropolisOnedriveKlient
                     }
                     catch
                     {
-                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
                         return;
                     }
 
@@ -760,7 +756,6 @@ namespace MetropolisOnedriveKlient
                 }
                 catch
                 {
-                    MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
                     return;
                 }
 
@@ -796,7 +791,6 @@ namespace MetropolisOnedriveKlient
             }
             catch
             {
-                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
                 return;
             }
 

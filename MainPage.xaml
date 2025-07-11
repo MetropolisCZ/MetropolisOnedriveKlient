@@ -11,7 +11,7 @@
     <Frame x:Name="NavigacniRamec" Navigated="NavigacniRamec_Navigated"></Frame>
 
     <Page.TopAppBar>
-        <CommandBar>
+        <CommandBar x:FieldModifier="public" x:Name="CommandBarMainPage">
 
             <AppBarButton x:Name="tlacitkoPrubeh" HorizontalAlignment="Left" Icon="Switch" Label="Průběh" VerticalAlignment="Top" Click="TlacitkoPrubeh_Click" />
 

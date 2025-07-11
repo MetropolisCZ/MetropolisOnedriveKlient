@@ -20,12 +20,16 @@ namespace MetropolisOnedriveKlient
     /// <summary>
     /// Poskytuje chování specifické pro aplikaci, které doplňuje výchozí třídu Application.
     /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App : Application
     {
         /// <summary>
         /// Inicializuje objekt aplikace typu singleton. Jedná se o první řádek spuštěného vytvořeného kódu,
         /// který je proto logickým ekvivalentem metod main() nebo WinMain().
         /// </summary>
+
+        public static string OsobniPristupovyToken { get; set; }
+
+
         public App()
         {
             this.InitializeComponent();

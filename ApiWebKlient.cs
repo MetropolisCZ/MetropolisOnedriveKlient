@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Networking.BackgroundTransfer;
+using Windows.Security.Authentication.Web.Core;
+using Windows.Security.Credentials;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -33,6 +35,9 @@ namespace MetropolisOnedriveKlient
 
         public static async Task<string> NacistStrankuRestApi(string UrlkZiskani, TypyHTTPrequestu typHTTPrequestu = TypyHTTPrequestu.Get, string teloHTTPrequestu = null)
         {
+            bool prvniPokus = true;
+        druhyPokus:
+
             HttpResponseMessage httpResponse = new HttpResponseMessage();
 
             if (typHTTPrequestu == TypyHTTPrequestu.Get)
@@ -67,18 +72,89 @@ namespace MetropolisOnedriveKlient
             }
             else
             {
-                ContentDialog dialogHTTPchyba = new ContentDialog()
+                if (httpResponse.StatusCode == HttpStatusCode.Unauthorized && prvniPokus)
                 {
-                    Title = "HTTP odpověď " + httpResponse.StatusCode,
-                    Content = await httpResponse.Content.ReadAsStringAsync() + "\n\n" + UrlkZiskani,
-                    CloseButtonText = "Zavřit"
-                };
+                    if (await NacistPristupovyTokenNaPozadi())
+                    {
+                        backgroundDownloader = new BackgroundDownloader();
+                        backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + App.OsobniPristupovyToken);
+                        var headers = httpClient.DefaultRequestHeaders;
+                        headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", App.OsobniPristupovyToken);
+                        prvniPokus = false;
+                        goto druhyPokus;
+                    }
+                    else
+                    {
+                        bool zobrazitPrihlaseniAutomaticky = true;
+                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
 
-                _ = await dialogHTTPchyba.ShowAsync();
-                throw new System.Net.Http.HttpRequestException();
+                        throw new OperationCanceledException();
+                    }
+
+                }
+                else
+                {
+                    ContentDialog dialogHTTPchyba = new ContentDialog()
+                    {
+                        Title = "HTTP odpověď " + httpResponse.StatusCode,
+                        Content = await httpResponse.Content.ReadAsStringAsync() + "\n\n" + UrlkZiskani,
+                        CloseButtonText = "Zavřit"
+                    };
+
+                    _ = await dialogHTTPchyba.ShowAsync();
+                    if (httpResponse.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        bool zobrazitPrihlaseniAutomaticky = true;
+                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
+                    }
+                    else
+                    {
+                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
+                    }
+
+                    throw new System.Net.Http.HttpRequestException();
+                }
+
             }
 
         }
+
+
+        public static async Task<bool> NacistPristupovyTokenNaPozadi()
+        {
+            string providerId = ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"]?.ToString();
+            string accountId = ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
+
+            if (null == providerId || null == accountId)
+            {
+
+                return false;
+            }
+
+            WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(providerId);
+            WebAccount account = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountId);
+
+            WebTokenRequest request = new WebTokenRequest(provider, "Files.ReadWrite.All");
+
+            WebTokenRequestResult result = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(request, account);
+            if (result.ResponseStatus == WebTokenRequestStatus.UserInteractionRequired)
+            {
+                // Unable to get a token silently - you'll need to show the UI
+                return false;
+            }
+            else if (result.ResponseStatus == WebTokenRequestStatus.Success)
+            {
+                // Success
+                App.OsobniPristupovyToken = result.ResponseData[0].Token;
+                return true;
+            }
+            else
+            {
+                // Other error
+                return false;
+            }
+        }
+
 
 
         public static async Task StahnoutSoubory(List<OneDriveAdresarSoubory> souboryKeStazeni, bool jenomOtevritTemp = false)
@@ -88,7 +164,6 @@ namespace MetropolisOnedriveKlient
                 //new ToastContentBuilder().AddText("Stahování " + souboryKeStazeni.Count + " položek").Show();
                 MainPage.ContentFrame.Navigate(typeof(StrankaPrubehStahovani)); // Navigovat na stahování
 
-                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + ApplicationData.Current.LocalSettings.Values["OsobniPristupovyToken"].ToString()); // Pro jistotu ještě jednou – ono to nějak vždycky vypadávalo
 
                 foreach (OneDriveAdresarSoubory jedenSouborKeStazeni in souboryKeStazeni)
                 {

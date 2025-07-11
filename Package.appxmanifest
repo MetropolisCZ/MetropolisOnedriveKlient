@@ -9,7 +9,7 @@
   <Identity
     Name="FirmaMetropolis.Metropoliscloudovklient"
     Publisher="CN=D21B3810-6776-4010-B3FB-7D9EB339B1A5"
-    Version="0.8.0.0" />
+    Version="0.8.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="f13dfceb-a8cc-4666-868e-4a653994ed9c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
