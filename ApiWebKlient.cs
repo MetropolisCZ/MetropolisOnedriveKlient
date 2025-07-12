@@ -1,4 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +14,12 @@ using Windows.Networking.BackgroundTransfer;
 using Windows.Security.Authentication.Web.Core;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
+using Windows.Web.Http.Headers;
+using static MetropolisOnedriveKlient.MainPage;
 
 namespace MetropolisOnedriveKlient
 {
@@ -23,6 +28,7 @@ namespace MetropolisOnedriveKlient
 
         public static HttpClient httpClient = new HttpClient();
         public static BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
+        public static BackgroundUploader backgroundUploader = new BackgroundUploader() { Method = "PUT" };
 
         public enum TypyHTTPrequestu
         {
@@ -33,7 +39,7 @@ namespace MetropolisOnedriveKlient
             Delete
         }
 
-        public static async Task<string> NacistStrankuRestApi(string UrlkZiskani, TypyHTTPrequestu typHTTPrequestu = TypyHTTPrequestu.Get, string teloHTTPrequestu = null)
+        public static async Task<string> NacistStrankuRestApi(string UrlkZiskani, TypyHTTPrequestu typHTTPrequestu = TypyHTTPrequestu.Get, string teloHTTPrequestu = null, StorageFile souborkNahrani = null)
         {
             bool prvniPokus = true;
         druhyPokus:
@@ -57,7 +63,7 @@ namespace MetropolisOnedriveKlient
             }
             else if (typHTTPrequestu == TypyHTTPrequestu.Put)
             {
-
+                
             }
             else if (typHTTPrequestu == TypyHTTPrequestu.Delete)
             {
@@ -76,17 +82,13 @@ namespace MetropolisOnedriveKlient
                 {
                     if (await NacistPristupovyTokenNaPozadi())
                     {
-                        backgroundDownloader = new BackgroundDownloader();
-                        backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + App.OsobniPristupovyToken);
-                        var headers = httpClient.DefaultRequestHeaders;
-                        headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", App.OsobniPristupovyToken);
                         prvniPokus = false;
                         goto druhyPokus;
                     }
                     else
                     {
                         bool zobrazitPrihlaseniAutomaticky = true;
-                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
+                        NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
 
                         throw new OperationCanceledException();
                     }
@@ -105,7 +107,7 @@ namespace MetropolisOnedriveKlient
                     if (httpResponse.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         bool zobrazitPrihlaseniAutomaticky = true;
-                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
+                        NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
                     }
                     else
                     {
@@ -145,13 +147,157 @@ namespace MetropolisOnedriveKlient
             else if (result.ResponseStatus == WebTokenRequestStatus.Success)
             {
                 // Success
-                App.OsobniPristupovyToken = result.ResponseData[0].Token;
+                string pristupovyToken = result.ResponseData[0].Token;
+                App.OsobniPristupovyToken = pristupovyToken;
+
+                backgroundDownloader = new BackgroundDownloader();
+                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + pristupovyToken);
+
+                //backgroundUploader = new BackgroundUploader() { Method = "PUT" };
+                //backgroundUploader.SetRequestHeader("Authorization", "Bearer " + pristupovyToken);
+
+                HttpRequestHeaderCollection headers = httpClient.DefaultRequestHeaders;
+                headers.Authorization = new HttpCredentialsHeaderValue("Bearer", pristupovyToken);
+
                 return true;
             }
             else
             {
                 // Other error
                 return false;
+            }
+        }
+
+
+        public static async Task NahratSoubory(string cestaKamNahrat, IReadOnlyList<StorageFile> souboryKnahrani)
+        {
+            if (souboryKnahrani.Count > 0)
+            {
+                ContentFrame.Navigate(typeof(StrankaPrubehStahovani), 1); // Navigovat na stahování
+                int puvodniCacheSize = ContentFrame.CacheSize;
+                ContentFrame.CacheSize = 0;
+                ContentFrame.CacheSize = puvodniCacheSize;
+
+                foreach (StorageFile jedenSouborKnahrani in souboryKnahrani)
+                {
+
+                    Windows.Storage.FileProperties.BasicProperties vlastnostiJedenSouborKnahrani = await jedenSouborKnahrani.GetBasicPropertiesAsync();
+
+                    string relaceKamNahravat_url = "";
+                    string relaceKamNahravat_expirace = "";
+
+                    // POZOR NA TO! "@microsoft.graph.conflictBehavior": "rename" musí být první!! Jinak to hází chybu! Očividně je tam jasně fixovaná možnost pořadí
+                    string jedenSouborKnahrani_jsonBody = "{ '@microsoft.graph.conflictBehavior': 'rename', 'item': { 'name': '" + jedenSouborKnahrani.Name + "' } }";
+
+                    try
+                    {
+                        if (cestaKamNahrat.Length == 0)
+                        {
+                            cestaKamNahrat = ":";
+                        }
+                        JObject odpovedVytvoreniRelaceNahravani = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + cestaKamNahrat + "/" + Uri.EscapeDataString(jedenSouborKnahrani.Name) + ":/createUploadSession", TypyHTTPrequestu.Post, jedenSouborKnahrani_jsonBody));
+                        relaceKamNahravat_url = odpovedVytvoreniRelaceNahravani.SelectToken("uploadUrl").ToString();
+                        relaceKamNahravat_expirace = odpovedVytvoreniRelaceNahravani.SelectToken("expirationDateTime").ToString();
+                    }
+                    catch
+                    {
+                        throw new TaskCanceledException();
+                    }
+
+                    DownloadItem polozkaSeznamNahravani = new DownloadItem
+                    {
+                        FileName = jedenSouborKnahrani.Name,
+                        Progress = 0,
+                        Status = "Připraveno"
+                    };
+
+                    DownloadManager.Instance.Uploads.Add(polozkaSeznamNahravani);
+
+                    //string uriZadostiNahrani = "https://graph.microsoft.com/v1.0/me/drive/items/" + idSlozkyKamNahrat + ":/" + jedenSouborKnahrani.Name + ":/content";
+
+                    try
+                    {
+
+                        /*UploadOperation operaceNahravaniNaPozadi = await backgroundUploader.CreateUpload(new Uri(relaceKamNahravat_url), jedenSouborKnahrani).StartAsync().AsTask(new Progress<UploadOperation>(async progress =>
+                        {
+                            double percent = 100.0 * progress.Progress.BytesSent / progress.Progress.TotalBytesToSend;
+
+                            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                polozkaSeznamNahravani.Progress = percent;
+                                polozkaSeznamNahravani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();
+                            });
+                        }));
+
+
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            polozkaSeznamNahravani.Status = "Dokončeno";
+                        });*/
+
+                        IRandomAccessStream randomAccessStream = await jedenSouborKnahrani.OpenAsync(FileAccessMode.Read);
+
+                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, new Uri(relaceKamNahravat_url))
+                        {
+                            Content = new HttpStreamContent(randomAccessStream.GetInputStreamAt(0))
+                        };
+                        request.Content.Headers.TryAppendWithoutValidation("Content-Length", randomAccessStream.Size.ToString());
+                        string contentRangeHeader = "bytes 0-" + (randomAccessStream.Size - 1) + "/" + randomAccessStream.Size;
+                        request.Content.Headers.TryAppendWithoutValidation("Content-Range", contentRangeHeader);
+
+
+
+                        HttpClient httpClientBezTokenu = new HttpClient();
+                        
+                        HttpResponseMessage odpovedNahravaniSouboru = await httpClientBezTokenu.SendRequestAsync(request).AsTask(new Progress<HttpProgress>(progress =>
+                        {
+                            double percent = 100.0 * progress.BytesSent / vlastnostiJedenSouborKnahrani.Size;
+
+                            _ = CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                polozkaSeznamNahravani.Progress = percent;
+                                polozkaSeznamNahravani.Status = progress.Stage == HttpProgressStage.SendingContent
+                                    ? "Probíhá"
+                                    : progress.Stage.ToString();
+                            });
+                        }));
+
+                        /*UploadOperation operaceNahravaniNaPozadi = await backgroundUploader.CreateUploadFromStreamAsync(new Uri(relaceKamNahravat_url), stream2);
+                        await operaceNahravaniNaPozadi.StartAsync().AsTask(new Progress<UploadOperation>(progress =>
+                        {
+                            double percent = 100.0 * progress.Progress.BytesSent / progress.Progress.TotalBytesToSend;
+
+                            _ = CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                polozkaSeznamNahravani.Progress = percent;
+                                polozkaSeznamNahravani.Status = progress.Progress.Status == BackgroundTransferStatus.Running
+                                    ? "Probíhá"
+                                    : progress.Progress.Status.ToString();
+                            });
+                        }));
+                        */
+
+                        odpovedNahravaniSouboru.EnsureSuccessStatusCode();
+
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            polozkaSeznamNahravani.Status = "Dokončeno";
+                        });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            polozkaSeznamNahravani.Status = "Chyba: " + ex.Message;
+                        });
+                        throw new OperationCanceledException();
+                    }
+
+                }
+
+                NavigovatNaStranku(typeof(StrankaSoubory));
+
             }
         }
 
@@ -167,7 +313,6 @@ namespace MetropolisOnedriveKlient
 
                 foreach (OneDriveAdresarSoubory jedenSouborKeStazeni in souboryKeStazeni)
                 {
-
                     DownloadItem polozkaSeznamStahovani = new DownloadItem
                     {
                         FileName = jedenSouborKeStazeni.Name,
@@ -197,20 +342,21 @@ namespace MetropolisOnedriveKlient
 
                         polozkaSeznamStahovani.StorageFile = destinationFile;
 
-                        await backgroundDownloader.CreateDownload(new Uri("https://graph.microsoft.com/v1.0/me/drive/items/" + jedenSouborKeStazeni.Id + "/content"), destinationFile).StartAsync().AsTask(new Progress<DownloadOperation>(async progress =>
+                        DownloadOperation operaceStahovaniNaPozadi = await backgroundDownloader.CreateDownload(new Uri("https://graph.microsoft.com/v1.0/me/drive/items/" + jedenSouborKeStazeni.Id + "/content"), destinationFile).StartAsync().AsTask(new Progress<DownloadOperation>(async progress =>
                         {
                             double percent = 100.0 * progress.Progress.BytesReceived / progress.Progress.TotalBytesToReceive;
 
                             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
                                 polozkaSeznamStahovani.Progress = percent;
-                                polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();     
+                                polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();
                                 if (jenomOtevritTemp)
                                 {
                                     polozkaSeznamStahovani.Status += " – dočasný soubor";
                                 }
                             });
                         }));
+
 
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
@@ -224,10 +370,61 @@ namespace MetropolisOnedriveKlient
                     }
                     catch (Exception ex)
                     {
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        try
+                        { // Když se stahování nepovede, tak nejdřív zkusíme načíst ještě jednou přístupový token
+
+                            if (await NacistPristupovyTokenNaPozadi())
+                            {
+                                // Zkusit ještě jednou operaci stahování
+
+                                StorageFile destinationFile;
+
+                                if (!jenomOtevritTemp)
+                                { // Normálně stáhnout –> do stažených souborů
+
+                                    destinationFile = await DownloadsFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
+                                }
+                                else
+                                { // Stáhnout do tempu (příklad stáhnu instalátor, otevřu ho a je mi jedno, jestli se smaže)
+
+                                    destinationFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
+                                    polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                }
+
+
+                                polozkaSeznamStahovani.StorageFile = destinationFile;
+
+                                DownloadOperation operaceStahovaniNaPozadi = await backgroundDownloader.CreateDownload(new Uri("https://graph.microsoft.com/v1.0/me/drive/items/" + jedenSouborKeStazeni.Id + "/content"), destinationFile).StartAsync().AsTask(new Progress<DownloadOperation>(async progress =>
+                                {
+                                    double percent = 100.0 * progress.Progress.BytesReceived / progress.Progress.TotalBytesToReceive;
+
+                                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                    {
+                                        polozkaSeznamStahovani.Progress = percent;
+                                        polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();
+                                        if (jenomOtevritTemp)
+                                        {
+                                            polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                        }
+                                    });
+                                }));
+                            }
+                            else
+                            { // Teď už je to ale fakt neřešitelně v háji
+
+                                bool zobrazitPrihlaseniAutomaticky = true;
+                                MainPage.NavigovatNaStranku(typeof(StrankaNastaveni), zobrazitPrihlaseniAutomaticky);
+
+                                throw new OperationCanceledException();
+                            }
+                        }
+                        catch
                         {
-                            polozkaSeznamStahovani.Status = "Chyba: " + ex.Message;
-                        });
+                            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                polozkaSeznamStahovani.Status = "Chyba: " + ex.Message;
+                            });
+                        }
                     }
                 }
 
@@ -318,8 +515,32 @@ namespace MetropolisOnedriveKlient
         }
 
         public ObservableCollection<DownloadItem> Downloads { get; } = new ObservableCollection<DownloadItem>();
+        public ObservableCollection<DownloadItem> Uploads { get; } = new ObservableCollection<DownloadItem>();
         private DownloadManager() { }
     }
+
+
+
+
+
+    // ✅ Singleton manager that holds all uploads
+    /*public class UploadManager
+    {
+        private static UploadManager _instance;
+
+        public static UploadManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new UploadManager();
+                return _instance;
+            }
+        }
+
+        public ObservableCollection<DownloadItem> Uploads { get; } = new ObservableCollection<DownloadItem>();
+        private UploadManager() { }
+    }*/
 
 
 }

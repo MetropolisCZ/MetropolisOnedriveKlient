@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.UI.Core;
 using System.Threading.Tasks;
+using Windows.Storage.Pickers;
+using Windows.Storage;
 
 // Dokumentaci k šabloně Prázdná aplikace najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -501,7 +503,7 @@ namespace MetropolisOnedriveKlient
 
 
 
-        private string AktualniCestaDoStringu()
+        private string AktualniCestaDoStringu(bool bezDvojteckyNaKonci = false)
         {
             string cestaAktualni = "";
             if (onedriveNavigacniCesta.Count != 1)
@@ -511,7 +513,8 @@ namespace MetropolisOnedriveKlient
                 {
                     cestaAktualni += "/" + onedriveNavigacniCesta[i];
                 }
-                return cestaAktualni += ":";
+
+                return !bezDvojteckyNaKonci ? (cestaAktualni += ":") : cestaAktualni;
             }
             else
             { // Kořenový adresář
@@ -555,7 +558,6 @@ namespace MetropolisOnedriveKlient
             { // Adresář dle pole onedriveNavigacniCesta
 
                 adresaKamNavigovat += AktualniCestaDoStringu();
-
 
             }
 
@@ -619,12 +621,10 @@ namespace MetropolisOnedriveKlient
                 if (contentDialogNovaSlozka_textBox.Text.Length > 0)
                 {
 
-                    string cestaAktualni = AktualniCestaDoStringu();
-
                     try
                     {
 
-                        _ = await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + cestaAktualni + "/children", TypyHTTPrequestu.Post, "{ 'name': '" + contentDialogNovaSlozka_textBox.Text + "', 'folder': { }, '@microsoft.graph.conflictBehavior': 'rename' }");
+                        _ = await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + AktualniCestaDoStringu() + "/children", TypyHTTPrequestu.Post, "{ 'name': '" + contentDialogNovaSlozka_textBox.Text + "', 'folder': { }, '@microsoft.graph.conflictBehavior': 'rename' }");
 
                         //_ = await new ContentDialog()
                         //{
@@ -654,8 +654,22 @@ namespace MetropolisOnedriveKlient
             }
         }
 
-        private void TlacitkoNahrat_Click(object sender, RoutedEventArgs e)
+        private async void TlacitkoNahrat_Click(object sender, RoutedEventArgs e)
         {
+            FileOpenPicker pickerSouboruNahrat = new FileOpenPicker();
+            pickerSouboruNahrat.FileTypeFilter.Add("*");
+
+            IReadOnlyList<StorageFile> souboryKnahrani = await pickerSouboruNahrat.PickMultipleFilesAsync();
+
+            try
+            {
+                //string idSlozkyKamPresunout = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + AktualniCestaDoStringu() + "?$select=id")).SelectToken("id").ToString();
+                await NahratSoubory(AktualniCestaDoStringu(true), souboryKnahrani);
+            }
+            catch
+            {
+                return;
+            }
 
         }
 
@@ -774,12 +788,9 @@ namespace MetropolisOnedriveKlient
             ListViewSouboryaSlozky.IsEnabled = false;
             BottomAppBar.IsEnabled = false;
 
-            string cestaAktualni = AktualniCestaDoStringu();
-
-
             try
             {
-                string idSlozkyKamPresunout = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + cestaAktualni + "?$select=id")).SelectToken("id").ToString();
+                string idSlozkyKamPresunout = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/root" + AktualniCestaDoStringu() + "?$select=id")).SelectToken("id").ToString();
 
                 foreach (OneDriveAdresarSoubory jedenSouborKpresunuti in souboryKpresunuti)
                 {

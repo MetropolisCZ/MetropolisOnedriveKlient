@@ -72,9 +72,6 @@ namespace MetropolisOnedriveKlient
         private void TlacitkoSoubory_Click(object sender, RoutedEventArgs e)
         {
             // Header dělá přímo ta stránka
-            int puvodniCacheSize = ContentFrame.CacheSize;
-            ContentFrame.CacheSize = 0;
-            ContentFrame.CacheSize = puvodniCacheSize;
             NavigovatNaStranku(typeof(StrankaSoubory));
         }
 
@@ -90,6 +87,9 @@ namespace MetropolisOnedriveKlient
 
         public static void NavigovatNaStranku(Type strankaKamNavigovatType, object navigacniParametry = null)
         {
+            int puvodniCacheSize = ContentFrame.CacheSize;
+            ContentFrame.CacheSize = 0;
+            ContentFrame.CacheSize = puvodniCacheSize;
             if (navigacniParametry == null)
             {
                 ContentFrame.Navigate(strankaKamNavigovatType);

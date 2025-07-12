@@ -13,7 +13,7 @@
 
             <!--<Button Click="Button_Click">Test</Button>-->
 
-            <Pivot>
+            <Pivot x:Name="PivotPrubehStahovani">
                 <PivotItem Margin="0">
                     <PivotItem.Header>
                         <StackPanel Orientation="Horizontal">
@@ -50,6 +50,25 @@
                             <TextBlock VerticalAlignment="Center" FontSize="15">Nahrávání</TextBlock>
                         </StackPanel>
                     </PivotItem.Header>
+
+                    <ListView ItemsSource="{x:Bind ViewModel.Uploads}" HorizontalAlignment="Stretch" SelectionMode="None" ItemClick="StazeneSoubory_ItemClick" IsItemClickEnabled="True">
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:DownloadItem">
+                                <StackPanel Margin="0,10">
+                                    <TextBlock Text="{x:Bind FileName, Mode=OneWay}" FontWeight="Bold" TextWrapping="Wrap"/>
+                                    <ProgressBar Value="{x:Bind Progress, Mode=OneWay}" Maximum="100" Height="10" Margin="0,5"/>
+                                    <TextBlock Text="{x:Bind Status, Mode=OneWay}" FontStyle="Italic" FontSize="12"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
                 </PivotItem>
 

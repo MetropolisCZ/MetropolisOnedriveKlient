@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using static MetropolisOnedriveKlient.ApiWebKlient;
+using Windows.Networking.BackgroundTransfer;
 
 // Dokumentaci k šabloně Prázdná aplikace najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -70,13 +71,20 @@ namespace MetropolisOnedriveKlient
 
             if (result.ResponseStatus == WebTokenRequestStatus.Success)
             {
-                App.OsobniPristupovyToken = result.ResponseData[0].Token;
+                string pristupovyToken = result.ResponseData[0].Token;
+                App.OsobniPristupovyToken = pristupovyToken;
+
                 ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"] = result.ResponseData[0].WebAccount.WebAccountProvider.Id;
                 ApplicationData.Current.LocalSettings.Values["CurrentUserId"] = result.ResponseData[0].WebAccount.Id;
 
+                backgroundDownloader = new BackgroundDownloader();
+                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + pristupovyToken);
+
+                //backgroundUploader = new BackgroundUploader() { Method = "PUT" };
+                //backgroundUploader.SetRequestHeader("Authorization", "Bearer " + pristupovyToken);
+
                 var headers = httpClient.DefaultRequestHeaders;
-                headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", result.ResponseData[0].Token);
-                backgroundDownloader.SetRequestHeader("Authorization", "Bearer " + result.ResponseData[0].Token);
+                headers.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", pristupovyToken);
 
                 MainPage.NavigovatNaStranku(typeof(StrankaSoubory));
 

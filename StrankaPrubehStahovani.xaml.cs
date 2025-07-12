@@ -34,6 +34,11 @@ namespace MetropolisOnedriveKlient
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             MainPage.PageHeader.Text = "Průběh";
+
+            if (e.Parameter != null)
+            {
+                PivotPrubehStahovani.SelectedIndex = (int)e.Parameter;
+            }
         }
 
         private async void StazeneSoubory_ItemClick(object sender, ItemClickEventArgs e)
