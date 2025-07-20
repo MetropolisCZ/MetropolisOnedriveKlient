@@ -13,10 +13,10 @@
     <Page.TopAppBar>
         <CommandBar x:FieldModifier="public" x:Name="CommandBarMainPage">
 
-            <AppBarButton x:Name="tlacitkoPrubeh" HorizontalAlignment="Left" Icon="Switch" Label="Průběh" VerticalAlignment="Top" Click="TlacitkoPrubeh_Click" />
+            <AppBarButton x:Name="tlacitkoPrubeh" x:Uid="AppBarTlacitkoPrubeh" HorizontalAlignment="Left" Icon="Switch" VerticalAlignment="Top" Click="TlacitkoPrubeh_Click" />
 
-            <AppBarButton x:Name="tlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" Label="Soubory" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>
-            <AppBarButton x:Name="tlacitkoUcet" HorizontalAlignment="Left" Icon="Setting" Label="Nastavení" VerticalAlignment="Top" Click="TlacitkoUcet_Click"/>
+            <AppBarButton x:Name="tlacitkoSoubory" x:Uid="AppBarTlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>
+            <AppBarButton x:Name="tlacitkoUcet" x:Uid="AppBarTlacitkoNastaveni" HorizontalAlignment="Left" Icon="Setting" VerticalAlignment="Top" Click="TlacitkoUcet_Click"/>
 
             <CommandBar.Content>
                 <TextBlock x:Name="NadpisStrankyTextBlock" Margin="12,8" x:FieldModifier="public" />

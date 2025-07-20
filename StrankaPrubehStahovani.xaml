@@ -18,7 +18,7 @@
                     <PivotItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="Download" Margin="0,0,8,0"></SymbolIcon>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Stahování</TextBlock>
+                            <TextBlock VerticalAlignment="Center" FontSize="15" x:Uid="TextBlockPivotStahovani"></TextBlock>
                         </StackPanel>
                     </PivotItem.Header>
                     
@@ -47,7 +47,7 @@
                     <PivotItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="Upload" Margin="0,0,8,0"></SymbolIcon>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Nahrávání</TextBlock>
+                            <TextBlock VerticalAlignment="Center" FontSize="15" x:Uid="TextBlockPivotNahravani"></TextBlock>
                         </StackPanel>
                     </PivotItem.Header>
 
@@ -77,7 +77,7 @@
                     <PivotItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="Camera" Margin="0,0,8,0"></SymbolIcon>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Fotoaparát</TextBlock>
+                            <TextBlock VerticalAlignment="Center" FontSize="15" x:Uid="TextBlockPivotFotoaparat"></TextBlock>
                         </StackPanel>
                     </PivotItem.Header>
 

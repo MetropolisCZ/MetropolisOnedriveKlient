@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Resources;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Security.Authentication.Web.Core;
 using Windows.Security.Credentials;
@@ -25,6 +26,7 @@ namespace MetropolisOnedriveKlient
 {
     public class ApiWebKlient
     {
+        private static ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
         public static HttpClient httpClient = new HttpClient();
         public static BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
@@ -98,10 +100,10 @@ namespace MetropolisOnedriveKlient
                 {
                     ContentDialog dialogHTTPchyba = new ContentDialog()
                     {
-                        Title = "HTTP odpověď " + httpResponse.StatusCode,
+                        Title = resourceLoader.GetString("dialogHTTPchyba/Title") + " " + httpResponse.StatusCode,
                         Content = await httpResponse.Content.ReadAsStringAsync() + "\n\n" + UrlkZiskani,
-                        CloseButtonText = "Zavřit"
-                    };
+                        CloseButtonText = resourceLoader.GetString("ZavritDialog")
+                };
 
                     _ = await dialogHTTPchyba.ShowAsync();
                     if (httpResponse.StatusCode == HttpStatusCode.Unauthorized)
@@ -111,7 +113,7 @@ namespace MetropolisOnedriveKlient
                     }
                     else
                     {
-                        MainPage.NavigovatNaStranku(typeof(StrankaNastaveni));
+                        NavigovatNaStranku(typeof(StrankaNastaveni));
                     }
 
                     throw new System.Net.Http.HttpRequestException();
@@ -208,7 +210,7 @@ namespace MetropolisOnedriveKlient
                     {
                         FileName = jedenSouborKnahrani.Name,
                         Progress = 0,
-                        Status = "Připraveno"
+                        Status = resourceLoader.GetString("polozkaSeznamNahravani/Pripraveno")
                     };
 
                     DownloadManager.Instance.Uploads.Add(polozkaSeznamNahravani);
@@ -257,7 +259,7 @@ namespace MetropolisOnedriveKlient
                             {
                                 polozkaSeznamNahravani.Progress = percent;
                                 polozkaSeznamNahravani.Status = progress.Stage == HttpProgressStage.SendingContent
-                                    ? "Probíhá"
+                                    ? resourceLoader.GetString("polozkaSeznamNahravani/Probiha")
                                     : progress.Stage.ToString();
                             });
                         }));
@@ -281,7 +283,7 @@ namespace MetropolisOnedriveKlient
 
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            polozkaSeznamNahravani.Status = "Dokončeno";
+                            polozkaSeznamNahravani.Status = resourceLoader.GetString("polozkaSeznamNahravani/Dokonceno");
                         });
 
                     }
@@ -289,7 +291,7 @@ namespace MetropolisOnedriveKlient
                     {
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            polozkaSeznamNahravani.Status = "Chyba: " + ex.Message;
+                            polozkaSeznamNahravani.Status = resourceLoader.GetString("Chyba") + ": " + ex.Message;
                         });
                         throw new OperationCanceledException();
                     }
@@ -317,7 +319,7 @@ namespace MetropolisOnedriveKlient
                     {
                         FileName = jedenSouborKeStazeni.Name,
                         Progress = 0,
-                        Status = "Připraveno",
+                        Status = resourceLoader.GetString("polozkaSeznamNahravani/Pripraveno"),
                         JenomTemp = jenomOtevritTemp
                     };
 
@@ -336,7 +338,7 @@ namespace MetropolisOnedriveKlient
                         { // Stáhnout do tempu (příklad stáhnu instalátor, otevřu ho a je mi jedno, jestli se smaže)
 
                             destinationFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
-                            polozkaSeznamStahovani.Status += " – dočasný soubor";
+                            polozkaSeznamStahovani.Status += " – " + resourceLoader.GetString("polozkaSeznamStahovani/DocasnySoubor");
                         }
 
 
@@ -349,10 +351,10 @@ namespace MetropolisOnedriveKlient
                             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
                                 polozkaSeznamStahovani.Progress = percent;
-                                polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();
+                                polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? resourceLoader.GetString("polozkaSeznamNahravani/Probiha") : progress.Progress.Status.ToString();
                                 if (jenomOtevritTemp)
                                 {
-                                    polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                    polozkaSeznamStahovani.Status += " – " + resourceLoader.GetString("polozkaSeznamStahovani/DocasnySoubor");
                                 }
                             });
                         }));
@@ -360,10 +362,10 @@ namespace MetropolisOnedriveKlient
 
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            polozkaSeznamStahovani.Status = "Dokončeno";
+                            polozkaSeznamStahovani.Status = resourceLoader.GetString("polozkaSeznamNahravani/Dokonceno");
                             if (jenomOtevritTemp)
                             {
-                                polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                polozkaSeznamStahovani.Status += " – " + resourceLoader.GetString("polozkaSeznamStahovani/DocasnySoubor");
                                 await Windows.System.Launcher.LaunchFileAsync(destinationFile);
                             }
                         });
@@ -388,7 +390,7 @@ namespace MetropolisOnedriveKlient
                                 { // Stáhnout do tempu (příklad stáhnu instalátor, otevřu ho a je mi jedno, jestli se smaže)
 
                                     destinationFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(jedenSouborKeStazeni.Name, CreationCollisionOption.GenerateUniqueName);
-                                    polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                    polozkaSeznamStahovani.Status += " – " + resourceLoader.GetString("polozkaSeznamStahovani/DocasnySoubor");
                                 }
 
 
@@ -401,10 +403,10 @@ namespace MetropolisOnedriveKlient
                                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                                     {
                                         polozkaSeznamStahovani.Progress = percent;
-                                        polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? "Probíhá" : progress.Progress.Status.ToString();
+                                        polozkaSeznamStahovani.Status = progress.Progress.Status == BackgroundTransferStatus.Running ? resourceLoader.GetString("polozkaSeznamStahovani/Probiha") : progress.Progress.Status.ToString();
                                         if (jenomOtevritTemp)
                                         {
-                                            polozkaSeznamStahovani.Status += " – dočasný soubor";
+                                            polozkaSeznamStahovani.Status += " – " + resourceLoader.GetString("polozkaSeznamStahovani/DocasnySoubor");
                                         }
                                     });
                                 }));
@@ -422,7 +424,7 @@ namespace MetropolisOnedriveKlient
                         {
                             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
-                                polozkaSeznamStahovani.Status = "Chyba: " + ex.Message;
+                                polozkaSeznamStahovani.Status = resourceLoader.GetString("Chyba") + ": " + ex.Message;
                             });
                         }
                     }
@@ -431,13 +433,13 @@ namespace MetropolisOnedriveKlient
             }
             else
             { // Žádný soubor ke stažení nebyl zvolen
-                ContentDialog dialogHTTPchyba = new ContentDialog()
+                ContentDialog dialogNebylVybranSoubor = new ContentDialog()
                 {
-                    Title = "Nebyl zvolen žádný soubor ke stažení",
-                    CloseButtonText = "Zavřit"
-                };
+                    Title = resourceLoader.GetString("dialogNebylVybranSoubor/Title"),
+                    CloseButtonText = resourceLoader.GetString("ZavritDialog")
+            };
 
-                _ = await dialogHTTPchyba.ShowAsync();
+                _ = await dialogNebylVybranSoubor.ShowAsync();
 
                 //return null;
             }

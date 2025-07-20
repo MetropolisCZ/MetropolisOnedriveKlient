@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,16 +25,18 @@ namespace MetropolisOnedriveKlient
     /// </summary>
     public sealed partial class StrankaPrubehStahovani : Page
     {
+        private static ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+
         public DownloadManager ViewModel => DownloadManager.Instance;
 
         public StrankaPrubehStahovani()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            MainPage.PageHeader.Text = "Průběh";
+            MainPage.PageHeader.Text = resourceLoader.GetString("StrankaPrubehNadpis");
 
             if (e.Parameter != null)
             {
@@ -47,37 +50,5 @@ namespace MetropolisOnedriveKlient
             await Windows.System.Launcher.LaunchFileAsync(kliknutySoubor.StorageFile);
         }
 
-        /*private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var item = new DownloadItem
-            {
-                FileName = "TestFile.txt",
-                Progress = 0,
-                Status = "Starting..."
-            };
-            DownloadManager.Instance.Downloads.Add(item);
-
-            _ = Task.Run(async () =>
-            {
-                for (int i = 0; i <= 100; i += 10)
-                {
-                    await Task.Delay(300);
-
-                    // 👇 This ensures the UI sees the update
-                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                        Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            item.Progress = i;
-                            item.Status = $"Downloading... {i}%";
-                        });
-                }
-
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                    Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        item.Status = "Completed!";
-                    });
-            });
-        }*/
     }
 }

@@ -17,10 +17,10 @@
         <!-- Default mode buttons -->
         <DataTemplate x:Key="CommandBarTemplate_vychozi">
             <CommandBar>
-                <AppBarButton Icon="NewFolder" Label="Nová složka" Click="TlacitkoNovaSlozka_Click"/>
-                <AppBarButton Icon="Upload" Label="Nahrát" Click="TlacitkoNahrat_Click"/>
-                <AppBarButton Icon="Bullets" Label="Výběr" Click="TlacitkoVyber_Click"/>
-                <AppBarButton Icon="Sync" Label="Aktualizovat" Click="TlacitkoAktualizovat_Click"/>
+                <AppBarButton x:Uid="TlacitkoNovaSlozka" Icon="NewFolder" Click="TlacitkoNovaSlozka_Click"/>
+                <AppBarButton x:Uid="TlacitkoNahrat" Icon="Upload" Click="TlacitkoNahrat_Click"/>
+                <AppBarButton x:Uid="TlacitkoMultiVyber" Icon="Bullets" Click="TlacitkoVyber_Click"/>
+                <AppBarButton x:Uid="TlacitkoAktualizovat" Icon="Sync" Click="TlacitkoAktualizovat_Click"/>
             </CommandBar>
         </DataTemplate>
 
@@ -32,17 +32,17 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Icon="Download" Label="Stáhnout" Click="FlyoutTlacitkoStahnout_Click"/>
-                <AppBarButton Icon="MoveToFolder" Label="Přesunout" Click="FlyoutTlacitkoPresunout_Click"/>
-                <AppBarButton Icon="Delete" Label="Odstranit" Click="TlacitkoOdstranit_Click"/>
+                <AppBarButton x:Uid="TlacitkoStahnout" Icon="Download" Click="FlyoutTlacitkoStahnout_Click"/>
+                <AppBarButton x:Uid="TlacitkoPresunout" Icon="MoveToFolder" Click="FlyoutTlacitkoPresunout_Click"/>
+                <AppBarButton x:Uid="TlacitkoOdstranit" Icon="Delete" Click="TlacitkoOdstranit_Click"/>
             </CommandBar>
         </DataTemplate>
 
         <!-- Tlačítka pro přesouvání souborů -->
         <DataTemplate x:Key="CommandBarTemplate_presouvaniSouboru">
             <CommandBar>
-                <AppBarButton Icon="Accept" Label="Přesunout sem" Click="TlacitkoPresunoutSem_Click"/>
-                <AppBarButton Icon="Clear" Label="Zrušit" Click="FlyoutTlacitkoZrusitPresun_Click"/>
+                <AppBarButton x:Uid="TlacitkoPresunoutSem" Icon="Accept" Click="TlacitkoPresunoutSem_Click"/>
+                <AppBarButton x:Uid="TlacitkoZrusitPresun" Icon="Clear" Click="FlyoutTlacitkoZrusitPresun_Click"/>
             </CommandBar>
         </DataTemplate>
     </Page.Resources>

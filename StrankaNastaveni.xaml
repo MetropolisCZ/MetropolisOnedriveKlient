@@ -14,7 +14,7 @@
 
             <!--<TextBlock Text="O aplikaci" FontSize="23" Margin="0,15,0,15" />-->
             
-            <Button x:Name="LoginButton" Content="Zobrazit dialog přihlášení" Click="LoginButton_Click" />
+            <Button x:Name="LoginButton" x:Uid="TlacitkoNastaveniZobrazitPrihlaseni" Click="LoginButton_Click" />
 
             <!--<Button Click="Button_Click">Testtttt</Button>-->
             
@@ -31,13 +31,13 @@
             <!--<ToggleSwitch Header="Zobrazit čas odjezdu v nadpisu včetně zpoždění" x:Name="ZobrazitCasVcetneZpozdeni" Margin="0,25,0,0" IsOn="True" IsEnabled="False"/>-->
 
 
-            <TextBlock TextWrapping="Wrap" Text="O aplikaci" FontSize="23" Margin="0,50,0,0" />
-            <TextBlock TextWrapping="Wrap" Text="Tato aplikace byla založena na Microsoft Graph API" />
-            <TextBlock TextWrapping="Wrap" Text="Firma Metropolis 2025, všechna práva na kód vyhrazena"></TextBlock>
-            <HyperlinkButton Content="Web firmy Metropolis" NavigateUri="http://www.metropolis.xf.cz/webdesign/index.php?zdrojZobrazeni=MetropolisCloudovyKlient" />
-            <HyperlinkButton Content="Ochrana osobních údajů a odpovědnost" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
+            <TextBlock x:Uid="NadpisOaplikaci" TextWrapping="Wrap" Text="O aplikaci" FontSize="23" Margin="0,50,0,0" />
+            <TextBlock x:Uid="PodnadpisOaplikaci" TextWrapping="Wrap" />
+            <TextBlock x:Uid="LicenceOaplikaci" TextWrapping="Wrap"></TextBlock>
+            <HyperlinkButton x:Uid="WebFirmyOaplikaci" NavigateUri="http://www.metropolis.xf.cz/webdesign/index.php?zdrojZobrazeni=MetropolisCloudovyKlient" />
+            <HyperlinkButton x:Uid="OsobniUdajeOaplikaci" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
 
-            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0" Text="Verze aplikace: 1.0.1" />
+            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0" Text="Verze aplikace: 1.1.1" />
 
         </StackPanel>
 

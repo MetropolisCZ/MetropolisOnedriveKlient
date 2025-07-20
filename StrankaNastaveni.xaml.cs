@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using static MetropolisOnedriveKlient.ApiWebKlient;
 using Windows.Networking.BackgroundTransfer;
+using Windows.ApplicationModel.Resources;
 
 // Dokumentaci k šabloně Prázdná aplikace najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,6 +20,7 @@ namespace MetropolisOnedriveKlient
     /// </summary>
     public sealed partial class StrankaNastaveni : Page
     {
+        private static ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
         public StrankaNastaveni()
         {
@@ -34,7 +36,7 @@ namespace MetropolisOnedriveKlient
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += NaplnitPrihlasovaciMoznosti;
-            MainPage.PageHeader.Text = "Nastavení";
+            MainPage.PageHeader.Text = resourceLoader.GetString("StrankaNastaveniNadpis");
 
             if (e?.Parameter != null && (bool)e.Parameter) // zobrazitPrihlaseniAutomaticky
             {
@@ -94,10 +96,10 @@ namespace MetropolisOnedriveKlient
             {
                 _ = await new ContentDialog()
                 {
-                    Title = "Chyba " + nameof(WebTokenRequestStatus),
-                    CloseButtonText = "Zavřít"
+                    Title = resourceLoader.GetString("Chyba") + " " + nameof(WebTokenRequestStatus),
+                    CloseButtonText = resourceLoader.GetString("ZavritDialog")
 
-                }.ShowAsync();
+            }.ShowAsync();
             }
         }
 
