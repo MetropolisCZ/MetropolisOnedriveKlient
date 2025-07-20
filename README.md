@@ -1,5 +1,7 @@
 # Metropolis cloudový klient
 Klient pro Microsoft OneDrive. Založeno na oficiálních Microsoft Rest API.
+Všechna práva na zdrojový kód vyhrazena. Nevytvářejte prosím vlastní aplikace bez konzultace s vývojářem této.
+All rights on source code reserved. Please do not create own forks without consulting with dev of this app.
 
 
 ### Privacy Policy & Disclaimer
