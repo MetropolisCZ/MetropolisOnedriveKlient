@@ -309,6 +309,10 @@
     <value>Przenieś tutaj</value>
     <comment>Move here</comment>
   </data>
+  <data name="TlacitkoSdilet.Label" xml:space="preserve">
+    <value>Udostępnij</value>
+    <comment>Share</comment>
+  </data>
   <data name="TlacitkoStahnout.Label" xml:space="preserve">
     <value>Pobierz</value>
     <comment>Download</comment>

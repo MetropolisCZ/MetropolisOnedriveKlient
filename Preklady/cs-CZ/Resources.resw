@@ -317,6 +317,10 @@
     <value>Přesunout sem</value>
     <comment>Move here</comment>
   </data>
+  <data name="TlacitkoSdilet.Label" xml:space="preserve">
+    <value>Sdílet</value>
+    <comment>Share</comment>
+  </data>
   <data name="TlacitkoStahnout.Label" xml:space="preserve">
     <value>Stáhnout</value>
     <comment>Download</comment>

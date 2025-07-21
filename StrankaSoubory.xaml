@@ -27,7 +27,7 @@
         <!-- Multi-select mode buttons -->
         <DataTemplate x:Key="CommandBarTemplate_multiVyber">
             <CommandBar>
-                <AppBarButton Label="Sdílet" Click="TlacitkoSdilet_Click">
+                <AppBarButton x:Uid="TlacitkoSdilet" Click="TlacitkoSdilet_Click">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
                     </AppBarButton.Icon>

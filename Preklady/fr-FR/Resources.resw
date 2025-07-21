@@ -317,6 +317,10 @@
     <value>Déplacer ici</value>
     <comment>Move here</comment>
   </data>
+  <data name="TlacitkoSdilet.Label" xml:space="preserve">
+    <value>Partager</value>
+    <comment>Share</comment>
+  </data>
   <data name="TlacitkoStahnout.Label" xml:space="preserve">
     <value>Télécharger</value>
     <comment>Download</comment>
