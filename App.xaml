@@ -10,6 +10,7 @@
         <!--<local:KonvertorViditelnostThumbnailu x:Key="KonvertorViditelnostThumbnailu"/>-->
         <!--<local:KonvertorViditelnostThumbnailuInvert x:Key="KonvertorViditelnostThumbnailuInvert"/>-->
         <local:KonvertorBnaMB x:Key="KonvertorBnaMB"/>
+        <local:KonvertorViditelnostiSdileno x:Key="KonvertorViditelnostiSdileno"/>
 
         <local:VybratIkonuDleObsahu x:Key="VybratIkonuDleObsahu"
                             SablonaSouboryRepozitarGithub_IkonaSlozky="{StaticResource SablonaSouboryRepozitarGithub_IkonaSlozky}"
@@ -72,6 +73,12 @@
                     <Run>–</Run>
                     <Run Text="{Binding LastModifiedDateTime}"></Run>
                 </TextBlock>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Visibility="{Binding Shared, Converter={StaticResource KonvertorViditelnostiSdileno}}">
+                    <FontIcon Glyph="&#xE716;" Margin="0,0,5,0" FontSize="14" Foreground="DarkGray"></FontIcon>
+                    <TextBlock VerticalAlignment="Center" FontSize="12" x:Uid="TextBlockAdresarSdileno" Foreground="DarkGray"></TextBlock>
+                </StackPanel>
+                
             </Grid>
         </DataTemplate>
         

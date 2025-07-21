@@ -13,11 +13,11 @@
         <StackPanel Padding="20">
 
             <!--<TextBlock Text="O aplikaci" FontSize="23" Margin="0,15,0,15" />-->
-            
+
             <Button x:Name="LoginButton" x:Uid="TlacitkoNastaveniZobrazitPrihlaseni" Click="LoginButton_Click" />
 
             <!--<Button Click="Button_Click">Testtttt</Button>-->
-            
+
 
             <!--<ToggleSwitch Header="Zobrazit nezpracované výsledky vyhledávání" x:Name="ZobrazitNezpracovaneVysledkyVyhledavani" Toggled="ZobrazitNezpracovaneVysledkyVyhledavani_Toggled"/>-->
 
@@ -31,13 +31,21 @@
             <!--<ToggleSwitch Header="Zobrazit čas odjezdu v nadpisu včetně zpoždění" x:Name="ZobrazitCasVcetneZpozdeni" Margin="0,25,0,0" IsOn="True" IsEnabled="False"/>-->
 
 
-            <TextBlock x:Uid="NadpisOaplikaci" TextWrapping="Wrap" Text="O aplikaci" FontSize="23" Margin="0,50,0,0" />
+            <TextBlock x:Uid="NadpisOaplikaci" TextWrapping="Wrap" FontSize="23" Margin="0,50,0,0" />
             <TextBlock x:Uid="PodnadpisOaplikaci" TextWrapping="Wrap" />
             <TextBlock x:Uid="LicenceOaplikaci" TextWrapping="Wrap"></TextBlock>
             <HyperlinkButton x:Uid="WebFirmyOaplikaci" NavigateUri="http://www.metropolis.xf.cz/webdesign/index.php?zdrojZobrazeni=MetropolisCloudovyKlient" />
             <HyperlinkButton x:Uid="OsobniUdajeOaplikaci" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
 
-            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0" Text="Verze aplikace: 1.1.2" />
+            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0" Text="Verze aplikace: 1.2" />
+
+
+            <TextBlock x:Uid="NadpisPodekovani" TextWrapping="Wrap" FontSize="23" Margin="0,50,0,0" />
+            <TextBlock TextWrapping="Wrap">
+                <Run>Bryan</Run>
+                <Run FontStyle="Italic">(Portuguese)</Run><Run>, jan.exe</Run>
+                <Run FontStyle="Italic">(Indonesian)</Run>
+            </TextBlock>
 
         </StackPanel>
 

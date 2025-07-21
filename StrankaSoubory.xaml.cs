@@ -552,6 +552,7 @@ namespace MetropolisOnedriveKlient
                 onedriveNavigacniCesta.Clear();
                 onedriveNavigacniCesta.Add(resourceLoader.GetString("KorenovyAdresarNazev"));
                 NavigacniPanelCesty.SelectedIndex = 0;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
                 //adresaKamNavigovat = "";
             }
@@ -559,10 +560,11 @@ namespace MetropolisOnedriveKlient
             { // Adresář dle pole onedriveNavigacniCesta
 
                 adresaKamNavigovat += AktualniCestaDoStringu();
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
             }
 
-            adresaKamNavigovat += "/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size&$expand=thumbnails";
+            adresaKamNavigovat += "/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
 
             // Provést navigaci
             try

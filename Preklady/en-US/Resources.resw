@@ -221,6 +221,10 @@
     <value>About</value>
     <comment>About</comment>
   </data>
+  <data name="NadpisPodekovani.Text" xml:space="preserve">
+    <value>Acknowledgments for translations</value>
+    <comment>Acknowledgments for translations</comment>
+  </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
     <value>Privacy Policy &amp; Disclaimer</value>
     <comment>Privacy Policy &amp; Disclaimer</comment>
@@ -260,6 +264,10 @@
   <data name="StrankaSouboryNadpis" xml:space="preserve">
     <value>Files</value>
     <comment>Files</comment>
+  </data>
+  <data name="TextBlockAdresarSdileno.Text" xml:space="preserve">
+    <value>Shared</value>
+    <comment>Shared</comment>
   </data>
   <data name="TextBlockPivotFotoaparat.Text" xml:space="preserve">
     <value>Camera</value>

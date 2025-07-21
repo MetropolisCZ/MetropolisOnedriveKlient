@@ -221,6 +221,10 @@
     <value>O aplikaci</value>
     <comment>About</comment>
   </data>
+  <data name="NadpisPodekovani.Text" xml:space="preserve">
+    <value>Poděkování za překlad</value>
+    <comment>Acknowledgments for translations</comment>
+  </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
     <value>Ochrana osobních údajů a odpovědnost</value>
     <comment>Privacy Policy &amp; Disclaimer</comment>
@@ -260,6 +264,10 @@
   <data name="StrankaSouboryNadpis" xml:space="preserve">
     <value>Soubory</value>
     <comment>Files</comment>
+  </data>
+  <data name="TextBlockAdresarSdileno.Text" xml:space="preserve">
+    <value>Sdíleno</value>
+    <comment>Shared</comment>
   </data>
   <data name="TextBlockPivotFotoaparat.Text" xml:space="preserve">
     <value>Fotoaparát</value>

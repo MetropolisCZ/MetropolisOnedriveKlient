@@ -39,6 +39,33 @@ namespace MetropolisOnedriveKlient
         [JsonProperty("file")]
         public FileTrida File { get; set; }
 
+        [JsonProperty("shared")]
+        public Shared Shared { get; set; }
+
+    }
+
+    public class Shared
+    {
+        [JsonProperty("owner")]
+        public Owner Owner { get; set; }
+    }
+
+    public class Owner
+    {
+        [JsonProperty("user")]
+        public User User { get; set; }
+    }
+
+    public class User
+    {
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("displayName")]
+        public string DisplayName { get; set; }
     }
 
     public class FolderTrida
