@@ -118,227 +118,227 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppBarTlacitkoNastaveni.Label" xml:space="preserve">
-    <value>Nastavení</value>
+    <value>Paramètres</value>
     <comment>Settings</comment>
   </data>
   <data name="AppBarTlacitkoPrubeh.Label" xml:space="preserve">
-    <value>Průběh</value>
+    <value>Statut</value>
     <comment>Status</comment>
   </data>
   <data name="AppBarTlacitkoSoubory.Label" xml:space="preserve">
-    <value>Soubory</value>
+    <value>Fichiers</value>
     <comment>Files</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>Metropolis cloudový klient</value>
+    <value>Metropolis cloud client</value>
     <comment>Metropolis cloud client</comment>
   </data>
   <data name="Chyba" xml:space="preserve">
-    <value>Chyba</value>
+    <value>Erreur</value>
     <comment>Error</comment>
   </data>
   <data name="contentDialogNovaSlozka.PrimaryButtonText" xml:space="preserve">
-    <value>Vytvořit</value>
+    <value>Créer</value>
     <comment>Create</comment>
   </data>
   <data name="contentDialogNovaSlozka.Title" xml:space="preserve">
-    <value>Vytvoření nové složky</value>
+    <value>Créer nouveau répertoire</value>
     <comment>Create new folder</comment>
   </data>
   <data name="contentDialogNovaSlozka.ZadejtePlatnyNazev" xml:space="preserve">
-    <value>Zadejte platný název</value>
+    <value>Entrer un nom valide</value>
     <comment>Enter a valid name</comment>
   </data>
   <data name="contentDialogNovaSlozka_textBox.PlaceholderText" xml:space="preserve">
-    <value>Nový název složky</value>
+    <value>Nom du nouveau répertoire</value>
     <comment>New folder name</comment>
   </data>
   <data name="contentDialogOdstranit.PrimaryButtonText" xml:space="preserve">
-    <value>Odstranit</value>
+    <value>Supprimer</value>
     <comment>Delete</comment>
   </data>
   <data name="contentDialogOdstranit.TitleJeden" xml:space="preserve">
-    <value>Odstranit tuto položku?</value>
+    <value>Supprimer ce fichier ?</value>
     <comment>Delete this file?</comment>
   </data>
   <data name="contentDialogOdstranit.TitleMulti" xml:space="preserve">
-    <value>Odstranit tyto položky?</value>
+    <value>Supprimer ces fichiers ?</value>
     <comment>Delete these files?</comment>
   </data>
   <data name="contentDialogPrejmenovat.PrimaryButtonText" xml:space="preserve">
-    <value>Přejmenovat</value>
+    <value>Renomer</value>
     <comment>Rename</comment>
   </data>
   <data name="contentDialogPrejmenovat.Title" xml:space="preserve">
-    <value>Přejmenovat soubor</value>
+    <value>Ronomer le fichier</value>
     <comment>Rename file</comment>
   </data>
   <data name="contentDialogPrejmenovat.ZadejtePlatnyNazev" xml:space="preserve">
-    <value>Zadejte platný název</value>
+    <value>Entrer un nom de fichier valide</value>
     <comment>Enter a valid filename</comment>
   </data>
   <data name="contentDialogPrejmenovat_textBox.PlaceholderText" xml:space="preserve">
-    <value>Nový název (včetně koncovky)</value>
+    <value>Nouveau fichier (avec extension)</value>
     <comment>New filename (incl. extension)</comment>
   </data>
   <data name="dialogHTTPchyba.Title" xml:space="preserve">
-    <value>HTTP odpověď</value>
+    <value>Réponse HTTP</value>
     <comment>HTTP response</comment>
   </data>
   <data name="dialogNebylVybranSoubor.Title" xml:space="preserve">
-    <value>Nebyl zvolen žádný soubor ke stažení</value>
+    <value>Aucun fichier sélectionner a télécharger</value>
     <comment>No file for download selected</comment>
   </data>
   <data name="flyoutTlacitkoOdstranit.Text" xml:space="preserve">
-    <value>Odstranit</value>
+    <value>Supprimer</value>
     <comment>Delete</comment>
   </data>
   <data name="flyoutTlacitkoPrejmenovat.Text" xml:space="preserve">
-    <value>Přejmenovat</value>
+    <value>Renomer</value>
     <comment>Rename</comment>
   </data>
   <data name="flyoutTlacitkoPresunout.Text" xml:space="preserve">
-    <value>Přesunout</value>
+    <value>Déplacer</value>
     <comment>Move</comment>
   </data>
   <data name="flyoutTlacitkoSdilet.Text" xml:space="preserve">
-    <value>Sdílet</value>
+    <value>Partager</value>
     <comment>Share</comment>
   </data>
   <data name="flyoutTlacitkoStahnout.Text" xml:space="preserve">
-    <value>Stáhnout</value>
+    <value>Télécharger</value>
     <comment>Download</comment>
   </data>
   <data name="KorenovyAdresarNazev" xml:space="preserve">
-    <value>Moje soubory</value>
+    <value>Mes fichiers</value>
     <comment>My files</comment>
   </data>
   <data name="LicenceOaplikaci.Text" xml:space="preserve">
-    <value>Firma Metropolis 2025, všechna práva na kód vyhrazena</value>
+    <value>Firma Metropolis 2025, tout droit réservé sur le code source </value>
     <comment>Firma Metropolis 2025, all right on source code reserved</comment>
   </data>
   <data name="NadpisOaplikaci.Text" xml:space="preserve">
-    <value>O aplikaci</value>
+    <value>A propos</value>
     <comment>About</comment>
   </data>
   <data name="NadpisPodekovani.Text" xml:space="preserve">
-    <value>Poděkování za překlad</value>
+    <value>Remerciements pour les traductions</value>
     <comment>Acknowledgments for translations</comment>
   </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
-    <value>Ochrana osobních údajů a odpovědnost</value>
+    <value>Politique de confidentialité et avertissement</value>
     <comment>Privacy Policy &amp; Disclaimer</comment>
   </data>
   <data name="PodnadpisOaplikaci.Text" xml:space="preserve">
-    <value>Tato aplikace byla založena na Microsoft Graph API</value>
+    <value>Application basée sur l'API Microsoft Graph</value>
     <comment>App based on Microsoft Graph API</comment>
   </data>
   <data name="polozkaSeznamNahravani.Dokonceno" xml:space="preserve">
-    <value>Dokončeno</value>
+    <value>Terminé</value>
     <comment>Finished</comment>
   </data>
   <data name="polozkaSeznamNahravani.Pripraveno" xml:space="preserve">
-    <value>Připraveno</value>
+    <value>Prêt</value>
     <comment>Ready</comment>
   </data>
   <data name="polozkaSeznamNahravani.Probiha" xml:space="preserve">
-    <value>Probíhá</value>
+    <value>En cours</value>
     <comment>Running</comment>
   </data>
   <data name="polozkaSeznamStahovani.DocasnySoubor" xml:space="preserve">
-    <value>dočasný soubor</value>
+    <value>fichier temporaire</value>
     <comment>temporary file</comment>
   </data>
   <data name="PresunoutNadpis" xml:space="preserve">
-    <value>Přesunout</value>
+    <value>Déplacer</value>
     <comment>Move</comment>
   </data>
   <data name="StrankaNastaveniNadpis" xml:space="preserve">
-    <value>Nastavení</value>
+    <value>Paramètres</value>
     <comment>Settings</comment>
   </data>
   <data name="StrankaPrubehNadpis" xml:space="preserve">
-    <value>Průběh</value>
+    <value>Statut</value>
     <comment>Status (like uploading files, downloading files)</comment>
   </data>
   <data name="StrankaSouboryNadpis" xml:space="preserve">
-    <value>Soubory</value>
+    <value>Fichiers</value>
     <comment>Files</comment>
   </data>
   <data name="TextBlockAdresarSdileno.Text" xml:space="preserve">
-    <value>Sdíleno</value>
+    <value>Partagé</value>
     <comment>Shared</comment>
   </data>
   <data name="TextBlockPivotFotoaparat.Text" xml:space="preserve">
-    <value>Fotoaparát</value>
+    <value>Appareil photo</value>
     <comment>Camera</comment>
   </data>
   <data name="TextBlockPivotNahravani.Text" xml:space="preserve">
-    <value>Nahrávání</value>
+    <value>Téléversements</value>
     <comment>Uploads</comment>
   </data>
   <data name="TextBlockPivotStahovani.Text" xml:space="preserve">
-    <value>Stahování</value>
+    <value>Téléchargements</value>
     <comment>Downloads</comment>
   </data>
   <data name="TlacitkoAktualizovat.Label" xml:space="preserve">
-    <value>Aktualizovat</value>
+    <value>Mise à jour</value>
     <comment>Update</comment>
   </data>
   <data name="TlacitkoMultiVyber.Label" xml:space="preserve">
-    <value>Výběr</value>
+    <value>Sélectionner</value>
     <comment>Select</comment>
   </data>
   <data name="TlacitkoNacistDalsi.Content" xml:space="preserve">
-    <value>Načíst další</value>
+    <value>Charger plus</value>
     <comment>Load more</comment>
   </data>
   <data name="TlacitkoNahrat.Label" xml:space="preserve">
-    <value>Nahrát</value>
+    <value>Téléverser</value>
     <comment>Upload</comment>
   </data>
   <data name="TlacitkoNastaveniZobrazitPrihlaseni.Content" xml:space="preserve">
-    <value>Zobrazit dialog přihlášení</value>
+    <value>Afficher la boîte de dialogue de connexion</value>
     <comment>Show login dialog</comment>
   </data>
   <data name="TlacitkoNovaSlozka.Label" xml:space="preserve">
-    <value>Nová složka</value>
+    <value>Nouveau dossier</value>
     <comment>New folder</comment>
   </data>
   <data name="TlacitkoOdstranit.Label" xml:space="preserve">
-    <value>Odstranit</value>
+    <value>Supprimer</value>
     <comment>Delete</comment>
   </data>
   <data name="TlacitkoPresunout.Label" xml:space="preserve">
-    <value>Přesunout</value>
+    <value>Déplacer</value>
     <comment>Move</comment>
   </data>
   <data name="TlacitkoPresunoutSem.Label" xml:space="preserve">
-    <value>Přesunout sem</value>
+    <value>Déplacer ici</value>
     <comment>Move here</comment>
   </data>
   <data name="TlacitkoStahnout.Label" xml:space="preserve">
-    <value>Stáhnout</value>
+    <value>Télécharger</value>
     <comment>Download</comment>
   </data>
   <data name="TlacitkoZrusitPresun.Label" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Annuler</value>
     <comment>Cancel</comment>
   </data>
   <data name="VerzeAplikaceRun.Text" xml:space="preserve">
-    <value>Verze aplikace</value>
+    <value>Version de l'application</value>
     <comment>App version</comment>
   </data>
   <data name="WebFirmyOaplikaci.Content" xml:space="preserve">
-    <value>Web firmy Metropolis</value>
+    <value>Site internet Firma Metropolis</value>
     <comment>Firma Metropolis website</comment>
   </data>
   <data name="ZavritDialog" xml:space="preserve">
-    <value>Zavřít</value>
+    <value>Fermer</value>
     <comment>Close (like when closing ContentDialog)</comment>
   </data>
   <data name="ZrusitDialog" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Annuler</value>
     <comment>Cancel (like when cancelling some operation)</comment>
   </data>
 </root>

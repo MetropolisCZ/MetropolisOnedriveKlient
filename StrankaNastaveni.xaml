@@ -37,14 +37,28 @@
             <HyperlinkButton x:Uid="WebFirmyOaplikaci" NavigateUri="http://www.metropolis.xf.cz/webdesign/index.php?zdrojZobrazeni=MetropolisCloudovyKlient" />
             <HyperlinkButton x:Uid="OsobniUdajeOaplikaci" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
 
-            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0" Text="Verze aplikace: 1.2" />
+            <TextBlock TextWrapping="Wrap" Margin="0,7,0,0">
+                <Run x:Uid="VerzeAplikaceRun"></Run>
+                <Run>: 1.2.2</Run>
+            </TextBlock>
 
 
             <TextBlock x:Uid="NadpisPodekovani" TextWrapping="Wrap" FontSize="23" Margin="0,50,0,0" />
             <TextBlock TextWrapping="Wrap">
-                <Run>Bryan</Run>
-                <Run FontStyle="Italic">(Portuguese)</Run><Run>, jan.exe</Run>
+                <Run>BRYANLPS</Run>
+                <Run FontStyle="Italic">(Portuguese)</Run>
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap">
+                <Run>jan.exe</Run>
                 <Run FontStyle="Italic">(Indonesian)</Run>
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap">
+                <Run>Damian</Run>
+                <Run FontStyle="Italic">(Polish)</Run>
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap">
+                <Run>Thomas Soucille</Run>
+                <Run FontStyle="Italic">(French)</Run>
             </TextBlock>
 
         </StackPanel>

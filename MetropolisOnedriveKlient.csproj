@@ -20,7 +20,7 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <PackageCertificateThumbprint>ED08FD01E2170AC4146F38DE3EC12C13034EEF65</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>6209096AA50908E87CE150832D8723D12BFD507D</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -195,6 +195,8 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Preklady\pl-PL\Resources.resw" />
+    <PRIResource Include="Preklady\fr-FR\Resources.resw" />
     <PRIResource Include="Preklady\pt-PT\Resources.resw" />
     <PRIResource Include="Preklady\en-US\Resources.resw" />
     <PRIResource Include="Preklady\cs-CZ\Resources.resw" />
