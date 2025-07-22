@@ -222,7 +222,7 @@
     <comment>About</comment>
   </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
-    <value>Polityka Prywatności &amp; Zrzeczenie się</value>
+    <value>Polityka Prywatności & Wyłączenie Odpowiedzialności</value>
     <comment>Privacy Policy &amp; Disclaimer</comment>
   </data>
   <data name="PodnadpisOaplikaci.Text" xml:space="preserve">
@@ -266,7 +266,7 @@
     <comment>Camera</comment>
   </data>
   <data name="TextBlockPivotNahravani.Text" xml:space="preserve">
-    <value>Pobierane</value>
+    <value>Przekazywane</value>
     <comment>Uploads</comment>
   </data>
   <data name="TextBlockPivotStahovani.Text" xml:space="preserve">
@@ -275,7 +275,7 @@
   </data>
   <data name="TlacitkoAktualizovat.Label" xml:space="preserve">
     <value>Aktualizacja</value>
-    <comment>Update</comment>
+    <comment>Odśwież</comment>
   </data>
   <data name="TlacitkoMultiVyber.Label" xml:space="preserve">
     <value>Wybierz</value>
