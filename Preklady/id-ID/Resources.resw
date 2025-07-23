@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppBarTlacitkoNastaveni.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>Pengaturan</value>
     <comment>Settings</comment>
   </data>
   <data name="AppBarTlacitkoPrubeh.Label" xml:space="preserve">
@@ -126,59 +126,59 @@
     <comment>Status</comment>
   </data>
   <data name="AppBarTlacitkoSoubory.Label" xml:space="preserve">
-    <value>Files</value>
+    <value>Berkas</value>
     <comment>Files</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>Metropolis Cloud Client</value>
+    <value>Metropolis cloud klien</value>
     <comment>Metropolis cloud client</comment>
   </data>
   <data name="Chyba" xml:space="preserve">
-    <value>Error</value>
+    <value>Kesalahan</value>
     <comment>Error</comment>
   </data>
   <data name="contentDialogNovaSlozka.PrimaryButtonText" xml:space="preserve">
-    <value>Create</value>
+    <value>Buat</value>
     <comment>Create</comment>
   </data>
   <data name="contentDialogNovaSlozka.Title" xml:space="preserve">
-    <value>Create new folder</value>
+    <value>Buat Folder baru</value>
     <comment>Create new folder</comment>
   </data>
   <data name="contentDialogNovaSlozka.ZadejtePlatnyNazev" xml:space="preserve">
-    <value>Enter a valid name</value>
+    <value>Masukan nama yang benar</value>
     <comment>Enter a valid name</comment>
   </data>
   <data name="contentDialogNovaSlozka_textBox.PlaceholderText" xml:space="preserve">
-    <value>New folder name</value>
+    <value>Nama folder baru</value>
     <comment>New folder name</comment>
   </data>
   <data name="contentDialogOdstranit.PrimaryButtonText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Hapus</value>
     <comment>Delete</comment>
   </data>
   <data name="contentDialogOdstranit.TitleJeden" xml:space="preserve">
-    <value>Delete this file?</value>
+    <value>Hapus berkas ini?</value>
     <comment>Delete this file?</comment>
   </data>
   <data name="contentDialogOdstranit.TitleMulti" xml:space="preserve">
-    <value>Delete these files?</value>
+    <value>Hapus berkas-berkas ini?</value>
     <comment>Delete these files?</comment>
   </data>
   <data name="contentDialogPrejmenovat.PrimaryButtonText" xml:space="preserve">
-    <value>Rename</value>
+    <value>Ubah nama</value>
     <comment>Rename</comment>
   </data>
   <data name="contentDialogPrejmenovat.Title" xml:space="preserve">
-    <value>Rename file</value>
+    <value>Ubah nama berkas</value>
     <comment>Rename file</comment>
   </data>
   <data name="contentDialogPrejmenovat.ZadejtePlatnyNazev" xml:space="preserve">
-    <value>Enter a valid filename</value>
+    <value>Masukan nama berkas yang benar</value>
     <comment>Enter a valid filename</comment>
   </data>
   <data name="contentDialogPrejmenovat_textBox.PlaceholderText" xml:space="preserve">
-    <value>New filename (incl. extension)</value>
+    <value>Nama baru berkas (termsuk ekstensi)</value>
     <comment>New filename (incl. extension)</comment>
   </data>
   <data name="dialogHTTPchyba.Title" xml:space="preserve">
@@ -186,31 +186,31 @@
     <comment>HTTP response</comment>
   </data>
   <data name="dialogNebylVybranSoubor.Title" xml:space="preserve">
-    <value>No file for download selected</value>
+    <value>Tidak ada berkas terpilih untuk diunduh </value>
     <comment>No file for download selected</comment>
   </data>
   <data name="flyoutTlacitkoOdstranit.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Hapus</value>
     <comment>Delete</comment>
   </data>
   <data name="flyoutTlacitkoPrejmenovat.Text" xml:space="preserve">
-    <value>Rename</value>
+    <value>Ubah nama</value>
     <comment>Rename</comment>
   </data>
   <data name="flyoutTlacitkoPresunout.Text" xml:space="preserve">
-    <value>Move</value>
+    <value>Pindah</value>
     <comment>Move</comment>
   </data>
   <data name="flyoutTlacitkoSdilet.Text" xml:space="preserve">
-    <value>Share</value>
+    <value>Bagikan</value>
     <comment>Share</comment>
   </data>
   <data name="flyoutTlacitkoStahnout.Text" xml:space="preserve">
-    <value>Download</value>
+    <value>Unduh</value>
     <comment>Download</comment>
   </data>
   <data name="KorenovyAdresarNazev" xml:space="preserve">
-    <value>My files</value>
+    <value>Berkas saya</value>
     <comment>My files</comment>
   </data>
   <data name="LicenceOaplikaci.Text" xml:space="preserve">
@@ -218,131 +218,115 @@
     <comment>Firma Metropolis 2025, all right on source code reserved</comment>
   </data>
   <data name="NadpisOaplikaci.Text" xml:space="preserve">
-    <value>About</value>
+    <value>Tentang</value>
     <comment>About</comment>
   </data>
-  <data name="NadpisPodekovani.Text" xml:space="preserve">
-    <value>Acknowledgments for translations</value>
-    <comment>Acknowledgments for translations</comment>
-  </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
-    <value>Privacy Policy &amp; Disclaimer</value>
+    <value>Kebijakan privasi &amp; Penafian</value>
     <comment>Privacy Policy &amp; Disclaimer</comment>
   </data>
   <data name="PodnadpisOaplikaci.Text" xml:space="preserve">
-    <value>App based on Microsoft Graph API</value>
+    <value>Berdasarkan Microsoft Graph API</value>
     <comment>App based on Microsoft Graph API</comment>
   </data>
   <data name="polozkaSeznamNahravani.Dokonceno" xml:space="preserve">
-    <value>Finished</value>
+    <value>Selesai</value>
     <comment>Finished</comment>
   </data>
   <data name="polozkaSeznamNahravani.Pripraveno" xml:space="preserve">
-    <value>Ready</value>
+    <value>Siap</value>
     <comment>Ready</comment>
   </data>
   <data name="polozkaSeznamNahravani.Probiha" xml:space="preserve">
-    <value>Running</value>
+    <value>Berjalan</value>
     <comment>Running</comment>
   </data>
   <data name="polozkaSeznamStahovani.DocasnySoubor" xml:space="preserve">
-    <value>temporary file</value>
+    <value>Berkas sementara</value>
     <comment>temporary file</comment>
   </data>
   <data name="PresunoutNadpis" xml:space="preserve">
-    <value>Move</value>
+    <value>Pindah</value>
     <comment>Move</comment>
   </data>
   <data name="StrankaNastaveniNadpis" xml:space="preserve">
-    <value>Settings</value>
+    <value>Pengaturan</value>
     <comment>Settings</comment>
   </data>
   <data name="StrankaPrubehNadpis" xml:space="preserve">
-    <value>Status</value>
+    <value>Proses</value>
     <comment>Status (like uploading files, downloading files)</comment>
   </data>
   <data name="StrankaSouboryNadpis" xml:space="preserve">
-    <value>Files</value>
+    <value>Berkas-berkas</value>
     <comment>Files</comment>
   </data>
-  <data name="TextBlockAdresarSdileno.Text" xml:space="preserve">
-    <value>Shared</value>
-    <comment>Shared</comment>
-  </data>
   <data name="TextBlockPivotFotoaparat.Text" xml:space="preserve">
-    <value>Camera</value>
+    <value>Kamera</value>
     <comment>Camera</comment>
   </data>
   <data name="TextBlockPivotNahravani.Text" xml:space="preserve">
-    <value>Uploads</value>
+    <value>Unggahan</value>
     <comment>Uploads</comment>
   </data>
   <data name="TextBlockPivotStahovani.Text" xml:space="preserve">
-    <value>Downloads</value>
+    <value>Unduhan</value>
     <comment>Downloads</comment>
   </data>
   <data name="TlacitkoAktualizovat.Label" xml:space="preserve">
-    <value>Update</value>
+    <value>Perbarui</value>
     <comment>Update</comment>
   </data>
   <data name="TlacitkoMultiVyber.Label" xml:space="preserve">
-    <value>Select</value>
+    <value>Pilih</value>
     <comment>Select</comment>
   </data>
   <data name="TlacitkoNacistDalsi.Content" xml:space="preserve">
-    <value>Load more</value>
+    <value>Muat lebih</value>
     <comment>Load more</comment>
   </data>
   <data name="TlacitkoNahrat.Label" xml:space="preserve">
-    <value>Upload</value>
+    <value>Unggah</value>
     <comment>Upload</comment>
   </data>
   <data name="TlacitkoNastaveniZobrazitPrihlaseni.Content" xml:space="preserve">
-    <value>Show login dialog</value>
+    <value>Tampilkan obrolan masuk</value>
     <comment>Show login dialog</comment>
   </data>
   <data name="TlacitkoNovaSlozka.Label" xml:space="preserve">
-    <value>New folder</value>
+    <value>Folder baru</value>
     <comment>New folder</comment>
   </data>
   <data name="TlacitkoOdstranit.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Hapus</value>
     <comment>Delete</comment>
   </data>
   <data name="TlacitkoPresunout.Label" xml:space="preserve">
-    <value>Move</value>
+    <value>Pindah</value>
     <comment>Move</comment>
   </data>
   <data name="TlacitkoPresunoutSem.Label" xml:space="preserve">
-    <value>Move here</value>
+    <value>Pindah kesini</value>
     <comment>Move here</comment>
   </data>
-  <data name="TlacitkoSdilet.Label" xml:space="preserve">
-    <value>Share</value>
-    <comment>Share</comment>
-  </data>
   <data name="TlacitkoStahnout.Label" xml:space="preserve">
-    <value>Download</value>
+    <value>Unduh</value>
     <comment>Download</comment>
   </data>
   <data name="TlacitkoZrusitPresun.Label" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Batal</value>
     <comment>Cancel</comment>
   </data>
-  <data name="VerzeAplikaceRun.Text" xml:space="preserve">
-    <value>App version</value>
-    <comment>App version</comment>
-  </data>
   <data name="WebFirmyOaplikaci.Content" xml:space="preserve">
-    <value>Firma Metropolis website</value>
+    <value>Situs Firma Metropolis</value>
     <comment>Firma Metropolis website</comment>
   </data>
   <data name="ZavritDialog" xml:space="preserve">
-    <value>Close</value>
+    <value>Tutup</value>
     <comment>Close (like when closing ContentDialog)</comment>
   </data>
   <data name="ZrusitDialog" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Batalkan</value>
     <comment>Cancel (like when cancelling some operation)</comment>
   </data>
 </root>

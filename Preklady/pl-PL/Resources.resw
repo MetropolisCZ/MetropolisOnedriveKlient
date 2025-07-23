@@ -222,7 +222,7 @@
     <comment>About</comment>
   </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
-    <value>Polityka Prywatności & Wyłączenie Odpowiedzialności</value>
+    <value>Polityka Prywatności &amp; Wyłączenie Odpowiedzialności</value>
     <comment>Privacy Policy &amp; Disclaimer</comment>
   </data>
   <data name="PodnadpisOaplikaci.Text" xml:space="preserve">
