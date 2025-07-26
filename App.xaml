@@ -11,12 +11,46 @@
         <!--<local:KonvertorViditelnostThumbnailuInvert x:Key="KonvertorViditelnostThumbnailuInvert"/>-->
         <local:KonvertorBnaMB x:Key="KonvertorBnaMB"/>
         <local:KonvertorViditelnostiSdileno x:Key="KonvertorViditelnostiSdileno"/>
+        <local:KonvertorOpravneniSouboruRoles x:Key="KonvertorOpravneniSouboruRoles"/>
 
         <local:VybratIkonuDleObsahu x:Key="VybratIkonuDleObsahu"
                             SablonaSouboryRepozitarGithub_IkonaSlozky="{StaticResource SablonaSouboryRepozitarGithub_IkonaSlozky}"
                             SablonaSouboryRepozitarGithub_IkonaGenericka="{StaticResource SablonaSouboryRepozitarGithub_IkonaGenericka}"
                             SablonaSouboryRepozitarGithub_IkonaObrazkovyNahled="{StaticResource SablonaSouboryRepozitarGithub_IkonaObrazkovyNahled}" />
 
+
+
+
+
+        <DataTemplate x:Key="SablonaOpravneniSdileni">
+            <Grid Padding="0,5,5,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <!--<RowDefinition Height="22"></RowDefinition>-->
+                </Grid.RowDefinitions>
+                <!--<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{Binding Roles, Converter={StaticResource KonvertorOpravneniSouboruRoles}}" Margin="0,0,10,0" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />-->
+                <SymbolIcon Symbol="Link" Margin="0,0,10,0" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+
+                <!--<ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource VybratIkonuDleObsahu}" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,15,0" />-->
+
+                <TextBlock Grid.Column="1" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding TypSdileniNadpis}">
+                </TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" Foreground="DarkGray">
+                    <Run Text="{Binding Roles, Converter={StaticResource KonvertorOpravneniSouboruRoles}}"></Run>
+                </TextBlock>
+
+                <!--<StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Visibility="{Binding Shared, Converter={StaticResource KonvertorViditelnostiSdileno}}">
+                    <FontIcon Glyph="&#xE716;" Margin="0,0,5,0" FontSize="14" Foreground="DarkGray"></FontIcon>
+                    <TextBlock VerticalAlignment="Center" FontSize="12" x:Uid="TextBlockAdresarSdileno" Foreground="DarkGray"></TextBlock>
+                </StackPanel>-->
+
+            </Grid>
+        </DataTemplate>
 
 
         <DataTemplate x:Key="SablonaSouboryRepozitarGithub_IkonaSlozky">

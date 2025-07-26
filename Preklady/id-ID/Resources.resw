@@ -290,7 +290,7 @@
     <comment>Upload</comment>
   </data>
   <data name="TlacitkoNastaveniZobrazitPrihlaseni.Content" xml:space="preserve">
-    <value>Tampilkan obrolan masuk</value>
+    <value>Tampilkan akun masuk</value>
     <comment>Show login dialog</comment>
   </data>
   <data name="TlacitkoNovaSlozka.Label" xml:space="preserve">

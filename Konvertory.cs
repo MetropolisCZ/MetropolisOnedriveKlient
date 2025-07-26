@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -44,6 +45,38 @@ namespace MetropolisOnedriveKlient
             else
             {
                 return Visibility.Visible;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class KonvertorOpravneniSouboruRoles : IValueConverter
+    {
+        private static ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            string[] roles = value as string[];
+            if (roles.Length == 1 && roles[0] == "write")
+            {
+                return resourceLoader.GetString("contentDialogSdileni/OpravneniUpravy");
+            }
+            else if (roles.Length == 1 && roles[0] == "read")
+            {
+                return resourceLoader.GetString("contentDialogSdileni/OpravneniCteni");
+            }
+            else if (roles.Length == 1 && roles[0] == "owner")
+            {
+                return resourceLoader.GetString("contentDialogSdileni/OpravneniVlastnik");
+            }
+            else
+            {
+                return roles[0];
             }
         }
 

@@ -181,6 +181,74 @@
     <value>New filename (incl. extension)</value>
     <comment>New filename (incl. extension)</comment>
   </data>
+  <data name="contentDialogSdileni.Nadpis" xml:space="preserve">
+    <value>Manage file access</value>
+    <comment>Manage file access (like if the file is shared – in the documentation it is called sharing permissions and it means who can view the file)</comment>
+  </data>
+  <data name="contentDialogSdileni.Odkaz" xml:space="preserve">
+    <value>Link</value>
+    <comment>Link (like link for sharing; used in sharing ContentDialog)</comment>
+  </data>
+  <data name="contentDialogSdileni.OdkazAplikace" xml:space="preserve">
+    <value>Link (app</value>
+    <comment>Link (app (part of string only; used in sharing ContentDialog, after this, there will be an app name)</comment>
+  </data>
+  <data name="contentDialogSdileni.OdkazUzivatele" xml:space="preserve">
+    <value>Link (users</value>
+    <comment>Link (users (part of string only; used in sharing ContentDialog, after this, there will be listed users)</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniCteni" xml:space="preserve">
+    <value>Read</value>
+    <comment>Read (like file permission to read)</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniUpravy" xml:space="preserve">
+    <value>Write</value>
+    <comment>Write (like file permission to write)</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniVlastnik" xml:space="preserve">
+    <value>You are the owner of this item</value>
+    <comment>You are the owner of this item (like file permission)</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniZdedenoOd" xml:space="preserve">
+    <value>inherited from</value>
+    <comment>inherited from (like inheriting permission from parent folder)</comment>
+  </data>
+  <data name="contentDialogSdileni.SouborNeniSdilen" xml:space="preserve">
+    <value>File is not shared with another users</value>
+    <comment>File is not shared with another users</comment>
+  </data>
+  <data name="contentDialogSdileni.TlacitkoVytvoritOdkazKeSdileni" xml:space="preserve">
+    <value>Create new sharing link</value>
+    <comment>Create new sharing link</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.KopirovatOdkaz" xml:space="preserve">
+    <value>Copy file link</value>
+    <comment>Copy file link (file sharing link)</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazOdstranen" xml:space="preserve">
+    <value>Link permanently deleted</value>
+    <comment>Link permanently deleted</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazZkopirovan" xml:space="preserve">
+    <value>Link copied to the clipboard</value>
+    <comment>Link copied to the clipboard</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdstranitOdkaz" xml:space="preserve">
+    <value>Delete file link</value>
+    <comment>Delete file link (file sharing link)</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OpravneniOdkazu" xml:space="preserve">
+    <value>Link permission</value>
+    <comment>Link permission (like view, edit, owner)</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.SdiletOdkaz" xml:space="preserve">
+    <value>Share file link</value>
+    <comment>Share file link</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.ZdedenoNejdeOdstranit" xml:space="preserve">
+    <value>Inherited permissions cannot be edited here, please edit parent folder</value>
+    <comment>Inherited permissions cannot be edited here, please edit parent folder</comment>
+  </data>
   <data name="dialogHTTPchyba.Title" xml:space="preserve">
     <value>HTTP response</value>
     <comment>HTTP response</comment>
