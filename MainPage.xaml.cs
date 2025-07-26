@@ -35,6 +35,11 @@ namespace MetropolisOnedriveKlient
         {
             this.InitializeComponent();
 
+            if (ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"] == null)
+            {
+                ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"] = false;
+            }
+
             ContentFrame = NavigacniRamec;
             PageHeader = NadpisStrankyTextBlock;
 

@@ -26,6 +26,9 @@ namespace MetropolisOnedriveKlient
         {
             this.InitializeComponent();
 
+
+            NastaveniPrepinacAktualizovatPriZmeneSdileni.IsOn = (bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"];
+
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -103,5 +106,11 @@ namespace MetropolisOnedriveKlient
             }
         }
 
+        private void NastaveniPrepinacAktualizovatPriZmeneSdileni_Toggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch prepinacSender = sender as ToggleSwitch;
+
+            ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"] = prepinacSender.IsOn;
+        }
     }
 }

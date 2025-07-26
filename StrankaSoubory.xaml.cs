@@ -15,6 +15,7 @@ using Windows.ApplicationModel.Resources;
 using Newtonsoft.Json;
 using Windows.ApplicationModel.DataTransfer;
 using System.Globalization;
+using Windows.UI.Xaml.Media;
 
 // Dokumentaci k šabloně Prázdná aplikace najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -320,8 +321,54 @@ namespace MetropolisOnedriveKlient
 
         }
 
+        public Button VytvoritTlacitkoSikonou(string textTlacitka, Symbol? symbol, bool symbolIkona = true, string glyphFontIkony = null)
+        {
+            Button TlacitkoSikonou = new Button();
+
+            StackPanel stackPanelVnitrni = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            if (symbolIkona)
+            {
+                SymbolIcon ikona = new SymbolIcon
+                {
+                    Symbol = (Symbol)symbol,
+                    Margin = new Thickness(0, 0, 8, 0)
+                };
+                stackPanelVnitrni.Children.Add(ikona);
+            }
+            else if (!string.IsNullOrEmpty(glyphFontIkony))
+            {
+                FontIcon ikonaGlyph = new FontIcon
+                {
+                    Glyph = glyphFontIkony,
+                    FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                    Margin = new Thickness(0, 0, 8, 0)
+                };
+                stackPanelVnitrni.Children.Add(ikonaGlyph);
+            }
+
+            TextBlock textBlock = new TextBlock
+            {
+                Text = textTlacitka,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            stackPanelVnitrni.Children.Add(textBlock);
+
+            TlacitkoSikonou.Content = stackPanelVnitrni;
+            return TlacitkoSikonou;
+        }
+
         private async void FlyoutTlacitkoSdilet_Click(object sender, RoutedEventArgs e)
         {
+            ListViewSouboryaSlozky.IsEnabled = false;
+            NavigacniPanelCesty.IsEnabled = false;
+            BottomAppBar.IsEnabled = false;
+
             OneDriveOpravneniSouboru oneDriveOpravneniSouboru = new OneDriveOpravneniSouboru();
 
             var originalSource = e.OriginalSource as FrameworkElement;
@@ -343,14 +390,20 @@ namespace MetropolisOnedriveKlient
                 CloseButtonText = resourceLoader.GetString("ZavritDialog")
             };
 
+            StackPanel contentDialogSdileni_stackPanel = new StackPanel();
+
+
             if (oneDriveOpravneniSouboru.Value.Length == 1)
             { // Je tam jenom oprávnění pro přihlášeného uživatele
 
-                contentDialogSdileni.Content = resourceLoader.GetString("contentDialogSdileni/SouborNeniSdilen");
+                contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                {
+                    Text = resourceLoader.GetString("contentDialogSdileni/SouborNeniSdilen"),
+                    TextWrapping = TextWrapping.Wrap
+                });
             }
             else
             {
-                StackPanel contentDialogSdileni_stackPanel = new StackPanel();
 
                 ListView ListViewSdileniSouboru = new ListView
                 {
@@ -394,11 +447,9 @@ namespace MetropolisOnedriveKlient
                         if (vybranaMoznostSdileni.Roles[0] != "owner")
                         { // Když oprávnění není typu vlastník (což jsem stejně nikdy moc nepochopil, co to jako je), tak zobrazíme tlačítka pro sdílení
 
-                            Button tlacitkoKopirovatOdkaz = new Button
-                            {
-                                Content = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/KopirovatOdkaz"),
-                                Margin = new Thickness(0, 10, 0, 10)
-                            };
+                            Button tlacitkoKopirovatOdkaz = VytvoritTlacitkoSikonou(resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/KopirovatOdkaz"), Symbol.Copy);
+                            tlacitkoKopirovatOdkaz.Margin = new Thickness(0, 10, 0, 10);
+
                             tlacitkoKopirovatOdkaz.Click += (__s, __e) =>
                             {
                                 DataPackage dataPackage = new DataPackage
@@ -424,11 +475,13 @@ namespace MetropolisOnedriveKlient
                                 });
                             };
 
-                            Button tlacitkoSdiletOdkaz = new Button
+                            Button tlacitkoSdiletOdkaz = VytvoritTlacitkoSikonou(resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/SdiletOdkaz"), Symbol.Share); // Ikona sdílení NENÍ dostupná na W10M! Zrada!
+
+                            /*Button tlacitkoSdiletOdkaz = new Button
                             {
                                 Content = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/SdiletOdkaz")
                                 //Margin = new Thickness(0, 0, 0, 10)
-                            };
+                            };*/
                             tlacitkoSdiletOdkaz.Click += (__s, __e) =>
                             {
                                 DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -465,14 +518,25 @@ namespace MetropolisOnedriveKlient
                     }
                     else if (vybranaMoznostSdileni.Roles[0] != "owner")
                     {
-                        Button tlacitkoOdstranitOdkaz = new Button
-                        {
-                            Content = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/OdstranitOdkaz"),
-                            Margin = new Thickness(0, 25, 0, 0),
-                            FontStyle = Windows.UI.Text.FontStyle.Italic
-                        };
-                        tlacitkoOdstranitOdkaz.Click += (__s, __e) =>
-                        {
+                        Button tlacitkoOdstranitOdkaz = VytvoritTlacitkoSikonou(resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/OdstranitOdkaz"), Symbol.Delete);
+
+                        tlacitkoOdstranitOdkaz.Margin = new Thickness(0, 25, 0, 0);
+                        tlacitkoOdstranitOdkaz.FontStyle = Windows.UI.Text.FontStyle.Italic;
+
+
+                        tlacitkoOdstranitOdkaz.Click += async (__s, __e) =>
+                        { // Odstranit odkaz ke sdílení
+                            tlacitkoOdstranitOdkaz.IsEnabled = false;
+
+                            try
+                            {
+                                await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/items/" + kliknutySoubor.Id + "/permissions/" + vybranaMoznostSdileni.Id, TypyHTTPrequestu.Delete);
+                            }
+                            catch
+                            {
+                                contentDialogSdileni.Hide();
+                                return;
+                            }
 
                             contentDialogSdileni_stackPanel.Children.Clear();
 
@@ -487,29 +551,183 @@ namespace MetropolisOnedriveKlient
                             {
                                 Text = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/OdkazOdstranen")
                             });
+
+                            if ((bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"])
+                            {
+                                TlacitkoAktualizovat_Click(sender, e);
+                            }
                         };
 
                         contentDialogSdileni_stackPanel.Children.Add(tlacitkoOdstranitOdkaz);
                     }
                 };
 
-                Button TlacitkoVytvoritOdkazKeSdileni = new Button
-                {
-                    Content = resourceLoader.GetString("contentDialogSdileni/TlacitkoVytvoritOdkazKeSdileni"),
-                    Margin = new Thickness(0, 10, 0, 0)
-                };
-                TlacitkoVytvoritOdkazKeSdileni.Click += (_s, _e) =>
-                {
-                    contentDialogSdileni.Hide();
-                };
-
-
                 contentDialogSdileni_stackPanel.Children.Add(ListViewSdileniSouboru);
-                contentDialogSdileni_stackPanel.Children.Add(TlacitkoVytvoritOdkazKeSdileni);
-                contentDialogSdileni.Content = new ScrollViewer() { Content = contentDialogSdileni_stackPanel };
             }
 
-            await contentDialogSdileni.ShowAsync();
+
+
+            Button TlacitkoVytvoritOdkazKeSdileni = new Button
+            {
+                Content = resourceLoader.GetString("contentDialogSdileni/TlacitkoVytvoritOdkazKeSdileni"),
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+            TlacitkoVytvoritOdkazKeSdileni.Click += (_s, _e) =>
+            {
+                contentDialogSdileni_stackPanel.Children.Clear();
+
+                contentDialogSdileni.Title = resourceLoader.GetString("contentDialogSdileni/TlacitkoVytvoritOdkazKeSdileni");
+                contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                {
+                    Text = kliknutySoubor.Name,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontWeight = Windows.UI.Text.FontWeights.Bold
+                });
+
+                //contentDialogSdileni.Title = kliknutySoubor.Name;
+
+                contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                {
+                    Text = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/VyberteOpravneniOdkazu"),
+                    TextWrapping = TextWrapping.Wrap,
+                    Margin = new Thickness(0, 18, 0, 5)
+                });
+                RadioButton radioButtonVyberDruhuOpravneni1 = new RadioButton
+                {
+                    Content = resourceLoader.GetString("contentDialogSdileni/OpravneniCteni"),
+                    IsChecked = true,
+                    Tag = "view",
+                    GroupName = "RadioTlacitkaOpravneniSdileni"
+                };
+                contentDialogSdileni_stackPanel.Children.Add(radioButtonVyberDruhuOpravneni1);
+
+                RadioButton radioButtonVyberDruhuOpravneni2 = new RadioButton
+                {
+                    Content = resourceLoader.GetString("contentDialogSdileni/OpravneniUpravy"),
+                    Tag = "edit",
+                    GroupName = "RadioTlacitkaOpravneniSdileni"
+                };
+                contentDialogSdileni_stackPanel.Children.Add(radioButtonVyberDruhuOpravneni2);
+
+
+                Button tlacitkoPotvrditVytvoreniOdkazu = new Button
+                {
+                    Content = resourceLoader.GetString("contentDialogSdileni/TlacitkoVytvoritOdkazKeSdileni"),
+                    Margin = new Thickness(0, 25, 0, 0)
+                };
+                tlacitkoPotvrditVytvoreniOdkazu.Click += async (__s, __e) =>
+                { // Potvrdit vytvoření odkazu ke sdílení se zvolenou možností úprav
+
+                    tlacitkoPotvrditVytvoreniOdkazu.IsEnabled = false;
+
+                    string vybraneOpravneniNovehoOdkazu = radioButtonVyberDruhuOpravneni1.IsChecked == true
+                        ? radioButtonVyberDruhuOpravneni1.Tag as string
+                        : radioButtonVyberDruhuOpravneni2.Tag as string;
+
+                    string novyOdkazKeSdileniUrl;
+
+                    try
+                    {
+                        novyOdkazKeSdileniUrl = JObject.Parse(await NacistStrankuRestApi("https://graph.microsoft.com/v1.0/me/drive/items/" + kliknutySoubor.Id + "/createLink", TypyHTTPrequestu.Post, "{ \"type\": \"" + vybraneOpravneniNovehoOdkazu + "\" }")).SelectToken("link").SelectToken("webUrl").ToString();
+
+                    }
+                    catch
+                    {
+                        contentDialogSdileni.Hide();
+                        return;
+                    }
+
+                    contentDialogSdileni.Title = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/OdkazBylVytvoren");
+                    contentDialogSdileni_stackPanel.Children.Clear();
+
+                    contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                    {
+                        Text = kliknutySoubor.Name,
+                        TextWrapping = TextWrapping.Wrap,
+                        FontWeight = Windows.UI.Text.FontWeights.Bold
+                    });
+                    contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                    {
+                        Text = radioButtonVyberDruhuOpravneni1.IsChecked == true
+                        ? resourceLoader.GetString("contentDialogSdileni/OpravneniCteni")
+                        : resourceLoader.GetString("contentDialogSdileni/OpravneniUpravy"),
+                        TextWrapping = TextWrapping.Wrap
+                    });
+
+
+                    Button tlacitkoKopirovatOdkaz = VytvoritTlacitkoSikonou(resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/KopirovatOdkaz"), Symbol.Copy);
+                    tlacitkoKopirovatOdkaz.Margin = new Thickness(0, 10, 0, 10);
+
+                    tlacitkoKopirovatOdkaz.Click += (___s, ___e) =>
+                    {
+                        DataPackage dataPackage = new DataPackage
+                        {
+                            RequestedOperation = DataPackageOperation.Copy
+                        };
+                        dataPackage.SetText(novyOdkazKeSdileniUrl);
+                        Clipboard.SetContent(dataPackage);
+
+
+                        contentDialogSdileni_stackPanel.Children.Clear();
+
+                        contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                        {
+                            Text = radioButtonVyberDruhuOpravneni1.IsChecked == true
+                        ? resourceLoader.GetString("contentDialogSdileni/OpravneniCteni")
+                        : resourceLoader.GetString("contentDialogSdileni/OpravneniUpravy"),
+                            TextWrapping = TextWrapping.Wrap,
+                            FontWeight = Windows.UI.Text.FontWeights.Bold
+                        });
+
+                        contentDialogSdileni_stackPanel.Children.Add(new TextBlock
+                        {
+                            Text = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/OdkazZkopirovan")
+                        });
+                    };
+
+                    Button tlacitkoSdiletOdkaz = VytvoritTlacitkoSikonou(resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/SdiletOdkaz"), Symbol.Share);
+
+                    tlacitkoSdiletOdkaz.Click += (___s, ___e) =>
+                    {
+                        DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+                        dataTransferManager.DataRequested += (____s, ____e) =>
+                        {
+                            DataRequest request = ____e.Request;
+                            request.Data.Properties.Title = kliknutySoubor.Name;
+                            //request.Data.Properties.Description = "Popis";
+                            request.Data.SetWebLink(new Uri(novyOdkazKeSdileniUrl));
+                        };
+                        DataTransferManager.ShowShareUI();
+
+
+                        contentDialogSdileni.Hide();
+                    };
+
+                    contentDialogSdileni_stackPanel.Children.Add(tlacitkoKopirovatOdkaz);
+
+                    contentDialogSdileni_stackPanel.Children.Add(tlacitkoSdiletOdkaz);
+
+                    if ((bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"])
+                    {
+                        TlacitkoAktualizovat_Click(sender, e);
+                    }
+                };
+
+                contentDialogSdileni_stackPanel.Children.Add(tlacitkoPotvrditVytvoreniOdkazu);
+
+                //contentDialogSdileni.Hide();
+            };
+
+
+            contentDialogSdileni.Content = new ScrollViewer() { Content = contentDialogSdileni_stackPanel };
+            contentDialogSdileni_stackPanel.Children.Add(TlacitkoVytvoritOdkazKeSdileni);
+
+
+            _ = await contentDialogSdileni.ShowAsync();
+
+            ListViewSouboryaSlozky.IsEnabled = true;
+            NavigacniPanelCesty.IsEnabled = true;
+            BottomAppBar.IsEnabled = true;
         }
 
 

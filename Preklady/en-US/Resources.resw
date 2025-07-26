@@ -198,12 +198,12 @@
     <comment>Link (users (part of string only; used in sharing ContentDialog, after this, there will be listed users)</comment>
   </data>
   <data name="contentDialogSdileni.OpravneniCteni" xml:space="preserve">
-    <value>Read</value>
-    <comment>Read (like file permission to read)</comment>
+    <value>Permission to read</value>
+    <comment>Permission to read</comment>
   </data>
   <data name="contentDialogSdileni.OpravneniUpravy" xml:space="preserve">
-    <value>Write</value>
-    <comment>Write (like file permission to write)</comment>
+    <value>Permission to edit</value>
+    <comment>Permission to edit</comment>
   </data>
   <data name="contentDialogSdileni.OpravneniVlastnik" xml:space="preserve">
     <value>You are the owner of this item</value>
@@ -225,6 +225,10 @@
     <value>Copy file link</value>
     <comment>Copy file link (file sharing link)</comment>
   </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazBylVytvoren" xml:space="preserve">
+    <value>File sharing link created</value>
+    <comment>File sharing link created</comment>
+  </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.OdkazOdstranen" xml:space="preserve">
     <value>Link permanently deleted</value>
     <comment>Link permanently deleted</comment>
@@ -244,6 +248,10 @@
   <data name="contentDialogVytvoritOdkazKeSdileni.SdiletOdkaz" xml:space="preserve">
     <value>Share file link</value>
     <comment>Share file link</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.VyberteOpravneniOdkazu" xml:space="preserve">
+    <value>Select link permissions</value>
+    <comment>Select link permissions</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.ZdedenoNejdeOdstranit" xml:space="preserve">
     <value>Inherited permissions cannot be edited here, please edit parent folder</value>
@@ -292,6 +300,10 @@
   <data name="NadpisPodekovani.Text" xml:space="preserve">
     <value>Acknowledgments for translations</value>
     <comment>Acknowledgments for translations</comment>
+  </data>
+  <data name="NastaveniPrepinacAktualizovatPriZmeneSdileni.Header" xml:space="preserve">
+    <value>Refresh folder when editing file sharing permissions</value>
+    <comment>Refresh folder when editing file sharing permissions</comment>
   </data>
   <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
     <value>Privacy Policy &amp; Disclaimer</value>
