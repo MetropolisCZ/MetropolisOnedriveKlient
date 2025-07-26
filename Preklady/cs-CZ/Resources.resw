@@ -345,4 +345,64 @@
     <value>Zrušit</value>
     <comment>Cancel (like when cancelling some operation)</comment>
   </data>
+  <data name="contentDialogSdileni.Nadpis" xml:space="preserve">
+    <value>Spravovat sdílení souboru</value>
+  </data>
+  <data name="contentDialogSdileni.Odkaz" xml:space="preserve">
+    <value>Odkaz</value>
+  </data>
+  <data name="contentDialogSdileni.OdkazAplikace" xml:space="preserve">
+    <value>Odkaz (aplikace</value>
+  </data>
+  <data name="contentDialogSdileni.OdkazUzivatele" xml:space="preserve">
+    <value>Odkaz (uživatelé</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniCteni" xml:space="preserve">
+    <value>Oprávnění k zobrazení</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniUpravy" xml:space="preserve">
+    <value>Oprávnění k úpravám</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniVlastnik" xml:space="preserve">
+    <value>Jste vlastníkem této položky</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniZdedenoOd" xml:space="preserve">
+    <value>zděděno od</value>
+  </data>
+  <data name="contentDialogSdileni.SouborNeniSdilen" xml:space="preserve">
+    <value>Tato položka není sdílena s dalšími uživateli</value>
+  </data>
+  <data name="contentDialogSdileni.TlacitkoVytvoritOdkazKeSdileni" xml:space="preserve">
+    <value>Vytvořit nový odkaz ke sdílení</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.KopirovatOdkaz" xml:space="preserve">
+    <value>Kopírovat odkaz</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazBylVytvoren" xml:space="preserve">
+    <value>Odkaz ke sdílení vytvořen</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazOdstranen" xml:space="preserve">
+    <value>Odkaz byl trvale odstraněn</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazZkopirovan" xml:space="preserve">
+    <value>Odkaz byl zkopírován do schránky</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdstranitOdkaz" xml:space="preserve">
+    <value>Odstranit odkaz</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OpravneniOdkazu" xml:space="preserve">
+    <value>Oprávnění odkazu</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.SdiletOdkaz" xml:space="preserve">
+    <value>Sdílet odkaz</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.VyberteOpravneniOdkazu" xml:space="preserve">
+    <value>Zvolte oprávnění odkazu</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.ZdedenoNejdeOdstranit" xml:space="preserve">
+    <value>Zděděná oprávnění nelze upravovat zde, upravte rodičovskou složku</value>
+  </data>
+  <data name="NastaveniPrepinacAktualizovatPriZmeneSdileni.Header" xml:space="preserve">
+    <value>Po změně oprávnění ke sdílení aktualizovat složku</value>
+  </data>
 </root>

@@ -186,7 +186,7 @@
     <comment>HTTP response</comment>
   </data>
   <data name="dialogNebylVybranSoubor.Title" xml:space="preserve">
-    <value>Tidak ada berkas terpilih untuk diunduh </value>
+    <value>Tidak ada berkas terpilih untuk diunduh</value>
     <comment>No file for download selected</comment>
   </data>
   <data name="flyoutTlacitkoOdstranit.Text" xml:space="preserve">
