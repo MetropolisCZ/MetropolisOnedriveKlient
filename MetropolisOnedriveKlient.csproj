@@ -199,7 +199,7 @@
     <PRIResource Include="Preklady\id-ID\Resources.resw" />
     <PRIResource Include="Preklady\pl-PL\Resources.resw" />
     <PRIResource Include="Preklady\fr-FR\Resources.resw" />
-    <PRIResource Include="Preklady\pt-PT\Resources.resw" />
+    <PRIResource Include="Preklady\pt-BR\Resources.resw" />
     <PRIResource Include="Preklady\en-US\Resources.resw" />
     <PRIResource Include="Preklady\cs-CZ\Resources.resw" />
   </ItemGroup>

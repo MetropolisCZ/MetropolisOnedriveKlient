@@ -345,4 +345,64 @@
     <value>Annuler</value>
     <comment>Cancel (like when cancelling some operation)</comment>
   </data>
+  <data name="contentDialogSdileni.Odkaz" xml:space="preserve">
+    <value>Lien</value>
+  </data>
+  <data name="contentDialogSdileni.Nadpis" xml:space="preserve">
+    <value>Gerer les permissions</value>
+  </data>
+  <data name="contentDialogSdileni.OdkazUzivatele" xml:space="preserve">
+    <value>Lien (utlitisateurs</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniCteni" xml:space="preserve">
+    <value>Authorisation de lecture</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniUpravy" xml:space="preserve">
+    <value>Authorisation de modification</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniVlastnik" xml:space="preserve">
+    <value>Vous être le propriétaire de cet élément</value>
+  </data>
+  <data name="contentDialogSdileni.OpravneniZdedenoOd" xml:space="preserve">
+    <value>hérité de</value>
+  </data>
+  <data name="contentDialogSdileni.SouborNeniSdilen" xml:space="preserve">
+    <value>Fichier non partagé avec une autre personne</value>
+  </data>
+  <data name="contentDialogSdileni.TlacitkoVytvoritOdkazKeSdileni" xml:space="preserve">
+    <value>Créer un nouveau lien de partage</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.KopirovatOdkaz" xml:space="preserve">
+    <value>Copier le lien</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazBylVytvoren" xml:space="preserve">
+    <value>Lien de partage créé</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazOdstranen" xml:space="preserve">
+    <value>Lien supprimé définitivement</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazZkopirovan" xml:space="preserve">
+    <value>Lien copié dans la presse-papier</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdstranitOdkaz" xml:space="preserve">
+    <value>Supprimer le lien</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OpravneniOdkazu" xml:space="preserve">
+    <value>Permission du lien</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.SdiletOdkaz" xml:space="preserve">
+    <value>Partager le lien</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.VyberteOpravneniOdkazu" xml:space="preserve">
+    <value>Seclection des permissions du lien</value>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.ZdedenoNejdeOdstranit" xml:space="preserve">
+    <value>Les permissions héritées ne peuvent pas être modifiées ici, veuillez editer celles du parent</value>
+  </data>
+  <data name="NastaveniPrepinacAktualizovatPriZmeneSdileni.Header" xml:space="preserve">
+    <value>Après avoir modifié les autorisations de partage, mettez à jour le dossier</value>
+  </data>
+  <data name="contentDialogSdileni.OdkazAplikace" xml:space="preserve">
+    <value>Lien (applicaiton</value>
+  </data>
 </root>
