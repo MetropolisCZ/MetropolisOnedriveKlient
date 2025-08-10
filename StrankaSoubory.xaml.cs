@@ -651,7 +651,8 @@ namespace MetropolisOnedriveKlient
                         Text = radioButtonVyberDruhuOpravneni1.IsChecked == true
                         ? resourceLoader.GetString("contentDialogSdileni/OpravneniCteni")
                         : resourceLoader.GetString("contentDialogSdileni/OpravneniUpravy"),
-                        TextWrapping = TextWrapping.Wrap
+                        TextWrapping = TextWrapping.Wrap,
+                        Margin = new Thickness(0, 10, 0, 0)
                     });
 
 
