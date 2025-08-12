@@ -347,62 +347,121 @@
   </data>
   <data name="contentDialogSdileni.Nadpis" xml:space="preserve">
     <value>Spravovat sdílení souboru</value>
+    <comment>Manage file access (like if the file is shared – in the documentation it is called sharing permissions and it means who can view the file)</comment>
   </data>
   <data name="contentDialogSdileni.Odkaz" xml:space="preserve">
     <value>Odkaz</value>
+    <comment>Link (like link for sharing; used in sharing ContentDialog)</comment>
   </data>
   <data name="contentDialogSdileni.OdkazAplikace" xml:space="preserve">
     <value>Odkaz (aplikace</value>
+    <comment>Link (app (part of string only; used in sharing ContentDialog, after this, there will be an app name)</comment>
   </data>
   <data name="contentDialogSdileni.OdkazUzivatele" xml:space="preserve">
     <value>Odkaz (uživatelé</value>
+    <comment>Link (users (part of string only; used in sharing ContentDialog, after this, there will be listed users)</comment>
   </data>
   <data name="contentDialogSdileni.OpravneniCteni" xml:space="preserve">
     <value>Oprávnění k zobrazení</value>
+    <comment>Permission to read</comment>
   </data>
   <data name="contentDialogSdileni.OpravneniUpravy" xml:space="preserve">
     <value>Oprávnění k úpravám</value>
+    <comment>Permission to edit</comment>
   </data>
   <data name="contentDialogSdileni.OpravneniVlastnik" xml:space="preserve">
     <value>Jste vlastníkem této položky</value>
   </data>
   <data name="contentDialogSdileni.OpravneniZdedenoOd" xml:space="preserve">
     <value>zděděno od</value>
+    <comment>inherited from (like inheriting permission from parent folder)</comment>
   </data>
   <data name="contentDialogSdileni.SouborNeniSdilen" xml:space="preserve">
     <value>Tato položka není sdílena s dalšími uživateli</value>
+    <comment>File is not shared with another users</comment>
   </data>
   <data name="contentDialogSdileni.TlacitkoVytvoritOdkazKeSdileni" xml:space="preserve">
     <value>Vytvořit nový odkaz ke sdílení</value>
+    <comment>Create new sharing link</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.KopirovatOdkaz" xml:space="preserve">
     <value>Kopírovat odkaz</value>
+    <comment>Copy file link</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.OdkazBylVytvoren" xml:space="preserve">
     <value>Odkaz ke sdílení vytvořen</value>
+    <comment>File sharing link created</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.OdkazOdstranen" xml:space="preserve">
     <value>Odkaz byl trvale odstraněn</value>
+    <comment>Link permanently deleted</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.OdkazZkopirovan" xml:space="preserve">
     <value>Odkaz byl zkopírován do schránky</value>
+    <comment>Link copied to the clipboard</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.OdstranitOdkaz" xml:space="preserve">
     <value>Odstranit odkaz</value>
+    <comment>Delete file link</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.OpravneniOdkazu" xml:space="preserve">
     <value>Oprávnění odkazu</value>
+    <comment>Link permission (like view, edit, owner)</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.SdiletOdkaz" xml:space="preserve">
     <value>Sdílet odkaz</value>
+    <comment>Share file link</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.VyberteOpravneniOdkazu" xml:space="preserve">
     <value>Zvolte oprávnění odkazu</value>
+    <comment>Select link permissions</comment>
   </data>
   <data name="contentDialogVytvoritOdkazKeSdileni.ZdedenoNejdeOdstranit" xml:space="preserve">
     <value>Zděděná oprávnění nelze upravovat zde, upravte rodičovskou složku</value>
+    <comment>Inherited permissions cannot be edited here, please edit parent folder</comment>
   </data>
   <data name="NastaveniPrepinacAktualizovatPriZmeneSdileni.Header" xml:space="preserve">
     <value>Po změně oprávnění ke sdílení aktualizovat složku</value>
+    <comment>Refresh folder when editing file sharing permissions</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.DatumOdNejnovejsiho" xml:space="preserve">
+    <value>Datum (nejnovější nahoře)</value>
+    <comment>Date (from newest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.DatumOdNejstarsiho" xml:space="preserve">
+    <value>Datum (nejstarší nahoře)</value>
+    <comment>Date (from oldest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.NazevAZ" xml:space="preserve">
+    <value>Název (A nahoře)</value>
+    <comment>Name (from A)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.NazevZA" xml:space="preserve">
+    <value>Název (Z nahoře)</value>
+    <comment>Name (from Z)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.VelikostOdNejmensiho" xml:space="preserve">
+    <value>Velikost (nejmenší nahoře)</value>
+    <comment>Size (from smallest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.VelikostOdNejvetsiho" xml:space="preserve">
+    <value>Velikost (největší nahoře)</value>
+    <comment>Size (from largest)</comment>
+  </data>
+  <data name="RazeniPolozekTextBlock.Text" xml:space="preserve">
+    <value>Seřadit podle</value>
+    <comment>Sort by</comment>
+  </data>
+  <data name="Vychozi" xml:space="preserve">
+    <value>Výchozí</value>
+    <comment>Default</comment>
+  </data>
+  <data name="NastaveniPrepinacUkladatRazeniSouboru.Header" xml:space="preserve">
+    <value>Vždy nastavit vybranou volbu řazení jako výchozí</value>
+    <comment>Always set selected sorting option as default</comment>
+  </data>
+  <data name="NastaveniVychoziMoznostRazeniSouboru.Header" xml:space="preserve">
+    <value>Výchozí volba řazení souborů</value>
+    <comment>Default files sorting option</comment>
   </data>
 </root>

@@ -425,4 +425,44 @@
     <value>Cancel</value>
     <comment>Cancel (like when cancelling some operation)</comment>
   </data>
+  <data name="ComboBoxRazeniPolozek.DatumOdNejnovejsiho" xml:space="preserve">
+    <value>Date (from newest)</value>
+    <comment>Update (newest)</comment>
+  </data>
+  <data name="NastaveniPrepinacUkladatRazeniSouboru.Header" xml:space="preserve">
+    <value>Always set selected sorting option as default</value>
+    <comment>Always set selected sorting option as default</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.DatumOdNejstarsiho" xml:space="preserve">
+    <value>Date (from oldest)</value>
+    <comment>Date (from oldest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.NazevAZ" xml:space="preserve">
+    <value>Name (from A)</value>
+    <comment>Name (from A)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.NazevZA" xml:space="preserve">
+    <value>Name (from Z)</value>
+    <comment>Name (from Z)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.VelikostOdNejmensiho" xml:space="preserve">
+    <value>Size (from smallest)</value>
+    <comment>Size (from smallest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.VelikostOdNejvetsiho" xml:space="preserve">
+    <value>Size (from largest)</value>
+    <comment>Size (from largest)</comment>
+  </data>
+  <data name="RazeniPolozekTextBlock.Text" xml:space="preserve">
+    <value>Sort by</value>
+    <comment>Sort by</comment>
+  </data>
+  <data name="Vychozi" xml:space="preserve">
+    <value>Default</value>
+    <comment>Default</comment>
+  </data>
+  <data name="NastaveniVychoziMoznostRazeniSouboru.Header" xml:space="preserve">
+    <value>Default files sorting option</value>
+    <comment>Default files sorting option</comment>
+  </data>
 </root>

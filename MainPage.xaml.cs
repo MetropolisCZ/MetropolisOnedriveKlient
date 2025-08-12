@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Web.Http;
-using static MetropolisOnedriveKlient.ApiWebKlient;
 
 // Dokumentaci k šabloně položky Prázdná stránka najdete na adrese https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x405
 
@@ -38,6 +25,16 @@ namespace MetropolisOnedriveKlient
             if (ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"] == null)
             {
                 ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"] = false;
+            }
+
+            if (ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"] == null)
+            {
+                ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"] = 0; // Výchozí hodnota je 0 (= tedy bez zvoleného řazení)
+            }
+
+            if (ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"] == null)
+            {
+                ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"] = false;
             }
 
             ContentFrame = NavigacniRamec;

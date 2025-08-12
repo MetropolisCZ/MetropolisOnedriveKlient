@@ -102,8 +102,9 @@ namespace MetropolisOnedriveKlient
                     {
                         Title = resourceLoader.GetString("dialogHTTPchyba/Title") + " " + httpResponse.StatusCode,
                         Content = await httpResponse.Content.ReadAsStringAsync() + "\n\n" + UrlkZiskani,
-                        CloseButtonText = resourceLoader.GetString("ZavritDialog")
-                };
+                        CloseButtonText = resourceLoader.GetString("ZavritDialog"),
+                        DefaultButton = ContentDialogButton.Primary
+                    };
 
                     _ = await dialogHTTPchyba.ShowAsync();
                     if (httpResponse.StatusCode == HttpStatusCode.Unauthorized)
@@ -436,8 +437,9 @@ namespace MetropolisOnedriveKlient
                 ContentDialog dialogNebylVybranSoubor = new ContentDialog()
                 {
                     Title = resourceLoader.GetString("dialogNebylVybranSoubor/Title"),
-                    CloseButtonText = resourceLoader.GetString("ZavritDialog")
-            };
+                    CloseButtonText = resourceLoader.GetString("ZavritDialog"),
+                    DefaultButton = ContentDialogButton.Primary
+                };
 
                 _ = await dialogNebylVybranSoubor.ShowAsync();
 

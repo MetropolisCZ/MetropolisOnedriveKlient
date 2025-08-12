@@ -29,6 +29,16 @@ namespace MetropolisOnedriveKlient
 
             NastaveniPrepinacAktualizovatPriZmeneSdileni.IsOn = (bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"];
 
+            NastaveniPrepinacUkladatRazeniSouboru.IsOn = (bool)ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"];
+
+
+            NastaveniVychoziMoznostRazeniSouboru.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("Vychozi") });
+            NastaveniVychoziMoznostRazeniSouboru.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/NazevAZ") });
+            NastaveniVychoziMoznostRazeniSouboru.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/NazevZA") });
+            NastaveniVychoziMoznostRazeniSouboru.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/DatumOdNejstarsiho") });
+            NastaveniVychoziMoznostRazeniSouboru.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/DatumOdNejnovejsiho") });
+            NastaveniVychoziMoznostRazeniSouboru.SelectedIndex = (int)ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"];
+
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -111,6 +121,20 @@ namespace MetropolisOnedriveKlient
             ToggleSwitch prepinacSender = sender as ToggleSwitch;
 
             ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"] = prepinacSender.IsOn;
+        }
+
+        private void NastaveniPrepinacUkladatRazeniSouboru_Toggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch prepinacSender = sender as ToggleSwitch;
+
+            ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"] = prepinacSender.IsOn;
+        }
+
+        private void NastaveniVychoziMoznostRazeniSouboru_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox ZdrojovyComboBox = (ComboBox)sender;
+
+            ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"] = ZdrojovyComboBox.SelectedIndex;
         }
     }
 }

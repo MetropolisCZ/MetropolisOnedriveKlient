@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using Windows.ApplicationModel.DataTransfer;
 using System.Globalization;
 using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 // Dokumentaci k šabloně Prázdná aplikace najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,6 +31,7 @@ namespace MetropolisOnedriveKlient
 
         private ComboBox NavigacniPanelCesty;
         private ListView ListViewSouboryaSlozky;
+        public ComboBox ComboBoxRazeniPolozek;
         //private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_korenove;
         private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_aktualni;
         private string obsahSlozkyOneDrive_aktualni_adresaNext = null;
@@ -55,6 +57,10 @@ namespace MetropolisOnedriveKlient
         }
         MoznostiTlacitekCommandBar moznostiTlacitekCommandBar_aktualni = MoznostiTlacitekCommandBar.Vychozi;
         private List<OneDriveAdresarSoubory> souboryKpresunuti = new List<OneDriveAdresarSoubory>();
+        private readonly bool NastaveniAktualizovatSlozkuPriZmeneSdileni = (bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"];
+        private int NastaveniPodleCehoRaditSouboryVeSlozce = (int)ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"];
+        private readonly bool NastaveniUkladatRazeniSouboru = (bool)ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"];
+
 
         public StrankaSoubory()
         {
@@ -157,11 +163,61 @@ namespace MetropolisOnedriveKlient
             {
                 Name = "NavigacniPanelCesty",
                 ItemsSource = onedriveNavigacniCesta,
-                Margin = new Thickness(15, 10, 15, 15),
+                Margin = new Thickness(15, 10, 15, 5),
                 SelectedIndex = 0
             };
 
             NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
+
+
+
+
+
+            /// VÝBĚR SEŘADIT PODLE:
+            
+            StackPanel StackPanelRazeniPolozek = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(15, 0, 10, 8)
+            };
+
+            TextBlock RazeniPolozekTextBlock = new TextBlock
+            {
+                Text = resourceLoader.GetString("RazeniPolozekTextBlock/Text") + ":",
+                VerticalAlignment = VerticalAlignment.Center,
+                Foreground = new SolidColorBrush(Colors.DarkGray),
+                Margin = new Thickness(0, 0, 0, 2),
+                //Padding = new Thickness(0)
+            };
+
+            // Create the ComboBox
+            ComboBoxRazeniPolozek = new ComboBox
+            {
+                BorderThickness = new Thickness(0),
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0),
+                //Padding = new Thickness(0)
+            };
+
+            // Add sorting options
+            ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("Vychozi") });
+            ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/NazevAZ") });
+            ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/NazevZA") });
+            /*ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/VelikostOdNejmensiho") });
+            ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/VelikostOdNejvetsiho") });*/
+            ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/DatumOdNejstarsiho") });
+            ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/DatumOdNejnovejsiho") });
+
+            ComboBoxRazeniPolozek.SelectedIndex = NastaveniPodleCehoRaditSouboryVeSlozce;
+
+            // Handle selection change
+            ComboBoxRazeniPolozek.SelectionChanged += ComboBoxRazeniPolozek_SelectionChanged;
+
+            // Add controls to the StackPanel
+            StackPanelRazeniPolozek.Children.Add(RazeniPolozekTextBlock);
+            StackPanelRazeniPolozek.Children.Add(ComboBoxRazeniPolozek);
+
 
 
 
@@ -200,6 +256,7 @@ namespace MetropolisOnedriveKlient
 
             // Celkové přidání
             StackPanelHlavniObsah.Children.Add(NavigacniPanelCesty);
+            StackPanelHlavniObsah.Children.Add(StackPanelRazeniPolozek);
             StackPanelHlavniObsah.Children.Add(ListViewSouboryaSlozky);
             StackPanelHlavniObsah.Children.Add(TlacitkoNacistDalsiSoubory);
             TlacitkoNacistDalsiSoubory.Click += TlacitkoNacistDalsiSoubory_Click;
@@ -217,9 +274,24 @@ namespace MetropolisOnedriveKlient
 
         }
 
+        private void ComboBoxRazeniPolozek_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox ZdrojovyComboBox = (ComboBox)sender;
+
+            NastaveniPodleCehoRaditSouboryVeSlozce = ZdrojovyComboBox.SelectedIndex;
+
+            if (NastaveniUkladatRazeniSouboru)
+            {
+                ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"] = ZdrojovyComboBox.SelectedIndex;
+            }
+
+            TlacitkoAktualizovat_Click(sender, e);
+        }
+
+
         private void ListViewSouboryaSlozky_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var ZdrojovyListView = (ListView)sender;
+            ListView ZdrojovyListView = (ListView)sender;
             if (moznostiTlacitekCommandBar_aktualni != MoznostiTlacitekCommandBar.PresouvaniSouboru && ZdrojovyListView.SelectedRanges.Count == 0)
             {
                 PrepinacTlacitkaCommandBar();
@@ -387,7 +459,8 @@ namespace MetropolisOnedriveKlient
             ContentDialog contentDialogSdileni = new ContentDialog()
             {
                 Title = resourceLoader.GetString("contentDialogSdileni/Nadpis"),
-                CloseButtonText = resourceLoader.GetString("ZavritDialog")
+                CloseButtonText = resourceLoader.GetString("ZavritDialog"),
+                DefaultButton = ContentDialogButton.Primary
             };
 
             StackPanel contentDialogSdileni_stackPanel = new StackPanel();
@@ -552,7 +625,7 @@ namespace MetropolisOnedriveKlient
                                 Text = resourceLoader.GetString("contentDialogVytvoritOdkazKeSdileni/OdkazOdstranen")
                             });
 
-                            if ((bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"])
+                            if (NastaveniAktualizovatSlozkuPriZmeneSdileni)
                             {
                                 TlacitkoAktualizovat_Click(sender, e);
                             }
@@ -708,7 +781,7 @@ namespace MetropolisOnedriveKlient
 
                     contentDialogSdileni_stackPanel.Children.Add(tlacitkoSdiletOdkaz);
 
-                    if ((bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"])
+                    if (NastaveniAktualizovatSlozkuPriZmeneSdileni)
                     {
                         TlacitkoAktualizovat_Click(sender, e);
                     }
@@ -781,7 +854,8 @@ namespace MetropolisOnedriveKlient
                 Title = resourceLoader.GetString("contentDialogPrejmenovat/Title"),
                 PrimaryButtonText = resourceLoader.GetString("contentDialogPrejmenovat/PrimaryButtonText"),
                 CloseButtonText = resourceLoader.GetString("ZrusitDialog"),
-                Content = contentDialogPrejmenovat_stackPanel
+                Content = contentDialogPrejmenovat_stackPanel,
+                DefaultButton = ContentDialogButton.Primary
             };
 
             contentDialogPrejmenovat_textBox.SelectAll();
@@ -984,7 +1058,55 @@ namespace MetropolisOnedriveKlient
 
             }
 
+
             adresaKamNavigovat += "/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
+
+
+
+            // Řazení dle
+            switch (NastaveniPodleCehoRaditSouboryVeSlozce)
+            {
+                case 0:
+                    // Výchozí řazení
+                    break;
+                case 1:
+                    adresaKamNavigovat += "&$orderby=name asc";
+                    break;
+                case 2:
+                    adresaKamNavigovat += "&$orderby=name desc";
+                    break;
+                /*case 3:
+                    adresaKamNavigovat += "&$orderby=size asc";
+                    break;
+                case 4:
+                    adresaKamNavigovat += "&$orderby=size desc";
+                    break;*/
+                case 3:
+                    adresaKamNavigovat += "&$orderby=lastModifiedDateTime asc";
+                    break;
+                case 4:
+                    adresaKamNavigovat += "&$orderby=lastModifiedDateTime desc";
+                    break;
+                default:
+                    break;
+            }
+            /*
+             You can use the orderby query string to control the sort order of the items returned from the OneDrive API. For a collection of items, use the following fields in the orderby parameter.
+
+                name
+                size
+                lastModifiedDateTime
+
+                Note that in OneDrive for Business and SharePoint Server 2016, the orderby query string only works with name and url.
+
+                To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space, for example, ?orderby=name%20desc.
+
+                For example, to return the contents of the root of a drive in OneDrive, ordered largest to smallest, use this syntax: /drive/items/root/children?orderby=size%20desc.
+
+                https://github.com/OneDrive/onedrive-api-docs/blob/live/docs/rest-api/concepts/optional-query-parameters.md
+             */
+
+
 
             // Provést navigaci
             try
@@ -1030,7 +1152,8 @@ namespace MetropolisOnedriveKlient
                 Title = resourceLoader.GetString("contentDialogNovaSlozka/Title"),
                 PrimaryButtonText = resourceLoader.GetString("contentDialogNovaSlozka/PrimaryButtonText"),
                 CloseButtonText = resourceLoader.GetString("ZrusitDialog"),
-                Content = contentDialogNovaSlozka_stackPanel
+                Content = contentDialogNovaSlozka_stackPanel,
+                DefaultButton = ContentDialogButton.Primary
             };
 
             contentDialogNovaSlozka_textBox.SelectAll();
@@ -1151,7 +1274,8 @@ namespace MetropolisOnedriveKlient
             ContentDialog contentDialogOdstranit = new ContentDialog()
             {
                 PrimaryButtonText = resourceLoader.GetString("contentDialogOdstranit/PrimaryButtonText"),
-                CloseButtonText = resourceLoader.GetString("ZrusitDialog")
+                CloseButtonText = resourceLoader.GetString("ZrusitDialog"),
+                DefaultButton = ContentDialogButton.Primary
             };
 
             if (moznostiTlacitekCommandBar_aktualni == MoznostiTlacitekCommandBar.Vychozi)
