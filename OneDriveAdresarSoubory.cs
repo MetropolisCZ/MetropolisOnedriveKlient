@@ -30,6 +30,9 @@ namespace MetropolisOnedriveKlient
         [JsonProperty("size")]
         public long Size { get; set; }
 
+        [JsonProperty("parentReference")]
+        public ParentReferenceTrida ParentReference { get; set; }
+
         [JsonProperty("folder")]
         public FolderTrida Folder { get; set; }
 
@@ -42,6 +45,21 @@ namespace MetropolisOnedriveKlient
         [JsonProperty("shared")]
         public Shared Shared { get; set; }
 
+    }
+
+    public class ParentReferenceTrida
+    {
+        [JsonProperty("driveId")]
+        public string DriveId { get; set; }
+
+        [JsonProperty("driveType")]
+        public string DriveType { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("path")]
+        public string Path { get; set; }
     }
 
     public class Shared

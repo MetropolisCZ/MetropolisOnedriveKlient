@@ -1,12 +1,13 @@
 ﻿<Page
-    x:Class="MetropolisOnedriveKlient.StrankaNastaveni"
+    x:Class="MetropolisOnedriveKlient.StrankaVyhledavac"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetropolisOnedriveKlient"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Enabled">
 
     <ScrollViewer>
 
@@ -14,13 +15,17 @@
 
             <!--<TextBlock Text="O aplikaci" FontSize="23" Margin="0,15,0,15" />-->
 
-            <Button x:Name="LoginButton" x:Uid="TlacitkoNastaveniZobrazitPrihlaseni" Click="LoginButton_Click"/>
+            <TextBox x:Uid="VyhledavacOnedriveTextBox" x:Name="VyhledavacOnedriveTextBox" KeyDown="VyhledavacOnedriveTextBox_KeyDown"></TextBox>
+            <Button x:Name="VyhledavacOnedriveTlacitkoVyhledat" x:Uid="VyhledavacOnedriveTlacitkoVyhledat" Margin="0,10,0,0" Click="VyhledavacOnedriveTlacitkoVyhledat_Click"></Button>
+            
+            
+            <!--<Button x:Name="LoginButton" x:Uid="TlacitkoNastaveniZobrazitPrihlaseni" Click="LoginButton_Click"/>
 
             <ToggleSwitch x:Uid="NastaveniPrepinacAktualizovatPriZmeneSdileni" x:Name="NastaveniPrepinacAktualizovatPriZmeneSdileni" Toggled="NastaveniPrepinacAktualizovatPriZmeneSdileni_Toggled" Margin="0,25,0,0" />
 
             <ToggleSwitch x:Uid="NastaveniPrepinacUkladatRazeniSouboru" x:Name="NastaveniPrepinacUkladatRazeniSouboru" Toggled="NastaveniPrepinacUkladatRazeniSouboru_Toggled" Margin="0,25,0,0" />
 
-            <ComboBox x:Name="NastaveniVychoziMoznostRazeniSouboru" x:Uid="NastaveniVychoziMoznostRazeniSouboru" SelectionChanged="NastaveniVychoziMoznostRazeniSouboru_SelectionChanged" Margin="0,25,0,0" />
+            <ComboBox x:Name="NastaveniVychoziMoznostRazeniSouboru" x:Uid="NastaveniVychoziMoznostRazeniSouboru" SelectionChanged="NastaveniVychoziMoznostRazeniSouboru_SelectionChanged" Margin="0,25,0,0" />-->
 
 
 
@@ -39,34 +44,16 @@
             <!--<ToggleSwitch Header="Zobrazit čas odjezdu v nadpisu včetně zpoždění" x:Name="ZobrazitCasVcetneZpozdeni" Margin="0,25,0,0" IsOn="True" IsEnabled="False"/>-->
 
 
-            <TextBlock x:Uid="NadpisOaplikaci" TextWrapping="Wrap" FontSize="23" Margin="0,50,0,0" />
+            <!--<TextBlock x:Uid="NadpisOaplikaci" TextWrapping="Wrap" FontSize="23" Margin="0,50,0,0" />
             <TextBlock x:Uid="PodnadpisOaplikaci" TextWrapping="Wrap" />
             <TextBlock x:Uid="LicenceOaplikaci" TextWrapping="Wrap"></TextBlock>
             <HyperlinkButton x:Uid="WebFirmyOaplikaci" NavigateUri="http://www.metropolis.xf.cz/webdesign/index.php?zdrojZobrazeni=MetropolisCloudovyKlient" />
             <HyperlinkButton x:Uid="OsobniUdajeOaplikaci" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
 
             <TextBlock TextWrapping="Wrap" Margin="0,7,0,0">
-                <Run x:Uid="VerzeAplikaceRun"></Run><Run>: 1.6.0</Run>
-            </TextBlock>
+                <Run x:Uid="VerzeAplikaceRun"></Run><Run>: 1.5.0</Run>
+            </TextBlock>-->
 
-
-            <TextBlock x:Uid="NadpisPodekovani" TextWrapping="Wrap" FontSize="23" Margin="0,50,0,0" />
-            <TextBlock TextWrapping="Wrap">
-                <Run>BRYANLPS</Run>
-                <Run FontStyle="Italic">(Portuguese)</Run>
-            </TextBlock>
-            <TextBlock TextWrapping="Wrap">
-                <Run>jan.exe</Run>
-                <Run FontStyle="Italic">(Indonesian)</Run>
-            </TextBlock>
-            <TextBlock TextWrapping="Wrap">
-                <Run>Damian</Run>
-                <Run FontStyle="Italic">(Polish)</Run>
-            </TextBlock>
-            <TextBlock TextWrapping="Wrap">
-                <Run>Thomas Soucille</Run>
-                <Run FontStyle="Italic">(French)</Run>
-            </TextBlock>
 
         </StackPanel>
 

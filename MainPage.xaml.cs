@@ -104,5 +104,9 @@ namespace MetropolisOnedriveKlient
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
 
+        private void AppBarTlacitkoHledani_Click(object sender, RoutedEventArgs e)
+        {
+            NavigovatNaStranku(typeof(StrankaVyhledavac));
+        }
     }
 }

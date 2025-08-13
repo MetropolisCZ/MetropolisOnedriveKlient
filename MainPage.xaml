@@ -15,7 +15,11 @@
 
             <AppBarButton x:Name="tlacitkoPrubeh" x:Uid="AppBarTlacitkoPrubeh" HorizontalAlignment="Left" Icon="Switch" VerticalAlignment="Top" Click="TlacitkoPrubeh_Click" />
 
-            <AppBarButton x:Name="tlacitkoSoubory" x:Uid="AppBarTlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" VerticalAlignment="Top" Click="TlacitkoSoubory_Click"/>
+            <AppBarButton x:Name="tlacitkoSoubory" x:Uid="AppBarTlacitkoSoubory" HorizontalAlignment="Left" Icon="Folder" VerticalAlignment="Top" Click="TlacitkoSoubory_Click" />
+
+            <AppBarButton x:Name="AppBarTlacitkoHledani" x:Uid="AppBarTlacitkoHledani" HorizontalAlignment="Left" Icon="Find" VerticalAlignment="Top" Click="AppBarTlacitkoHledani_Click" />
+
+
             <AppBarButton x:Name="tlacitkoUcet" x:Uid="AppBarTlacitkoNastaveni" HorizontalAlignment="Left" Icon="Setting" VerticalAlignment="Top" Click="TlacitkoUcet_Click"/>
 
             <CommandBar.Content>

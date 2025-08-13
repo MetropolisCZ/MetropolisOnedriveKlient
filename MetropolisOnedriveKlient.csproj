@@ -136,6 +136,9 @@
     <Compile Include="OneDriveAdresarSoubory.cs" />
     <Compile Include="OneDriveOpravneniSouboru.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StrankaVyhledavac.xaml.cs">
+      <DependentUpon>StrankaVyhledavac.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StrankaPrubehStahovani.xaml.cs">
       <DependentUpon>StrankaPrubehStahovani.xaml</DependentUpon>
     </Compile>
@@ -210,6 +213,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StrankaVyhledavac.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

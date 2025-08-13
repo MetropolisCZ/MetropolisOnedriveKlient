@@ -24,7 +24,7 @@ namespace MetropolisOnedriveKlient
 
         public StrankaNastaveni()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
 
             NastaveniPrepinacAktualizovatPriZmeneSdileni.IsOn = (bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"];

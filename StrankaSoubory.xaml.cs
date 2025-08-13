@@ -60,21 +60,16 @@ namespace MetropolisOnedriveKlient
         private readonly bool NastaveniAktualizovatSlozkuPriZmeneSdileni = (bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"];
         private int NastaveniPodleCehoRaditSouboryVeSlozce = (int)ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"];
         private readonly bool NastaveniUkladatRazeniSouboru = (bool)ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"];
+        private string hledanyVyrazParametr;
+        private bool strankaUzJeInicializovana = false;
+        StackPanel StackPanelRazeniPolozek = new StackPanel();
 
 
         public StrankaSoubory()
         {
             InitializeComponent();
 
-            /*foreach (AppBarButton jednoTlacitko in commandBarStrankaSoubory_tlacitkaVychozi)
-            {
-                commandBarStrankaSoubory.PrimaryCommands.Add(jednoTlacitko);
-            }*/
-
-            //NacistTlacitkaCommandBar();
-
             NacistOvladaciPrvkyStranky();
-
         }
 
         private void PrepinacTlacitkaCommandBar(MoznostiTlacitekCommandBar moznostiTlacitekCommandBar = MoznostiTlacitekCommandBar.Vychozi)
@@ -137,7 +132,7 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
@@ -145,6 +140,19 @@ namespace MetropolisOnedriveKlient
 
             SystemNavigationManager.GetForCurrentView().BackRequested -= MainPage.OnBackRequested;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequestedZpetAdresar;
+
+            if (e?.Parameter != null) // Parametr – vyhledávaný výraz
+            {
+                hledanyVyrazParametr = (string)e.Parameter;
+
+                StackPanelRazeniPolozek.Visibility = Visibility.Collapsed;
+            }
+
+            if (!strankaUzJeInicializovana)
+            { // Navigovat jenom při prvním načtení stránky – další načtení budou z navigace zpět (třeba ze stránky průběh)
+
+                await NavigovatAdresarAsync(true);
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -156,7 +164,7 @@ namespace MetropolisOnedriveKlient
 
         }
 
-        private async void NacistOvladaciPrvkyStranky()
+        private void NacistOvladaciPrvkyStranky()
         {
 
             NavigacniPanelCesty = new ComboBox
@@ -175,11 +183,11 @@ namespace MetropolisOnedriveKlient
 
             /// VÝBĚR SEŘADIT PODLE:
             
-            StackPanel StackPanelRazeniPolozek = new StackPanel
+            StackPanelRazeniPolozek = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(15, 0, 10, 8)
+                Margin = new Thickness(15, 0, 10, 0)
             };
 
             TextBlock RazeniPolozekTextBlock = new TextBlock
@@ -191,16 +199,24 @@ namespace MetropolisOnedriveKlient
                 //Padding = new Thickness(0)
             };
 
-            // Create the ComboBox
+
+            // Vlastní stylování IsEnabled = false – vlastně přepíšu tu barvu pozadí, a to jenom pro tenhle element
+            ResourceDictionary ComboBoxRazeniPolozekResourceDictionary = new ResourceDictionary();
+            ComboBoxRazeniPolozekResourceDictionary.ThemeDictionaries["Default"] = new ResourceDictionary
+            {
+                ["ComboBoxBackgroundDisabled"] = new SolidColorBrush(Colors.Transparent)
+            };
+
             ComboBoxRazeniPolozek = new ComboBox
             {
                 BorderThickness = new Thickness(0),
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0),
-                //Padding = new Thickness(0)
+                Resources = ComboBoxRazeniPolozekResourceDictionary
             };
 
-            // Add sorting options
+
+
+
             ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("Vychozi") });
             ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/NazevAZ") });
             ComboBoxRazeniPolozek.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("ComboBoxRazeniPolozek/NazevZA") });
@@ -211,10 +227,10 @@ namespace MetropolisOnedriveKlient
 
             ComboBoxRazeniPolozek.SelectedIndex = NastaveniPodleCehoRaditSouboryVeSlozce;
 
-            // Handle selection change
+
             ComboBoxRazeniPolozek.SelectionChanged += ComboBoxRazeniPolozek_SelectionChanged;
 
-            // Add controls to the StackPanel
+
             StackPanelRazeniPolozek.Children.Add(RazeniPolozekTextBlock);
             StackPanelRazeniPolozek.Children.Add(ComboBoxRazeniPolozek);
 
@@ -234,7 +250,8 @@ namespace MetropolisOnedriveKlient
                 ItemTemplate = Application.Current.Resources["SablonaSouboryRepozitarGithub"] as DataTemplate,
                 Name = "ListViewSouboryaSlozky",
                 ItemsSource = obsahSlozkyOneDrive_aktualni,
-                IsRightTapEnabled = true
+                IsRightTapEnabled = true,
+                Margin = new Thickness(0, 8, 0, 0)
                 //Header = navigacniPanelCesty
             };
 
@@ -269,8 +286,6 @@ namespace MetropolisOnedriveKlient
             Content = ScrollViewerHlavniObsah;
 
             PrepinacTlacitkaCommandBar();
-
-            await NavigovatAdresarAsync(true);
 
         }
 
@@ -435,11 +450,17 @@ namespace MetropolisOnedriveKlient
             return TlacitkoSikonou;
         }
 
+        private void ZapnoutVypnoutUzivatelskeRozhrani(bool stavAktivovani = true)
+        {
+            ListViewSouboryaSlozky.IsEnabled = stavAktivovani;
+            NavigacniPanelCesty.IsEnabled = stavAktivovani;
+            ComboBoxRazeniPolozek.IsEnabled = stavAktivovani;
+            BottomAppBar.IsEnabled = stavAktivovani;
+        }
+
         private async void FlyoutTlacitkoSdilet_Click(object sender, RoutedEventArgs e)
         {
-            ListViewSouboryaSlozky.IsEnabled = false;
-            NavigacniPanelCesty.IsEnabled = false;
-            BottomAppBar.IsEnabled = false;
+            ZapnoutVypnoutUzivatelskeRozhrani(false);
 
             OneDriveOpravneniSouboru oneDriveOpravneniSouboru = new OneDriveOpravneniSouboru();
 
@@ -799,9 +820,7 @@ namespace MetropolisOnedriveKlient
 
             _ = await contentDialogSdileni.ShowAsync();
 
-            ListViewSouboryaSlozky.IsEnabled = true;
-            NavigacniPanelCesty.IsEnabled = true;
-            BottomAppBar.IsEnabled = true;
+            ZapnoutVypnoutUzivatelskeRozhrani();
         }
 
 
@@ -859,7 +878,7 @@ namespace MetropolisOnedriveKlient
             };
 
             contentDialogPrejmenovat_textBox.SelectAll();
-            ListViewSouboryaSlozky.IsEnabled = false;
+            ZapnoutVypnoutUzivatelskeRozhrani(false);
 
             ContentDialogResult contentDialogResult = await contentDialogPrejmenovat.ShowAsync();
             
@@ -899,7 +918,7 @@ namespace MetropolisOnedriveKlient
 
             }
 
-            ListViewSouboryaSlozky.IsEnabled = true;
+            ZapnoutVypnoutUzivatelskeRozhrani();
 
         }
 
@@ -948,7 +967,25 @@ namespace MetropolisOnedriveKlient
             else
             { // Složka
 
+                if (hledanyVyrazParametr != null)
+                { // Když se ve vyhledávání klikne na složku, tak prostě přejdu na tu složku a přepíšu historii jako kdybych se tam proklikal :) –> takže vymazat obsah ComboBoxu navigační cesty a vytvořit nový
+
+                    hledanyVyrazParametr = null;
+
+                    NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
+                    onedriveNavigacniCesta.Clear();
+                    onedriveNavigacniCesta.Add(resourceLoader.GetString("KorenovyAdresarNazev"));
+
+                    string[] cestaKliknutehoSouboruRozdelena = kliknutySoubor.ParentReference.Path.Split('/');
+                    for (int i = 3; i < cestaKliknutehoSouboruRozdelena.Length; i++) // 0 je prázdný, 1 je drive, 2 je root:, teprve 3 je hodnota
+                    {
+                        onedriveNavigacniCesta.Add(cestaKliknutehoSouboruRozdelena[i]);
+                    }
+
+                }
+
                 onedriveNavigacniCesta.Add(kliknutySoubor.Name);
+                
                 await NavigovatAdresarAsync();
             }
 
@@ -1020,92 +1057,92 @@ namespace MetropolisOnedriveKlient
         private async Task NavigovatAdresarAsync(bool navigovatNaKorenovyAdresar = false, bool navigovatNaIndexHistorie = false, int indexHistorieNavigace = 0)
         {
             ListViewSouboryaSlozky.ItemsSource = null;
-            NavigacniPanelCesty.IsEnabled = false;
+            ZapnoutVypnoutUzivatelskeRozhrani(false);
             TlacitkoNacistDalsiSoubory.Visibility = Visibility.Collapsed;
             NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
             string adresaKamNavigovat = "";
 
-            if (navigovatNaIndexHistorie)
-            { // Navigovat dle indexu v historii
+            if (hledanyVyrazParametr == null)
+            {
 
-                int pocetIteraci = onedriveNavigacniCesta.Count - indexHistorieNavigace - 1;
-                for (int i = 0; i < pocetIteraci; i++) // Oříznout vyšší indexy (cesta, kterou potřebujeme smazat)
-                {
-                    //NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
-                    onedriveNavigacniCesta.RemoveAt(indexHistorieNavigace + 1);
-                    //NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
+                if (navigovatNaIndexHistorie)
+                { // Navigovat dle indexu v historii
+
+                    int pocetIteraci = onedriveNavigacniCesta.Count - indexHistorieNavigace - 1;
+                    for (int i = 0; i < pocetIteraci; i++) // Oříznout vyšší indexy (cesta, kterou potřebujeme smazat)
+                    {
+                        onedriveNavigacniCesta.RemoveAt(indexHistorieNavigace + 1);
+                    }
+                    //NavigacniPanelCesty.SelectedIndex = onedriveNavigacniCesta.Count - 1;
                 }
-                //NavigacniPanelCesty.SelectedIndex = onedriveNavigacniCesta.Count - 1;
-            }
 
 
-            // Výpočet nové adresy
-            if (navigovatNaKorenovyAdresar || onedriveNavigacniCesta.Count == 1)
-            { // Kořenový adresář
+                // Výpočet nové adresy
+                if (navigovatNaKorenovyAdresar || onedriveNavigacniCesta.Count == 1)
+                { // Kořenový adresář
 
-                onedriveNavigacniCesta.Clear();
-                onedriveNavigacniCesta.Add(resourceLoader.GetString("KorenovyAdresarNazev"));
-                NavigacniPanelCesty.SelectedIndex = 0;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    onedriveNavigacniCesta.Clear();
+                    onedriveNavigacniCesta.Add(resourceLoader.GetString("KorenovyAdresarNazev"));
+                    NavigacniPanelCesty.SelectedIndex = 0;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
-                //adresaKamNavigovat = "";
+                    //adresaKamNavigovat = "";
+                }
+                else
+                { // Adresář dle pole onedriveNavigacniCesta
+
+                    adresaKamNavigovat += AktualniCestaDoStringu();
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                }
+
+
+                adresaKamNavigovat += "/children";
+
+
+                // Řazení dle
+                switch (NastaveniPodleCehoRaditSouboryVeSlozce)
+                {
+                    case 0:
+                        // Výchozí řazení
+                        break;
+                    case 1:
+                        adresaKamNavigovat += "&$orderby=name asc";
+                        break;
+                    case 2:
+                        adresaKamNavigovat += "&$orderby=name desc";
+                        break;
+                    /*case 3:
+                        adresaKamNavigovat += "&$orderby=size asc";
+                        break;
+                    case 4:
+                        adresaKamNavigovat += "&$orderby=size desc";
+                        break;*/
+                    case 3:
+                        adresaKamNavigovat += "&$orderby=lastModifiedDateTime asc";
+                        break;
+                    case 4:
+                        adresaKamNavigovat += "&$orderby=lastModifiedDateTime desc";
+                        break;
+                    default:
+                        break;
+                }
             }
             else
-            { // Adresář dle pole onedriveNavigacniCesta
+            { // Vyhledávání
 
-                adresaKamNavigovat += AktualniCestaDoStringu();
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                onedriveNavigacniCesta.Clear();
+                onedriveNavigacniCesta.Add(resourceLoader.GetString("VysledkyVyhledavani") + " „" + hledanyVyrazParametr + "“");
+                NavigacniPanelCesty.SelectedIndex = 0;
 
+                adresaKamNavigovat += "/search(q='" + hledanyVyrazParametr + "')";
+
+                // Řazení při vyhledávání nefunguje (prý možná jenom v OneDrive for Business)
             }
 
+            adresaKamNavigovat += "?$select=id,name,folder,parentReference,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
 
-            adresaKamNavigovat += "/children?$select=id,name,folder,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
-
-
-
-            // Řazení dle
-            switch (NastaveniPodleCehoRaditSouboryVeSlozce)
-            {
-                case 0:
-                    // Výchozí řazení
-                    break;
-                case 1:
-                    adresaKamNavigovat += "&$orderby=name asc";
-                    break;
-                case 2:
-                    adresaKamNavigovat += "&$orderby=name desc";
-                    break;
-                /*case 3:
-                    adresaKamNavigovat += "&$orderby=size asc";
-                    break;
-                case 4:
-                    adresaKamNavigovat += "&$orderby=size desc";
-                    break;*/
-                case 3:
-                    adresaKamNavigovat += "&$orderby=lastModifiedDateTime asc";
-                    break;
-                case 4:
-                    adresaKamNavigovat += "&$orderby=lastModifiedDateTime desc";
-                    break;
-                default:
-                    break;
-            }
-            /*
-             You can use the orderby query string to control the sort order of the items returned from the OneDrive API. For a collection of items, use the following fields in the orderby parameter.
-
-                name
-                size
-                lastModifiedDateTime
-
-                Note that in OneDrive for Business and SharePoint Server 2016, the orderby query string only works with name and url.
-
-                To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space, for example, ?orderby=name%20desc.
-
-                For example, to return the contents of the root of a drive in OneDrive, ordered largest to smallest, use this syntax: /drive/items/root/children?orderby=size%20desc.
-
-                https://github.com/OneDrive/onedrive-api-docs/blob/live/docs/rest-api/concepts/optional-query-parameters.md
-             */
-
+            
 
 
             // Provést navigaci
@@ -1131,8 +1168,9 @@ namespace MetropolisOnedriveKlient
             ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
             NavigacniPanelCesty.SelectedItem = NavigacniPanelCesty.Items[NavigacniPanelCesty.Items.Count - 1];
             NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
-            NavigacniPanelCesty.IsEnabled = true;
+            ZapnoutVypnoutUzivatelskeRozhrani();
 
+            strankaUzJeInicializovana = true;
         }
 
         // TLAČÍTKA COMMANDBAR VÝCHOZÍ
@@ -1157,9 +1195,7 @@ namespace MetropolisOnedriveKlient
             };
 
             contentDialogNovaSlozka_textBox.SelectAll();
-            ListViewSouboryaSlozky.IsEnabled = false;
-            BottomAppBar.IsEnabled = false;
-            NavigacniPanelCesty.IsEnabled = false;
+            ZapnoutVypnoutUzivatelskeRozhrani(false);
 
             ContentDialogResult contentDialogResult = await contentDialogNovaSlozka.ShowAsync();
 
@@ -1200,9 +1236,7 @@ namespace MetropolisOnedriveKlient
 
             }
 
-            ListViewSouboryaSlozky.IsEnabled = true;
-            BottomAppBar.IsEnabled = true;
-            NavigacniPanelCesty.IsEnabled = true;
+            ZapnoutVypnoutUzivatelskeRozhrani();
         }
 
         private async void TlacitkoNahrat_Click(object sender, RoutedEventArgs e)
@@ -1265,9 +1299,7 @@ namespace MetropolisOnedriveKlient
 
         private async void TlacitkoOdstranit_Click(object sender, RoutedEventArgs e)
         {
-            ListViewSouboryaSlozky.IsEnabled = false;
-            BottomAppBar.IsEnabled = false;
-            NavigacniPanelCesty.IsEnabled = false;
+            ZapnoutVypnoutUzivatelskeRozhrani(false);
 
             List<OneDriveAdresarSoubory> souboryKodstraneni = new List<OneDriveAdresarSoubory>();
 
@@ -1328,9 +1360,7 @@ namespace MetropolisOnedriveKlient
 
             }
 
-            ListViewSouboryaSlozky.IsEnabled = true;
-            BottomAppBar.IsEnabled = true;
-            NavigacniPanelCesty.IsEnabled = true;
+            ZapnoutVypnoutUzivatelskeRozhrani();
         }
 
 
@@ -1339,8 +1369,7 @@ namespace MetropolisOnedriveKlient
         // TLAČÍTKA COMMANDBAR PŘESUN SOUBORŮ
         private async void TlacitkoPresunoutSem_Click(object sender, RoutedEventArgs e)
         {
-            ListViewSouboryaSlozky.IsEnabled = false;
-            BottomAppBar.IsEnabled = false;
+            ZapnoutVypnoutUzivatelskeRozhrani(false);
 
             try
             {
@@ -1359,8 +1388,7 @@ namespace MetropolisOnedriveKlient
                 return;
             }
 
-            ListViewSouboryaSlozky.IsEnabled = true;
-            BottomAppBar.IsEnabled = true;
+            ZapnoutVypnoutUzivatelskeRozhrani();
         }
 
         private void FlyoutTlacitkoZrusitPresun_Click(object sender, RoutedEventArgs e)

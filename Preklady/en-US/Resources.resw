@@ -465,4 +465,20 @@
     <value>Default files sorting option</value>
     <comment>Default files sorting option</comment>
   </data>
+  <data name="VysledkyVyhledavani" xml:space="preserve">
+    <value>Search</value>
+    <comment>Search (and here will be the searched term)</comment>
+  </data>
+  <data name="VyhledavacOnedriveTextBox.PlaceholderText" xml:space="preserve">
+    <value>Search OneDrive</value>
+    <comment>Search OneDrive (placeholder text for search box)</comment>
+  </data>
+  <data name="AppBarTlacitkoHledani.Label" xml:space="preserve">
+    <value>Search</value>
+    <comment>Search (page name)</comment>
+  </data>
+  <data name="VyhledavacOnedriveTlacitkoVyhledat.Content" xml:space="preserve">
+    <value>Search</value>
+    <comment>Search (on a button to start search)</comment>
+  </data>
 </root>
