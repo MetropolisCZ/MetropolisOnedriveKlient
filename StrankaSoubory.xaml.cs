@@ -53,7 +53,8 @@ namespace MetropolisOnedriveKlient
         {
             Vychozi,
             MultiVyber,
-            PresouvaniSouboru
+            PresouvaniSouboru,
+            VysledekVyhledavani
         }
         MoznostiTlacitekCommandBar moznostiTlacitekCommandBar_aktualni = MoznostiTlacitekCommandBar.Vychozi;
         private List<OneDriveAdresarSoubory> souboryKpresunuti = new List<OneDriveAdresarSoubory>();
@@ -101,6 +102,11 @@ namespace MetropolisOnedriveKlient
                 ListViewSouboryaSlozky.SelectionMode = ListViewSelectionMode.None;
                 BottomAppBar = (CommandBar)((DataTemplate)Resources["CommandBarTemplate_presouvaniSouboru"]).LoadContent();
             }
+            else if (moznostiTlacitekCommandBar == MoznostiTlacitekCommandBar.VysledekVyhledavani)
+            {
+                moznostiTlacitekCommandBar_aktualni = MoznostiTlacitekCommandBar.PresouvaniSouboru;
+                BottomAppBar = (CommandBar)((DataTemplate)Resources["CommandBarTemplate_vysledekVyhledavani"]).LoadContent();
+            }
 
         }
 
@@ -146,6 +152,7 @@ namespace MetropolisOnedriveKlient
                 hledanyVyrazParametr = (string)e.Parameter;
 
                 StackPanelRazeniPolozek.Visibility = Visibility.Collapsed;
+                PrepinacTlacitkaCommandBar(MoznostiTlacitekCommandBar.VysledekVyhledavani);
             }
 
             if (!strankaUzJeInicializovana)
@@ -976,11 +983,13 @@ namespace MetropolisOnedriveKlient
                     onedriveNavigacniCesta.Clear();
                     onedriveNavigacniCesta.Add(resourceLoader.GetString("KorenovyAdresarNazev"));
 
-                    string[] cestaKliknutehoSouboruRozdelena = kliknutySoubor.ParentReference.Path.Split('/');
+                    string[] cestaKliknutehoSouboruRozdelena = Uri.UnescapeDataString(kliknutySoubor.ParentReference.Path).Split('/');
                     for (int i = 3; i < cestaKliknutehoSouboruRozdelena.Length; i++) // 0 je prázdný, 1 je drive, 2 je root:, teprve 3 je hodnota
                     {
                         onedriveNavigacniCesta.Add(cestaKliknutehoSouboruRozdelena[i]);
                     }
+
+                    PrepinacTlacitkaCommandBar();
 
                 }
 
@@ -1097,7 +1106,7 @@ namespace MetropolisOnedriveKlient
                 }
 
 
-                adresaKamNavigovat += "/children";
+                adresaKamNavigovat += "/children?$select=id,name,folder,parentReference,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
 
 
                 // Řazení dle
@@ -1127,6 +1136,7 @@ namespace MetropolisOnedriveKlient
                     default:
                         break;
                 }
+
             }
             else
             { // Vyhledávání
@@ -1135,12 +1145,10 @@ namespace MetropolisOnedriveKlient
                 onedriveNavigacniCesta.Add(resourceLoader.GetString("VysledkyVyhledavani") + " „" + hledanyVyrazParametr + "“");
                 NavigacniPanelCesty.SelectedIndex = 0;
 
-                adresaKamNavigovat += "/search(q='" + hledanyVyrazParametr + "')";
+                adresaKamNavigovat += "/search(q='" + hledanyVyrazParametr + "')?$select=id,name,folder,parentReference,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
 
                 // Řazení při vyhledávání nefunguje (prý možná jenom v OneDrive for Business)
             }
-
-            adresaKamNavigovat += "?$select=id,name,folder,parentReference,createdDateTime,lastModifiedDateTime,webUrl,size,shared&$expand=thumbnails";
 
             
 

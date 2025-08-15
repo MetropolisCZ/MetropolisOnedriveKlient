@@ -45,6 +45,14 @@
                 <AppBarButton x:Uid="TlacitkoZrusitPresun" Icon="Clear" Click="FlyoutTlacitkoZrusitPresun_Click"/>
             </CommandBar>
         </DataTemplate>
+
+
+        <!-- Výsledek vyhledávání -->
+        <DataTemplate x:Key="CommandBarTemplate_vysledekVyhledavani">
+            <CommandBar>
+                <AppBarButton x:Uid="TlacitkoAktualizovat" Icon="Sync" Click="TlacitkoAktualizovat_Click"/>
+            </CommandBar>
+        </DataTemplate>
     </Page.Resources>
 
     <!--<Page.BottomAppBar>
