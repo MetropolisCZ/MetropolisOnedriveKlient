@@ -64,6 +64,10 @@ namespace MetropolisOnedriveKlient
         private string hledanyVyrazParametr;
         private bool strankaUzJeInicializovana = false;
         StackPanel StackPanelRazeniPolozek = new StackPanel();
+        ProgressBar ProgressBarNacitaniSlozky = new ProgressBar {
+            Visibility = Visibility.Collapsed,
+            IsIndeterminate = true
+        };
 
 
         public StrankaSoubory()
@@ -178,7 +182,7 @@ namespace MetropolisOnedriveKlient
             {
                 Name = "NavigacniPanelCesty",
                 ItemsSource = onedriveNavigacniCesta,
-                Margin = new Thickness(15, 10, 15, 5),
+                Margin = new Thickness(15, 20, 20, 5),
                 SelectedIndex = 0
             };
 
@@ -243,6 +247,8 @@ namespace MetropolisOnedriveKlient
 
 
 
+            
+
 
 
             ////// LISTVIEW SOUBORY – HLAVNÍ OBSAH OKNA
@@ -281,6 +287,7 @@ namespace MetropolisOnedriveKlient
             // Celkové přidání
             StackPanelHlavniObsah.Children.Add(NavigacniPanelCesty);
             StackPanelHlavniObsah.Children.Add(StackPanelRazeniPolozek);
+            StackPanelHlavniObsah.Children.Add(ProgressBarNacitaniSlozky); // Indikátor načítání
             StackPanelHlavniObsah.Children.Add(ListViewSouboryaSlozky);
             StackPanelHlavniObsah.Children.Add(TlacitkoNacistDalsiSoubory);
             TlacitkoNacistDalsiSoubory.Click += TlacitkoNacistDalsiSoubory_Click;
@@ -463,6 +470,8 @@ namespace MetropolisOnedriveKlient
             NavigacniPanelCesty.IsEnabled = stavAktivovani;
             ComboBoxRazeniPolozek.IsEnabled = stavAktivovani;
             BottomAppBar.IsEnabled = stavAktivovani;
+
+            ProgressBarNacitaniSlozky.Visibility = stavAktivovani ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private async void FlyoutTlacitkoSdilet_Click(object sender, RoutedEventArgs e)

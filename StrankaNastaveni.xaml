@@ -46,7 +46,7 @@
             <HyperlinkButton x:Uid="OsobniUdajeOaplikaci" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
 
             <TextBlock TextWrapping="Wrap" Margin="0,7,0,0">
-                <Run x:Uid="VerzeAplikaceRun"></Run><Run>: 1.6.1</Run>
+                <Run x:Uid="VerzeAplikaceRun"></Run><Run>: 1.6.2</Run>
             </TextBlock>
 
 
