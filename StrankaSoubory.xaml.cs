@@ -31,6 +31,7 @@ namespace MetropolisOnedriveKlient
 
         private ComboBox NavigacniPanelCesty;
         private ListView ListViewSouboryaSlozky;
+        private GridView GridViewSouboryaSlozky;
         public ComboBox ComboBoxRazeniPolozek;
         //private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_korenove;
         private ObservableCollection<OneDriveAdresarSoubory> obsahSlozkyOneDrive_aktualni;
@@ -68,6 +69,7 @@ namespace MetropolisOnedriveKlient
             Visibility = Visibility.Collapsed,
             IsIndeterminate = true
         };
+        private bool zapnoutMrizkoveZobrazeni = false;
 
 
         public StrankaSoubory()
@@ -84,9 +86,20 @@ namespace MetropolisOnedriveKlient
             {
                 moznostiTlacitekCommandBar_aktualni = MoznostiTlacitekCommandBar.Vychozi;
                 MainPage.PageHeader.Text = resourceLoader.GetString("StrankaSouboryNadpis");
-                ListViewSouboryaSlozky.IsItemClickEnabled = true;
-                ListViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled = false;
-                ListViewSouboryaSlozky.SelectionMode = ListViewSelectionMode.None;
+
+                if (!zapnoutMrizkoveZobrazeni)
+                {
+                    ListViewSouboryaSlozky.IsItemClickEnabled = true;
+                    ListViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled = false;
+                    ListViewSouboryaSlozky.SelectionMode = ListViewSelectionMode.None;
+                }
+                else
+                {
+                    GridViewSouboryaSlozky.IsItemClickEnabled = true;
+                    GridViewSouboryaSlozky.IsMultiSelectCheckBoxEnabled = false;
+                    GridViewSouboryaSlozky.SelectionMode = ListViewSelectionMode.None;
+                }
+
                 BottomAppBar = (CommandBar)((DataTemplate)Resources["CommandBarTemplate_vychozi"]).LoadContent();
             }
             else if (moznostiTlacitekCommandBar == MoznostiTlacitekCommandBar.MultiVyber)
@@ -177,7 +190,6 @@ namespace MetropolisOnedriveKlient
 
         private void NacistOvladaciPrvkyStranky()
         {
-
             NavigacniPanelCesty = new ComboBox
             {
                 Name = "NavigacniPanelCesty",
@@ -193,7 +205,7 @@ namespace MetropolisOnedriveKlient
 
 
             /// VÝBĚR SEŘADIT PODLE:
-            
+
             StackPanelRazeniPolozek = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
@@ -247,7 +259,7 @@ namespace MetropolisOnedriveKlient
 
 
 
-            
+
 
 
 
@@ -262,33 +274,73 @@ namespace MetropolisOnedriveKlient
                 IsItemClickEnabled = true,
                 ItemTemplate = Application.Current.Resources["SablonaSouboryRepozitarGithub"] as DataTemplate,
                 Name = "ListViewSouboryaSlozky",
-                ItemsSource = obsahSlozkyOneDrive_aktualni,
                 IsRightTapEnabled = true,
                 Margin = new Thickness(0, 8, 0, 0)
                 //Header = navigacniPanelCesty
             };
 
+
             ListViewSouboryaSlozky.ItemClick += ListViewSouboryaSlozky_ItemClick;
             ListViewSouboryaSlozky.RightTapped += ListViewSouboryaSlozky_RightTapped;
             ListViewSouboryaSlozky.SelectionChanged += ListViewSouboryaSlozky_SelectionChanged;
 
-
             
 
 
 
+            Style GridViewSouboryaSlozkyItemStyle = new Style { TargetType = typeof(GridViewItem) };
+            GridViewSouboryaSlozkyItemStyle.Setters.Add(new Setter
+            {
+                Property = MarginProperty,
+                Value = new Thickness(5, 5, 5, 5)
+            });
+
+            GridViewSouboryaSlozky = new GridView
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                SelectionMode = ListViewSelectionMode.None,
+                IsSwipeEnabled = false, // Disabling the animation when it's not needed can improve the performance of your app.
+                IsItemClickEnabled = true,
+                ItemTemplate = Application.Current.Resources["SablonaSouboryRepozitarGrid"] as DataTemplate,
+                Name = "ListViewSouboryaSlozky",
+                IsRightTapEnabled = true,
+                Margin = new Thickness(5, 8, 5, 5),
+                //ItemsPanel = Application.Current.Resources["SablonaSouboryRepozitarGrid_ItemsPanel"] as ItemsPanelTemplate
+                ItemContainerStyle = GridViewSouboryaSlozkyItemStyle
+            };
+
+
+            GridViewSouboryaSlozky.ItemClick += ListViewSouboryaSlozky_ItemClick;
+            GridViewSouboryaSlozky.RightTapped += ListViewSouboryaSlozky_RightTapped;
+            GridViewSouboryaSlozky.SelectionChanged += ListViewSouboryaSlozky_SelectionChanged;
+          
 
 
 
 
-            
+
+
+
+
+
+
 
 
             // Celkové přidání
             StackPanelHlavniObsah.Children.Add(NavigacniPanelCesty);
             StackPanelHlavniObsah.Children.Add(StackPanelRazeniPolozek);
             StackPanelHlavniObsah.Children.Add(ProgressBarNacitaniSlozky); // Indikátor načítání
-            StackPanelHlavniObsah.Children.Add(ListViewSouboryaSlozky);
+
+            if (!zapnoutMrizkoveZobrazeni)
+            {
+                StackPanelHlavniObsah.Children.Add(ListViewSouboryaSlozky);
+            }
+            else
+            {
+                StackPanelHlavniObsah.Children.Add(GridViewSouboryaSlozky);
+            }
+
             StackPanelHlavniObsah.Children.Add(TlacitkoNacistDalsiSoubory);
             TlacitkoNacistDalsiSoubory.Click += TlacitkoNacistDalsiSoubory_Click;
 
@@ -467,6 +519,8 @@ namespace MetropolisOnedriveKlient
         private void ZapnoutVypnoutUzivatelskeRozhrani(bool stavAktivovani = true)
         {
             ListViewSouboryaSlozky.IsEnabled = stavAktivovani;
+            GridViewSouboryaSlozky.IsEnabled = stavAktivovani;
+
             NavigacniPanelCesty.IsEnabled = stavAktivovani;
             ComboBoxRazeniPolozek.IsEnabled = stavAktivovani;
             BottomAppBar.IsEnabled = stavAktivovani;
@@ -1074,7 +1128,15 @@ namespace MetropolisOnedriveKlient
 
         private async Task NavigovatAdresarAsync(bool navigovatNaKorenovyAdresar = false, bool navigovatNaIndexHistorie = false, int indexHistorieNavigace = 0)
         {
-            ListViewSouboryaSlozky.ItemsSource = null;
+            if (!zapnoutMrizkoveZobrazeni)
+            {
+                ListViewSouboryaSlozky.ItemsSource = null;
+            }
+            else
+            {
+                GridViewSouboryaSlozky.ItemsSource = null;
+            }
+
             ZapnoutVypnoutUzivatelskeRozhrani(false);
             TlacitkoNacistDalsiSoubory.Visibility = Visibility.Collapsed;
             NavigacniPanelCesty.SelectionChanged -= NavigacniPanelCesty_SelectionChanged;
@@ -1181,8 +1243,15 @@ namespace MetropolisOnedriveKlient
                 return;
             }
 
-            
-            ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
+            if (!zapnoutMrizkoveZobrazeni)
+            {
+                ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
+            }
+            else
+            {
+                GridViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
+            }
+
             NavigacniPanelCesty.SelectedItem = NavigacniPanelCesty.Items[NavigacniPanelCesty.Items.Count - 1];
             NavigacniPanelCesty.SelectionChanged += NavigacniPanelCesty_SelectionChanged;
             ZapnoutVypnoutUzivatelskeRozhrani();
@@ -1411,6 +1480,31 @@ namespace MetropolisOnedriveKlient
         private void FlyoutTlacitkoZrusitPresun_Click(object sender, RoutedEventArgs e)
         {
             PrepinacTlacitkaCommandBar();
+        }
+
+        private void TlacitkoZobrazeniMrizky_Click(object sender, RoutedEventArgs e)
+        {
+
+            AppBarToggleButton kliknuteTlacitko = (AppBarToggleButton)sender;
+
+            if ((bool)kliknuteTlacitko.IsChecked)
+            { // Zapnout mřížku
+
+                zapnoutMrizkoveZobrazeni = true;
+                StackPanelHlavniObsah.Children.Remove(ListViewSouboryaSlozky);
+                ListViewSouboryaSlozky.ItemsSource = null;
+                StackPanelHlavniObsah.Children.Insert(3, GridViewSouboryaSlozky);
+                GridViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
+            }
+            else
+            {
+                zapnoutMrizkoveZobrazeni = false;
+                StackPanelHlavniObsah.Children.Remove(GridViewSouboryaSlozky);
+                GridViewSouboryaSlozky.ItemsSource = null;
+                StackPanelHlavniObsah.Children.Insert(3, ListViewSouboryaSlozky);
+                ListViewSouboryaSlozky.ItemsSource = obsahSlozkyOneDrive_aktualni;
+            }
+
         }
     }
 }

@@ -481,4 +481,20 @@
     <value>Hledání</value>
     <comment>Search (and here will be the searched term)</comment>
   </data>
+  <data name="NastaveniSirkaDlazdiceGrid.Header" xml:space="preserve">
+    <value>Šířka dlaždice v mřížkovém zobrazení</value>
+    <comment>Tile width in grid layout</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGrid.PlaceholderText" xml:space="preserve">
+    <value>Šířka dlaždice v px</value>
+    <comment>Tile width in px</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGridTlacitkoVypocitat.Content" xml:space="preserve">
+    <value>Vypočítat ze šířky okna</value>
+    <comment>Calculate from window width</comment>
+  </data>
+  <data name="TlacitkoZobrazeniMrizky.Label" xml:space="preserve">
+    <value>Mřížka</value>
+    <comment>Grid</comment>
+  </data>
 </root>

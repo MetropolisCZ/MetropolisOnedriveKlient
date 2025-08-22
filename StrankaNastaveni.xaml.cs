@@ -10,6 +10,7 @@ using Windows.Storage;
 using static MetropolisOnedriveKlient.ApiWebKlient;
 using Windows.Networking.BackgroundTransfer;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.ViewManagement;
 
 // Dokumentaci k šabloně Prázdná aplikace najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,6 +31,16 @@ namespace MetropolisOnedriveKlient
             NastaveniPrepinacAktualizovatPriZmeneSdileni.IsOn = (bool)ApplicationData.Current.LocalSettings.Values["AktualizovatSlozkuPriZmeneSdileni"];
 
             NastaveniPrepinacUkladatRazeniSouboru.IsOn = (bool)ApplicationData.Current.LocalSettings.Values["UkladatRazeniSouboru"];
+
+            if (ApplicationData.Current.LocalSettings.Values["SirkaDlazdiceGrid"] == null)
+            {
+                NastaveniSirkaDlazdiceGridTlacitkoVypocitat_Click(NastaveniSirkaDlazdiceGridTlacitkoVypocitat, new RoutedEventArgs());
+                ApplicationData.Current.LocalSettings.Values["SirkaDlazdiceGrid"] = double.Parse(NastaveniSirkaDlazdiceGrid.Text);
+            }
+            else
+            {
+                NastaveniSirkaDlazdiceGrid.Text = ApplicationData.Current.LocalSettings.Values["SirkaDlazdiceGrid"].ToString();
+            }
 
 
             NastaveniVychoziMoznostRazeniSouboru.Items.Add(new ComboBoxItem { Content = resourceLoader.GetString("Vychozi") });
@@ -135,6 +146,18 @@ namespace MetropolisOnedriveKlient
             ComboBox ZdrojovyComboBox = (ComboBox)sender;
 
             ApplicationData.Current.LocalSettings.Values["PodleCehoRaditSouboryVeSlozce"] = ZdrojovyComboBox.SelectedIndex;
+        }
+
+        private void NastaveniSirkaDlazdiceGrid_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox ZdrojovyTextBox = (TextBox)sender;
+
+            ApplicationData.Current.LocalSettings.Values["SirkaDlazdiceGrid"] = double.Parse(ZdrojovyTextBox.Text);
+        }
+
+        private void NastaveniSirkaDlazdiceGridTlacitkoVypocitat_Click(object sender, RoutedEventArgs e)
+        {
+            NastaveniSirkaDlazdiceGrid.Text = ((ApplicationView.GetForCurrentView().VisibleBounds.Width - 32) / 2).ToString();
         }
     }
 }

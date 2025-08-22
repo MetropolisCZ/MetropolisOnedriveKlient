@@ -12,6 +12,7 @@
         <local:KonvertorBnaMB x:Key="KonvertorBnaMB"/>
         <local:KonvertorViditelnostiSdileno x:Key="KonvertorViditelnostiSdileno"/>
         <local:KonvertorOpravneniSouboruRoles x:Key="KonvertorOpravneniSouboruRoles"/>
+        <local:NastaveniAplikacePomocnaTrida x:Key="NastaveniAplikacePomocnaTrida" />
 
         <local:VybratIkonuDleObsahu x:Key="VybratIkonuDleObsahu"
                             SablonaSouboryRepozitarGithub_IkonaSlozky="{StaticResource SablonaSouboryRepozitarGithub_IkonaSlozky}"
@@ -115,7 +116,42 @@
                 
             </Grid>
         </DataTemplate>
-        
+
+
+        <DataTemplate x:Key="SablonaSouboryRepozitarGrid">
+            <Grid Padding="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding SirkaDlazdiceGridWidth, Source={StaticResource NastaveniAplikacePomocnaTrida}}"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition Height="26"></RowDefinition>
+                    <RowDefinition Height="18"></RowDefinition>
+                    <RowDefinition Height="22"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource VybratIkonuDleObsahu}" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,0,0" />
+
+                <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="0,5,0,0" TextTrimming="CharacterEllipsis" TextAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="2" FontSize="12" Foreground="DarkGray" TextTrimming="CharacterEllipsis" TextAlignment="Center">
+                    <Run Text="{Binding Size, Converter={StaticResource KonvertorBnaMB}}"></Run>
+                    <Run>–</Run>
+                    <Run Text="{Binding LastModifiedDateTime}"></Run>
+                </TextBlock>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="3" Visibility="{Binding Shared, Converter={StaticResource KonvertorViditelnostiSdileno}}">
+                    <FontIcon Glyph="&#xE716;" Margin="0,0,5,0" FontSize="14" Foreground="DarkGray"></FontIcon>
+                    <TextBlock VerticalAlignment="Center" FontSize="12" x:Uid="TextBlockAdresarSdileno" Foreground="DarkGray"></TextBlock>
+                </StackPanel>
+
+            </Grid>
+        </DataTemplate>
+
+
+        <!--<ItemsPanelTemplate x:Key="SablonaSouboryRepozitarGrid_ItemsPanel">
+            <VariableSizedWrapGrid Orientation="Horizontal" VerticalAlignment="Top" ScrollViewer.HorizontalScrollMode="Enabled" />
+        </ItemsPanelTemplate>-->
+
 
     </Application.Resources>
     

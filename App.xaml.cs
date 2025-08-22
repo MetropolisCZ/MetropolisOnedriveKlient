@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -99,6 +100,21 @@ namespace MetropolisOnedriveKlient
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Uložit stav aplikace a zastavit jakoukoliv aktivitu na pozadí
             deferral.Complete();
+        }
+
+    }
+
+
+    public class NastaveniAplikacePomocnaTrida
+    {
+
+        public static GridLength SirkaDlazdiceGridWidth
+        {
+            get
+            {
+                double SirkaDlazdiceGrid = (double)ApplicationData.Current.LocalSettings.Values["SirkaDlazdiceGrid"];
+                return new GridLength(SirkaDlazdiceGrid);
+            }
         }
     }
 }

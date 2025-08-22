@@ -481,4 +481,20 @@
     <value>Search</value>
     <comment>Search (on a button to start search)</comment>
   </data>
+  <data name="NastaveniSirkaDlazdiceGrid.PlaceholderText" xml:space="preserve">
+    <value>Tile width in px</value>
+    <comment>Tile width in px</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGrid.Header" xml:space="preserve">
+    <value>Tile width in grid layout</value>
+    <comment>Tile width in grid layout</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGridTlacitkoVypocitat.Content" xml:space="preserve">
+    <value>Calculate from window width</value>
+    <comment>Calculate from window width</comment>
+  </data>
+  <data name="TlacitkoZobrazeniMrizky.Label" xml:space="preserve">
+    <value>Grid</value>
+    <comment>Grid</comment>
+  </data>
 </root>

@@ -17,6 +17,7 @@
         <!-- Default mode buttons -->
         <DataTemplate x:Key="CommandBarTemplate_vychozi">
             <CommandBar>
+                <AppBarToggleButton x:Uid="TlacitkoZobrazeniMrizky" Icon="ViewAll" Click="TlacitkoZobrazeniMrizky_Click"/>
                 <AppBarButton x:Uid="TlacitkoNovaSlozka" Icon="NewFolder" Click="TlacitkoNovaSlozka_Click"/>
                 <AppBarButton x:Uid="TlacitkoNahrat" Icon="Upload" Click="TlacitkoNahrat_Click"/>
                 <AppBarButton x:Uid="TlacitkoMultiVyber" Icon="Bullets" Click="TlacitkoVyber_Click"/>
@@ -27,6 +28,7 @@
         <!-- Multi-select mode buttons -->
         <DataTemplate x:Key="CommandBarTemplate_multiVyber">
             <CommandBar>
+                <AppBarToggleButton x:Uid="TlacitkoZobrazeniMrizky" Icon="ViewAll" Click="TlacitkoZobrazeniMrizky_Click"/>
                 <AppBarButton x:Uid="TlacitkoSdilet" Click="TlacitkoSdilet_Click">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
@@ -41,6 +43,7 @@
         <!-- Tlačítka pro přesouvání souborů -->
         <DataTemplate x:Key="CommandBarTemplate_presouvaniSouboru">
             <CommandBar>
+                <AppBarToggleButton x:Uid="TlacitkoZobrazeniMrizky" Icon="ViewAll" Click="TlacitkoZobrazeniMrizky_Click"/>
                 <AppBarButton x:Uid="TlacitkoPresunoutSem" Icon="Accept" Click="TlacitkoPresunoutSem_Click"/>
                 <AppBarButton x:Uid="TlacitkoZrusitPresun" Icon="Clear" Click="FlyoutTlacitkoZrusitPresun_Click"/>
             </CommandBar>
@@ -50,6 +53,7 @@
         <!-- Výsledek vyhledávání -->
         <DataTemplate x:Key="CommandBarTemplate_vysledekVyhledavani">
             <CommandBar>
+                <AppBarToggleButton x:Uid="TlacitkoZobrazeniMrizky" Icon="ViewAll" Click="TlacitkoZobrazeniMrizky_Click"/>
                 <AppBarButton x:Uid="TlacitkoAktualizovat" Icon="Sync" Click="TlacitkoAktualizovat_Click"/>
             </CommandBar>
         </DataTemplate>

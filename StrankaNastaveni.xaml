@@ -22,6 +22,9 @@
 
             <ComboBox x:Name="NastaveniVychoziMoznostRazeniSouboru" x:Uid="NastaveniVychoziMoznostRazeniSouboru" SelectionChanged="NastaveniVychoziMoznostRazeniSouboru_SelectionChanged" Margin="0,25,0,0" />
 
+            <TextBox x:Uid="NastaveniSirkaDlazdiceGrid" x:Name="NastaveniSirkaDlazdiceGrid" TextChanged="NastaveniSirkaDlazdiceGrid_TextChanged" InputScope="Number" Margin="0,25,0,0"></TextBox>
+            <Button x:Uid="NastaveniSirkaDlazdiceGridTlacitkoVypocitat" x:Name="NastaveniSirkaDlazdiceGridTlacitkoVypocitat" Click="NastaveniSirkaDlazdiceGridTlacitkoVypocitat_Click" Margin="0,10,0,0"></Button>
+
 
 
             <!--<Button Click="Button_Click">Testtttt</Button>-->
@@ -46,7 +49,7 @@
             <HyperlinkButton x:Uid="OsobniUdajeOaplikaci" NavigateUri="https://github.com/MetropolisCZ/MetropolisOnedriveKlient/blob/master/README.md"></HyperlinkButton>
 
             <TextBlock TextWrapping="Wrap" Margin="0,7,0,0">
-                <Run x:Uid="VerzeAplikaceRun"></Run><Run>: 1.6.2</Run>
+                <Run x:Uid="VerzeAplikaceRun"></Run><Run>: 1.7.0</Run>
             </TextBlock>
 
 
