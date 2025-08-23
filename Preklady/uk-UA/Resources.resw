@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppBarTlacitkoNastaveni.Label" xml:space="preserve">
+    <value>Налаштування</value>
+    <comment>Settings</comment>
+  </data>
+  <data name="AppBarTlacitkoPrubeh.Label" xml:space="preserve">
+    <value>Статус</value>
+    <comment>Status</comment>
+  </data>
+  <data name="AppBarTlacitkoSoubory.Label" xml:space="preserve">
+    <value>Файли</value>
+    <comment>Files</comment>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>Хмарний Клієнт Metropolis</value>
+    <comment>Metropolis cloud client</comment>
+  </data>
+  <data name="Chyba" xml:space="preserve">
+    <value>Помилка</value>
+    <comment>Error</comment>
+  </data>
+  <data name="contentDialogNovaSlozka.PrimaryButtonText" xml:space="preserve">
+    <value>Створити</value>
+    <comment>Create</comment>
+  </data>
+  <data name="contentDialogNovaSlozka.Title" xml:space="preserve">
+    <value>Створити нову папку</value>
+    <comment>Create new folder</comment>
+  </data>
+  <data name="contentDialogNovaSlozka.ZadejtePlatnyNazev" xml:space="preserve">
+    <value>Напишіть дійсне ім'я</value>
+    <comment>Enter a valid name</comment>
+  </data>
+  <data name="contentDialogNovaSlozka_textBox.PlaceholderText" xml:space="preserve">
+    <value>Ім'я нової папки</value>
+    <comment>New folder name</comment>
+  </data>
+  <data name="contentDialogOdstranit.PrimaryButtonText" xml:space="preserve">
+    <value>Видалити</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="contentDialogOdstranit.TitleJeden" xml:space="preserve">
+    <value>Видалити цей файл?</value>
+    <comment>Delete this file?</comment>
+  </data>
+  <data name="contentDialogOdstranit.TitleMulti" xml:space="preserve">
+    <value>Видалити ці файли?</value>
+    <comment>Delete these files?</comment>
+  </data>
+  <data name="contentDialogPrejmenovat.PrimaryButtonText" xml:space="preserve">
+    <value>Перейменувати</value>
+    <comment>Rename</comment>
+  </data>
+  <data name="contentDialogPrejmenovat.Title" xml:space="preserve">
+    <value>Перейменувати файл</value>
+    <comment>Rename file</comment>
+  </data>
+  <data name="contentDialogPrejmenovat.ZadejtePlatnyNazev" xml:space="preserve">
+    <value>Напишіть дійсне ім'я файлу</value>
+    <comment>Enter a valid filename</comment>
+  </data>
+  <data name="contentDialogPrejmenovat_textBox.PlaceholderText" xml:space="preserve">
+    <value>Нове ім'я файлу (з розширеням)</value>
+    <comment>New filename (incl. extension)</comment>
+  </data>
+  <data name="contentDialogSdileni.Nadpis" xml:space="preserve">
+    <value>Управління доступом у файлу</value>
+    <comment>Manage file access (like if the file is shared – in the documentation it is called sharing permissions and it means who can view the file)</comment>
+  </data>
+  <data name="contentDialogSdileni.Odkaz" xml:space="preserve">
+    <value>Посилання</value>
+    <comment>Link (like link for sharing; used in sharing ContentDialog)</comment>
+  </data>
+  <data name="contentDialogSdileni.OdkazAplikace" xml:space="preserve">
+    <value>Посилання (додаток</value>
+    <comment>Link (app (part of string only; used in sharing ContentDialog, after this, there will be an app name)</comment>
+  </data>
+  <data name="contentDialogSdileni.OdkazUzivatele" xml:space="preserve">
+    <value>Посилання (користувачі</value>
+    <comment>Link (users (part of string only; used in sharing ContentDialog, after this, there will be listed users)</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniCteni" xml:space="preserve">
+    <value>Дозвіл для читання</value>
+    <comment>Permission to read</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniUpravy" xml:space="preserve">
+    <value>Дозвіл змінювати</value>
+    <comment>Permission to edit</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniVlastnik" xml:space="preserve">
+    <value>Ви власник цього предмету</value>
+    <comment>You are the owner of this item (like file permission)</comment>
+  </data>
+  <data name="contentDialogSdileni.OpravneniZdedenoOd" xml:space="preserve">
+    <value>Успадковано від</value>
+    <comment>inherited from (like inheriting permission from parent folder)</comment>
+  </data>
+  <data name="contentDialogSdileni.SouborNeniSdilen" xml:space="preserve">
+    <value>Файл не поділен з іншими користувачами</value>
+    <comment>File is not shared with another users</comment>
+  </data>
+  <data name="contentDialogSdileni.TlacitkoVytvoritOdkazKeSdileni" xml:space="preserve">
+    <value>Створити нове посилання для доступу</value>
+    <comment>Create new sharing link</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.KopirovatOdkaz" xml:space="preserve">
+    <value>Скопіювати посилання файлу</value>
+    <comment>Copy file link (file sharing link)</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazBylVytvoren" xml:space="preserve">
+    <value>Посилання для доступу створено</value>
+    <comment>File sharing link created</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazOdstranen" xml:space="preserve">
+    <value>Посилання видалено назавжди</value>
+    <comment>Link permanently deleted</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdkazZkopirovan" xml:space="preserve">
+    <value>Посилання скопійовано в буфер обміну</value>
+    <comment>Link copied to the clipboard</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OdstranitOdkaz" xml:space="preserve">
+    <value>Видалити посилання файлу</value>
+    <comment>Delete file link (file sharing link)</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.OpravneniOdkazu" xml:space="preserve">
+    <value>Дозвіли Посилання </value>
+    <comment>Link permission (like view, edit, owner)</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.SdiletOdkaz" xml:space="preserve">
+    <value>Поділитися посиланням файла</value>
+    <comment>Share file link</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.VyberteOpravneniOdkazu" xml:space="preserve">
+    <value>Виберіть дозволення посилання</value>
+    <comment>Select link permissions</comment>
+  </data>
+  <data name="contentDialogVytvoritOdkazKeSdileni.ZdedenoNejdeOdstranit" xml:space="preserve">
+    <value>Успадковані дозволення не можуть бути змінені тут, будь ласка змінить батьківську папку</value>
+    <comment>Inherited permissions cannot be edited here, please edit parent folder</comment>
+  </data>
+  <data name="dialogHTTPchyba.Title" xml:space="preserve">
+    <value>Відповідь HTTP</value>
+    <comment>HTTP response</comment>
+  </data>
+  <data name="dialogNebylVybranSoubor.Title" xml:space="preserve">
+    <value>Ніякого файлу для скачування не вибрано</value>
+    <comment>No file for download selected</comment>
+  </data>
+  <data name="flyoutTlacitkoOdstranit.Text" xml:space="preserve">
+    <value>Видалити</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="flyoutTlacitkoPrejmenovat.Text" xml:space="preserve">
+    <value>Перейменувати</value>
+    <comment>Rename</comment>
+  </data>
+  <data name="flyoutTlacitkoPresunout.Text" xml:space="preserve">
+    <value>Перемістити</value>
+    <comment>Move</comment>
+  </data>
+  <data name="flyoutTlacitkoSdilet.Text" xml:space="preserve">
+    <value>Поділитися</value>
+    <comment>Share</comment>
+  </data>
+  <data name="flyoutTlacitkoStahnout.Text" xml:space="preserve">
+    <value>Скачування</value>
+    <comment>Download</comment>
+  </data>
+  <data name="KorenovyAdresarNazev" xml:space="preserve">
+    <value>Мої файли</value>
+    <comment>My files</comment>
+  </data>
+  <data name="LicenceOaplikaci.Text" xml:space="preserve">
+    <value>Фірма Metropolis 2025, всі права на вихідний код захищені</value>
+    <comment>Firma Metropolis 2025, all right on source code reserved</comment>
+  </data>
+  <data name="NadpisOaplikaci.Text" xml:space="preserve">
+    <value>Про</value>
+    <comment>About</comment>
+  </data>
+  <data name="NadpisPodekovani.Text" xml:space="preserve">
+    <value>Дякую за перевод</value>
+    <comment>Acknowledgments for translations</comment>
+  </data>
+  <data name="NastaveniPrepinacAktualizovatPriZmeneSdileni.Header" xml:space="preserve">
+    <value>Оновити папку після редагування дозволів на спільний доступ до файлів</value>
+    <comment>Refresh folder when editing file sharing permissions</comment>
+  </data>
+  <data name="OsobniUdajeOaplikaci.Content" xml:space="preserve">
+    <value>Політика конфіденційності &amp; Дісклеймер</value>
+    <comment>Privacy Policy &amp; Disclaimer</comment>
+  </data>
+  <data name="PodnadpisOaplikaci.Text" xml:space="preserve">
+    <value>Додаток на базі Microsoft Graph API</value>
+    <comment>App based on Microsoft Graph API</comment>
+  </data>
+  <data name="polozkaSeznamNahravani.Dokonceno" xml:space="preserve">
+    <value>Завершено</value>
+    <comment>Finished</comment>
+  </data>
+  <data name="polozkaSeznamNahravani.Pripraveno" xml:space="preserve">
+    <value>Готово</value>
+    <comment>Ready</comment>
+  </data>
+  <data name="polozkaSeznamNahravani.Probiha" xml:space="preserve">
+    <value>В процесі</value>
+    <comment>Running</comment>
+  </data>
+  <data name="polozkaSeznamStahovani.DocasnySoubor" xml:space="preserve">
+    <value>тимчасовий файл</value>
+    <comment>temporary file</comment>
+  </data>
+  <data name="PresunoutNadpis" xml:space="preserve">
+    <value>Перемістити</value>
+    <comment>Move</comment>
+  </data>
+  <data name="StrankaNastaveniNadpis" xml:space="preserve">
+    <value>Налаштування</value>
+    <comment>Settings</comment>
+  </data>
+  <data name="StrankaPrubehNadpis" xml:space="preserve">
+    <value>Статус</value>
+    <comment>Status (like uploading files, downloading files)</comment>
+  </data>
+  <data name="StrankaSouboryNadpis" xml:space="preserve">
+    <value>Файли</value>
+    <comment>Files</comment>
+  </data>
+  <data name="TextBlockAdresarSdileno.Text" xml:space="preserve">
+    <value>Поділено</value>
+    <comment>Shared</comment>
+  </data>
+  <data name="TextBlockPivotFotoaparat.Text" xml:space="preserve">
+    <value>Камера</value>
+    <comment>Camera</comment>
+  </data>
+  <data name="TextBlockPivotNahravani.Text" xml:space="preserve">
+    <value>Загрузки</value>
+    <comment>Uploads</comment>
+  </data>
+  <data name="TextBlockPivotStahovani.Text" xml:space="preserve">
+    <value>Скачуванні файли</value>
+    <comment>Downloads</comment>
+  </data>
+  <data name="TlacitkoAktualizovat.Label" xml:space="preserve">
+    <value>Оновлення</value>
+    <comment>Update</comment>
+  </data>
+  <data name="TlacitkoMultiVyber.Label" xml:space="preserve">
+    <value>Вибрати</value>
+    <comment>Select</comment>
+  </data>
+  <data name="TlacitkoNacistDalsi.Content" xml:space="preserve">
+    <value>Загрузити більше</value>
+    <comment>Load more</comment>
+  </data>
+  <data name="TlacitkoNahrat.Label" xml:space="preserve">
+    <value>Загрузити</value>
+    <comment>Upload</comment>
+  </data>
+  <data name="TlacitkoNastaveniZobrazitPrihlaseni.Content" xml:space="preserve">
+    <value>Показати діалог входу</value>
+    <comment>Show login dialog</comment>
+  </data>
+  <data name="TlacitkoNovaSlozka.Label" xml:space="preserve">
+    <value>Нова папка</value>
+    <comment>New folder</comment>
+  </data>
+  <data name="TlacitkoOdstranit.Label" xml:space="preserve">
+    <value>Видалити</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="TlacitkoPresunout.Label" xml:space="preserve">
+    <value>Перемістити</value>
+    <comment>Move</comment>
+  </data>
+  <data name="TlacitkoPresunoutSem.Label" xml:space="preserve">
+    <value>Перемістити сюди</value>
+    <comment>Move here</comment>
+  </data>
+  <data name="TlacitkoSdilet.Label" xml:space="preserve">
+    <value>Поділитися</value>
+    <comment>Share</comment>
+  </data>
+  <data name="TlacitkoStahnout.Label" xml:space="preserve">
+    <value>Скачанні файли</value>
+    <comment>Download</comment>
+  </data>
+  <data name="TlacitkoZrusitPresun.Label" xml:space="preserve">
+    <value>Відмінити</value>
+    <comment>Cancel</comment>
+  </data>
+  <data name="VerzeAplikaceRun.Text" xml:space="preserve">
+    <value>Версія додатку</value>
+    <comment>App version</comment>
+  </data>
+  <data name="WebFirmyOaplikaci.Content" xml:space="preserve">
+    <value>Посилання Фірми Metropolis</value>
+    <comment>Firma Metropolis website</comment>
+  </data>
+  <data name="ZavritDialog" xml:space="preserve">
+    <value>Закрити</value>
+    <comment>Close (like when closing ContentDialog)</comment>
+  </data>
+  <data name="ZrusitDialog" xml:space="preserve">
+    <value>Відмінити</value>
+    <comment>Cancel (like when cancelling some operation)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.DatumOdNejnovejsiho" xml:space="preserve">
+    <value>Дата (з нового)</value>
+    <comment>Update (newest)</comment>
+  </data>
+  <data name="NastaveniPrepinacUkladatRazeniSouboru.Header" xml:space="preserve">
+    <value>Завжди ставити вибрану опцію сортування по умовчанням</value>
+    <comment>Always set selected sorting option as default</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.DatumOdNejstarsiho" xml:space="preserve">
+    <value>Дата (з старого)</value>
+    <comment>Date (from oldest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.NazevAZ" xml:space="preserve">
+    <value>Ім'я (з A)</value>
+    <comment>Name (from A)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.NazevZA" xml:space="preserve">
+    <value>Ім'я (з Z)</value>
+    <comment>Name (from Z)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.VelikostOdNejmensiho" xml:space="preserve">
+    <value>Розмір (з меншого)</value>
+    <comment>Size (from smallest)</comment>
+  </data>
+  <data name="ComboBoxRazeniPolozek.VelikostOdNejvetsiho" xml:space="preserve">
+    <value>Розмір (з великого)</value>
+    <comment>Size (from largest)</comment>
+  </data>
+  <data name="RazeniPolozekTextBlock.Text" xml:space="preserve">
+    <value>Сортувати за</value>
+    <comment>Sort by</comment>
+  </data>
+  <data name="Vychozi" xml:space="preserve">
+    <value>По умовчанням</value>
+    <comment>Default</comment>
+  </data>
+  <data name="NastaveniVychoziMoznostRazeniSouboru.Header" xml:space="preserve">
+    <value>Опція сортування файлів по умовчанням</value>
+    <comment>Default files sorting option</comment>
+  </data>
+  <data name="VysledkyVyhledavani" xml:space="preserve">
+    <value>Пошук</value>
+    <comment>Search (and here will be the searched term)</comment>
+  </data>
+  <data name="VyhledavacOnedriveTextBox.PlaceholderText" xml:space="preserve">
+    <value>Пошук OneDrive</value>
+    <comment>Search OneDrive (placeholder text for search box)</comment>
+  </data>
+  <data name="AppBarTlacitkoHledani.Label" xml:space="preserve">
+    <value>Пошук</value>
+    <comment>Search (page name)</comment>
+  </data>
+  <data name="VyhledavacOnedriveTlacitkoVyhledat.Content" xml:space="preserve">
+    <value>Пошук</value>
+    <comment>Search (on a button to start search)</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGrid.PlaceholderText" xml:space="preserve">
+    <value>Ширина плітки в пікселях</value>
+    <comment>Tile width in px</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGrid.Header" xml:space="preserve">
+    <value>Ширина плітки в сітковому пакеті</value>
+    <comment>Tile width in grid layout</comment>
+  </data>
+  <data name="NastaveniSirkaDlazdiceGridTlacitkoVypocitat.Content" xml:space="preserve">
+    <value>Обчислити від ширини вікна</value>
+    <comment>Calculate from window width</comment>
+  </data>
+  <data name="TlacitkoZobrazeniMrizky.Label" xml:space="preserve">
+    <value>Сітка</value>
+    <comment>Grid</comment>
+  </data>
+</root>
