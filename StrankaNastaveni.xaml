@@ -71,7 +71,7 @@
                 <Run FontStyle="Italic">(French)</Run>
             </TextBlock>
             <TextBlock TextWrapping="Wrap">
-                <Run></Run>
+                <Run>DanaTheScripter</Run>
                 <Run FontStyle="Italic">(Russian and Ukrainian)</Run>
             </TextBlock>
 
